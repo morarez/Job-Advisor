@@ -29,7 +29,7 @@ public class JobOffer {
         this.postDate = LocalDate.now().toString();
         this.salaryFrom = salaryFrom;
         this.salaryTo = salaryTo;
-        // formatting salary time unit to make it compatible with the format in db
+        // formatting salary time unit to make it compatible with the format in the database
         this.salaryUnit = ((salaryUnit.equals("year")) ? "/year" : "/hour");
         this.state = state;
         this.city = city;
