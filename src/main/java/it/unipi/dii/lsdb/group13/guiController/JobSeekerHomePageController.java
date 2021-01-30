@@ -16,4 +16,8 @@ public class JobSeekerHomePageController {
     private void pressViewAccount() throws IOException {
         App.setRoot("ViewJobSeekerAccount");
     }
+    @FXML
+    private void pressUpdateAccount() throws IOException {
+    	App.setRoot("UpdateAccountJobSeeker");
+    }
 }
