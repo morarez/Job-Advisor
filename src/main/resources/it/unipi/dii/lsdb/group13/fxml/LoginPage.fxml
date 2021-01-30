@@ -54,14 +54,14 @@
 
     <VBox alignment="center" spacing="10" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="9" GridPane.rowSpan="5">
         <Text text="Are you a job seeker?" />
-        <Button text="Sign Up" />
-        <!-- onAction="#handleSubmitButtonAction"  /> -->
+        <Button text="Sign Up"
+        onAction="#pressSignUpJobSeeekerButton"  />
     </VBox>
 
     <VBox alignment="center" spacing="10" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="9" GridPane.rowSpan="5">
         <Text text="Are you an employer?" />
-        <Button text="Sign Up" />
-        <!-- onAction="#handleSubmitButtonAction"  /> -->
+        <Button text="Sign Up"
+        onAction="#pressSignUpEmployerButton"  />
     </VBox>
 
     <ImageView fitHeight="130.0" preserveRatio="true" GridPane.columnIndex="6" GridPane.rowIndex="2">

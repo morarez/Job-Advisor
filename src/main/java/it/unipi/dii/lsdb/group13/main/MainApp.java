@@ -116,7 +116,7 @@ public class MainApp {
 							switch (sc.nextInt()) {
 								case 1: {
 									EmployerDao employer = new EmployerDao();
-									employer.changePassword();
+									//employer.changePassword();
 									break;
 								}
 								case 2: {
@@ -147,47 +147,47 @@ public class MainApp {
 							switch (sc.nextInt()) {
 								case 1: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.changePassword();
+									//jobSeeker.changePassword();
 									break;
 								}
 								case 2: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.changeFirstName();
+									//jobSeeker.changeFirstName();
 									break;
 								}
 								case 3: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.changeLastName();
+									//jobSeeker.changeLastName();
 									break;
 								}
 								case 4: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.changeBirthday();
+									//jobSeeker.changeBirthday();
 									break;
 								}
 								case 5: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.changeGender();
+									//jobSeeker.changeGender();
 									break;
 								}
 								case 6: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.changeEmail();
+									//jobSeeker.changeEmail();
 									break;
 								}
 								case 7: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.changeLocation();
+									//jobSeeker.changeLocation();
 									break;
 								}
 								case 8: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.addSkill();
+									//jobSeeker.addSkill();
 									break;
 								}
 								case 9: {
 									JobSeekerDao jobSeeker = new JobSeekerDao();
-									jobSeeker.deleteSkill();
+									//jobSeeker.deleteSkill();
 									break;
 								}
 								default: {
@@ -238,12 +238,12 @@ public class MainApp {
 		switch (input) {
 			case "seeker": {
 				JobSeekerDao jobSeeker = new JobSeekerDao();
-				jobSeeker.signUp();
+				//jobSeeker.signUp();
 				break;
 			}
 			case "employer": {
 				EmployerDao employer = new EmployerDao();
-				employer.signUp();
+				//employer.signUp();
 				break;
 			}
 			default:

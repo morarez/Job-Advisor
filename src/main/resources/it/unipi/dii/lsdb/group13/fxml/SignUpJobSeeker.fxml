@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="CENTER" hgap="10" prefHeight="668.0" prefWidth="466.0" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.dii.lsdb.group13.guiController.SignUpJobSeekerController">
+    <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
+<Label text="SIGN UP AS A JOB SEEKER" textAlignment="CENTER" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowSpan="1">
+        <font>
+            <Font name="sans-serif-verdana bold" size="24" />
+        </font>
+        <GridPane.margin>
+            <Insets bottom="10" left="0" right="0" top="10" />
+        </GridPane.margin>
+ </Label>
+
+
+
+<Label text="First Name* : " GridPane.columnIndex="3" GridPane.rowIndex="1">
+</Label>
+<TextField id="fname" fx:id="fname" prefHeight="40" prefWidth="300.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+
+
+
+<Label text="Last Name* : " GridPane.columnIndex="3" GridPane.rowIndex="2">
+</Label>
+<TextField id="lname" fx:id="lname" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+
+
+<Label text="Email* : " GridPane.columnIndex="3" GridPane.rowIndex="3">
+</Label>
+<TextField id="jemail" fx:id="jemail" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="3" />
+
+
+<Label text="Gender : " GridPane.columnIndex="3" GridPane.rowIndex="4">
+</Label>
+<TextField id="gender" fx:id="gender" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+<Label text="Birthday : " GridPane.columnIndex="3" GridPane.rowIndex="5">
+</Label>
+  <DatePicker id="birthday" fx:id="birthday" prefHeight="40.0" prefWidth="300.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
+
+<Label text="City : " GridPane.columnIndex="3" GridPane.rowIndex="6">
+</Label>
+<TextField id="jcity" fx:id="jcity" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+
+
+<Label text="State : " GridPane.columnIndex="3" GridPane.rowIndex="7">
+</Label>
+<TextField id="jstate" fx:id="jstate" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="7" />
+
+
+<Label text="Username* : " GridPane.columnIndex="3" GridPane.rowIndex="8">
+</Label>
+<TextField id="username" fx:id="username" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="8" />
+
+
+<Label text="Password* : " GridPane.columnIndex="3" GridPane.rowIndex="9">
+</Label>
+<PasswordField id="jpassword" fx:id="jpassword" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="9" />
+
+
+<Label text="Skills* : " GridPane.columnIndex="3" GridPane.rowIndex="10">
+</Label>
+<TextField id="skills" fx:id="skills" promptText="skill,skill,skill..." prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+
+
+
+
+
+<Button fx:id="submitButton" defaultButton="true" onAction="#presssubmit" prefHeight="40" prefWidth="100" text="Submit" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="17" GridPane.rowSpan="1">
+           
+        <GridPane.margin>
+            <Insets bottom="20" left="0" right="0" top="20" />
+        </GridPane.margin>
+    </Button>
+   <Label id="error" fx:id="error" textFill="RED" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.rowIndex="16">
+      <font>
+         <Font name="System Bold" size="12.0" />
+      </font>
+   </Label>
+
+
+    <stylesheets>
+        <URL value="@../css/style.css" />
+    </stylesheets>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+
+</GridPane>

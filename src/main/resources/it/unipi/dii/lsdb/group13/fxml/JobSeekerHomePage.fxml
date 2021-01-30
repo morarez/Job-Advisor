@@ -23,7 +23,7 @@
                   <Menu text="Account">
                       <items>
                           <MenuItem onAction="#pressViewAccount" text="View your account" />
-                          <MenuItem text="Update your account" />
+                          <MenuItem onAction="#pressUpdateAccount" text="Update your account" />
                           <SeparatorMenuItem />
                           <MenuItem onAction="#pressExit" text="Exit" />
                       </items>
