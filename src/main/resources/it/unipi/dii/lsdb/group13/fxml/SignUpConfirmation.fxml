@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane alignment="CENTER" hgap="10" prefHeight="668.0" prefWidth="466.0" vgap="10" style="-fx-background-color: #ADD8E6;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/15.0.1" fx:controller="it.unipi.dii.lsdb.group13.guiController.SignUpConfirmationController">
+      <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="351.0" minWidth="10.0" prefWidth="301.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="301.0" minWidth="10.0" prefWidth="299.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="142.0" minHeight="10.0" prefHeight="142.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="320.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="243.0" minHeight="10.0" prefHeight="178.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="YOU HAVE BEEN SIGNED UP SUCCESSFULLY!" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.columnSpan="2">
+         <font>
+            <Font name="System Bold" size="23.0" />
+         </font>
+      </Label>
+      <Button onAction="#showLogin" text="Back to HomePage" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP"
+      style="-fx-border-color: darkgray;-fx-border-radius: 8px; -fx-border-width: 2px; -fx-padding: 5px 22px; -fx-text-align: center; -fx-background-radius: 8px;" />
+
+   </children>
+</GridPane>

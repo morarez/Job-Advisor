@@ -20,41 +20,25 @@ import static com.mongodb.client.model.Updates.set;
 
 public class EmployerDao {
 
-    public void signUp()
-    {
-        try {
-            System.out.println("Enter the name of company: ");
-            Scanner sc= new Scanner(System.in);
-            String companyName=sc.nextLine();
-            System.out.println("Enter email of the company: ");
-            String email= sc.nextLine();
-            System.out.println("Enter password: ");
-            String password= sc.nextLine();
-            System.out.println("How many locations do you want to enter: ");
-            int n= sc.nextInt();
-            List<DBObject> locations= new ArrayList<>();
-            for(int i=1;i<=n;i++)
-            {
-                System.out.println("Enter the city: ");
-                Scanner s= new Scanner(System.in);
-                String city= s.nextLine();
-                System.out.println("Enter the state: ");
-                String state= s.nextLine();
-                DBObject document= new BasicDBObject();
-                document.put("city",city);
-                document.put("state",state);
-                locations.add(document);
-            }
-            MongoDBManager mongoDB = MongoDBManager.getInstance();
-            MongoCollection companies = mongoDB.getCompaniesCollection();
-            Document doc= new Document("_id",companyName).append("email",email).append("password",password).append("locations",locations);
-            companies.insertOne(doc);
-            System.out.println("Signed up Successfully!");
-        }
-        catch(Exception e) {
-            System.out.println(e.getMessage());
-        }
-    }
+	 public boolean signUp(String companyName,String email,String password, String city, String state)
+	    {
+	    	try {
+	            List<DBObject> locations= new ArrayList<>();
+	                DBObject document= new BasicDBObject();
+	                document.put("city",city);
+	                document.put("state",state);
+	                locations.add(document);
+	            MongoDBManager mongoDB = MongoDBManager.getInstance();
+	            MongoCollection companies = mongoDB.getCompaniesCollection();
+	            Document doc= new Document("_id",companyName).append("email",email).append("password",password).append("locations",locations);
+	            companies.insertOne(doc);
+	            return true;
+	        }
+	        catch(Exception e) {
+	            System.out.println(e.getMessage());
+	            return false;
+	        }
+	    }
 
     public void deleteAccount()
     {
@@ -66,46 +50,18 @@ public class EmployerDao {
         System.out.println(deleteresult.getDeletedCount()+" document has been deleted.");
     }
 
-    public void changePassword() {
-        Scanner sc = new Scanner(System.in);
-        Session.getSingleton();
+    public boolean changePassword(String newpwd, String pwdagain) {
+       Session.getSingleton();
         String username= Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
-        String current= null, foundpwd = null, newpwd= null, pwdagain= null;
-        Document doc= null;
+        MongoCollection col= mongoDB.getCompaniesCollection();
         try {
-            do
-            {
-                System.out.println("Enter current password: ");
-                current=sc.nextLine();
-                MongoCollection col= mongoDB.getCompaniesCollection();
-                try (MongoCursor<Document> cursor= col.find(eq("_id", username)).iterator())
-                {
-                    doc= cursor.next();
-                    foundpwd= (String) doc.get("password");
-                }
-                while(foundpwd.equals(current)) {
-                    System.out.println("Enter new password: ");
-                    newpwd= sc.nextLine();
-                    System.out.println("Confirm new password: ");
-                    pwdagain= sc.nextLine();
-                    if(newpwd.equals(pwdagain))
-                    {
                         col.updateOne(eq("_id",username),set("password",newpwd));
-                        System.out.println("Password updated!");
-                        return;
-                    }
-                    else
-                    {
-                        System.out.println("Passwords don't match! \n Try Again! \n");
-                        continue;
-                    }
+                        return true;
                 }
-                System.out.println("Please enter correct current password again!\n");
-            }while(!foundpwd.equals(current));
-        }
         catch(Exception e) {
             System.out.println(e.getMessage());
+            return false;
         }
     }
 
