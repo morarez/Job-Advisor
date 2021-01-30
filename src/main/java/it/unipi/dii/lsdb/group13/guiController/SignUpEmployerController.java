@@ -18,10 +18,6 @@ public class SignUpEmployerController {
 	@FXML
 	private TextField cemail;
 	@FXML
-	private TextField ccity;
-	@FXML
-	private TextField cstate;
-	@FXML
 	private Button submitButton;
 	@FXML
 	private Label error;
@@ -29,7 +25,7 @@ public class SignUpEmployerController {
 	
 	@FXML
 	private void presssubmit(ActionEvent event) throws IOException {
-        if((companyName.getText().isEmpty()) || (cpassword.getText().isEmpty()) || (cemail.getText().isEmpty()) || (ccity.getText().isEmpty()) || (cstate.getText().isEmpty()))
+        if((companyName.getText().isEmpty()) || (cpassword.getText().isEmpty()) || (cemail.getText().isEmpty()))
         {
         	error.setText("Please enter all required fields!");
         	error.setTextFill(Color.web("#ff0000",0.8));
@@ -38,12 +34,16 @@ public class SignUpEmployerController {
         else
         {
         	EmployerDao employer= new EmployerDao();
-        	boolean isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText(),ccity.getText(),cstate.getText());
+        	boolean isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText());
         	if(isValid==true)
         	App.setRoot("SignUpConfirmation");
         	else
         		error.setText("Sign Up Failed!");
         	error.setTextFill(Color.web("#ff0000",0.8));
         }
+	}
+	@FXML
+	private void goBack() throws IOException{
+		App.setRoot("LoginPage");
 	}
 }

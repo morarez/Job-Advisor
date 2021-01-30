@@ -20,17 +20,12 @@ import static com.mongodb.client.model.Updates.set;
 
 public class EmployerDao {
 
-	 public boolean signUp(String companyName,String email,String password, String city, String state)
+	 public boolean signUp(String companyName,String email,String password)
 	    {
 	    	try {
-	            List<DBObject> locations= new ArrayList<>();
-	                DBObject document= new BasicDBObject();
-	                document.put("city",city);
-	                document.put("state",state);
-	                locations.add(document);
 	            MongoDBManager mongoDB = MongoDBManager.getInstance();
 	            MongoCollection companies = mongoDB.getCompaniesCollection();
-	            Document doc= new Document("_id",companyName).append("email",email).append("password",password).append("locations",locations);
+	            Document doc= new Document("_id",companyName).append("email",email).append("password",password);
 	            companies.insertOne(doc);
 	            return true;
 	        }
