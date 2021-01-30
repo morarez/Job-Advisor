@@ -52,4 +52,9 @@ public class SignUpJobSeekerController{
 			 	 error.setTextFill(Color.web("#ff0000",0.8));
 		 }
 }
+	 
+	 @FXML
+	 private void goBack() throws IOException{
+		 App.setRoot("LoginPage");
+	 }
 }

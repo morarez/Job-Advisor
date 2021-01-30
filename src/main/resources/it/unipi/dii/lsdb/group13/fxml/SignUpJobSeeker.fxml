@@ -41,19 +41,19 @@
 <TextField id="jemail" fx:id="jemail" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="3" />
 
 
-<Label text="Gender : " GridPane.columnIndex="3" GridPane.rowIndex="4">
+<Label text="Gender* : " GridPane.columnIndex="3" GridPane.rowIndex="4">
 </Label>
 <TextField id="gender" fx:id="gender" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="4" />
-<Label text="Birthday : " GridPane.columnIndex="3" GridPane.rowIndex="5">
+<Label text="Birthday* : " GridPane.columnIndex="3" GridPane.rowIndex="5">
 </Label>
   <DatePicker id="birthday" fx:id="birthday" prefHeight="40.0" prefWidth="300.0" GridPane.columnIndex="4" GridPane.rowIndex="5" />
 
-<Label text="City : " GridPane.columnIndex="3" GridPane.rowIndex="6">
+<Label text="City* : " GridPane.columnIndex="3" GridPane.rowIndex="6">
 </Label>
 <TextField id="jcity" fx:id="jcity" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="6" />
 
 
-<Label text="State : " GridPane.columnIndex="3" GridPane.rowIndex="7">
+<Label text="State* : " GridPane.columnIndex="3" GridPane.rowIndex="7">
 </Label>
 <TextField id="jstate" fx:id="jstate" prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="7" />
 
@@ -70,13 +70,13 @@
 
 <Label text="Skills* : " GridPane.columnIndex="3" GridPane.rowIndex="10">
 </Label>
-<TextField id="skills" fx:id="skills" promptText="skill,skill,skill..." prefHeight="40" GridPane.columnIndex="4" GridPane.rowIndex="10" />
+<TextField id="skills" fx:id="skills" prefHeight="40" promptText="skill,skill,skill..." GridPane.columnIndex="4" GridPane.rowIndex="10" />
 
 
 
 
 
-<Button fx:id="submitButton" defaultButton="true" onAction="#presssubmit" prefHeight="40" prefWidth="100" text="Submit" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="17" GridPane.rowSpan="1">
+<Button fx:id="submitButton" defaultButton="true" onAction="#presssubmit" prefHeight="40.0" prefWidth="130.0" text="Submit" GridPane.columnIndex="3" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="17" GridPane.rowSpan="1">
            
         <GridPane.margin>
             <Insets bottom="20" left="0" right="0" top="20" />
@@ -87,6 +87,11 @@
          <Font name="System Bold" size="12.0" />
       </font>
    </Label>
+   <Button id="goBack" fx:id="goBack" defaultButton="true" onAction="#goBack" prefHeight="40.0" prefWidth="130.0" text="Go Back" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="17">
+      <GridPane.margin>
+         <Insets bottom="20.0" top="20.0" />
+      </GridPane.margin>
+   </Button>
 
 
     <stylesheets>
