@@ -19,6 +19,7 @@ public class App extends Application {
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("LoginPage"), 640, 480);
         stage.setScene(scene);
+        stage.setFullScreen(true);
         stage.show();
     }
 
