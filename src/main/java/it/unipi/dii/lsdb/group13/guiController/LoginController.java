@@ -1,6 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
+import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -27,12 +28,12 @@ public class LoginController {
 
     @FXML
     private void pressSignUpEmployerButton() throws IOException {
-        /*App.setRoot("secondary"); */
+    	App.setRoot("SignUpEmployer");
     }
 
     @FXML
-    private void pressSignUpJobSeeekerButton() {
-        /*App.setRoot(); */
+    private void pressSignUpJobSeeekerButton() throws IOException {
+    	App.setRoot("SignUpJobSeeker");
     }
 
     @FXML
@@ -71,6 +72,9 @@ public class LoginController {
                 errorMessage.setVisible(true);
                 return;
             } else {
+            	//created session to test update account code
+            	Session.getSingleton();
+    			Session.setLoggedUser(username);
                 App.setRoot("JobSeekerHomePage");
             }
         }
