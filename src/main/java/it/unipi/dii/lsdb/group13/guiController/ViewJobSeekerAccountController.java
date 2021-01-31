@@ -1,10 +1,13 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
+import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 public class ViewJobSeekerAccountController {
     @FXML
@@ -24,10 +27,10 @@ public class ViewJobSeekerAccountController {
 
     @FXML
     private Text loc;
-    /*
+
     @FXML
     private Text skills;
-     */
+
 
     @FXML
     public void initialize(){
@@ -41,5 +44,11 @@ public class ViewJobSeekerAccountController {
         birthdate.setText("BirthDate: " + user.getBirthdate());
         loc.setText("Location:   State: " + user.getLocation().getState() +
                 " - City: " + user.getLocation().getCity());
+        skills.setText("Skills: " +  user.getSkills().toString());
+    }
+
+    @FXML
+    private void goHome() throws IOException {
+        App.setRoot("JobSeekerHomePage");
     }
 }

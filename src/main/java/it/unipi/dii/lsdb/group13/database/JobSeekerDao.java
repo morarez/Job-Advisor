@@ -232,9 +232,16 @@ public class JobSeekerDao {
         // handle nullPointerException
         if (user != null) {
             Document loc = (Document) user.get("location");
-            return new JobSeeker(username, user.get("first_name").toString(), user.get("last_name").toString(),
-                    user.get("gender").toString(), user.get("birthdate").toString(), user.get("email").toString(),
-                    loc.get("state").toString(), loc.get("city").toString());
+            if (user.get("skills") != null) {
+                return new JobSeeker(username, user.getString("first_name"), user.getString("last_name"),
+                        user.getString("gender"), user.getString("birthdate"), user.getString("email"),
+                        loc.getString("state"), loc.getString("city"),
+                        (List<String>)user.get("skills", List.class));
+            } else {
+                return new JobSeeker(username, user.getString("first_name"), user.getString("last_name"),
+                        user.getString("gender"), user.getString("birthdate"), user.getString("email"),
+                        loc.getString("state"), loc.getString("city"));
+            }
         } else {
             return new JobSeeker();
         }
