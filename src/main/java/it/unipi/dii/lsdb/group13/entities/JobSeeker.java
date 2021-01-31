@@ -11,9 +11,7 @@ public class JobSeeker{
     String email = null;
     Location location;
 
-    public String getLocationState(){ return location.state; }
-
-    public String getLocationCity(){ return location.city; }
+    public Location getLocation(){ return location; }
 
     public String getFirstName() {
         return firstName;

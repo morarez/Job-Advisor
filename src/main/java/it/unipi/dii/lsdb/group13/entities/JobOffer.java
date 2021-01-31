@@ -8,10 +8,23 @@ public class JobOffer {
     String id;
     String title;
     String companyName;
+    String postDate;
+    String description;
+    String jobType;
+    Salary salary;
+    Location location;
+
+    public String getId() {
+        return id;
+    }
 
     public void setId(String id) {
         this.id = id;
     }
+
+    public Location getLocation(){ return location; }
+
+    public Salary getSalary(){ return salary;}
 
     public String getTitle() {
         return title;
@@ -53,86 +66,30 @@ public class JobOffer {
         this.jobType = jobType;
     }
 
-    public String getSalaryFrom() {
-        return salaryFrom;
-    }
-
-    public void setSalaryFrom(String salaryFrom) {
-        this.salaryFrom = salaryFrom;
-    }
-
-    public String getSalaryTo() {
-        return salaryTo;
-    }
-
-    public void setSalaryTo(String salaryTo) {
-        this.salaryTo = salaryTo;
-    }
-
-    public String getSalaryUnit() {
-        return salaryUnit;
-    }
-
-    public void setSalaryUnit(String salaryUnit) {
-        this.salaryUnit = salaryUnit;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    String postDate;
-    String description;
-    String jobType;
-    String salaryFrom;
-    String salaryTo;
-    String salaryUnit;
-    String state;
-    String city;
-
     public JobOffer(String title, String companyName, String description, String jobType, String salaryFrom,
                     String salaryTo, String salaryUnit, String state, String city) {
-        // check the id in database
         this.id = UUID.randomUUID().toString().replace("-","");
         this.title = title;
         this.companyName = companyName;
         this.description = description;
         this.jobType = jobType;
         this.postDate = LocalDate.now().toString();
-        this.salaryFrom = salaryFrom;
-        this.salaryTo = salaryTo;
-        // formatting salary time unit to make it compatible with the format in the Database
-        this.salaryUnit = ((salaryUnit.equals("year")) ? "/year" : "/hour");
-        this.state = state;
-        this.city = city;
-    }
-
-    public String getId() {
-        return id;
+        this.location.city = city;
+        this.location.state = state;
+        this.salary.to = salaryTo;
+        this.salary.from = salaryFrom;
+        this.salary.timeUnit = salaryUnit;
     }
 
     public Document createDoc(){
-        Document location = new Document("city", this.city).append("state", this.state);
-
-        Document salary = new Document("from", this.salaryFrom).append("to", this.salaryTo)
-                .append("time_unit",salaryUnit);
+        Document locationDoc = new Document("city", this.location.city).append("state", this.location.state);
+        Document salaryDoc = new Document("from", this.salary.from).append("to", this.salary.to)
+                .append("time_unit",salary.timeUnit);
         return new Document("_id", this.id)
                 .append("job_title", this.title)
                 .append("company_name", this.companyName)
-                .append("location", location)
-                .append("salary", salary)
+                .append("location", locationDoc)
+                .append("salary", salaryDoc)
                 .append("post_date",this.postDate)
                 .append("job_description",description);
     }

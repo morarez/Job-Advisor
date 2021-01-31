@@ -39,6 +39,7 @@ public class ViewJobSeekerAccountController {
         gender.setText("Gender: " + user.getGender());
         email.setText("Email: " + user.getEmail());
         birthdate.setText("BirthDate: " + user.getBirthdate());
-        loc.setText("Location:   State: " + user.getLocationState() + " - City: " + user.getLocationCity());
+        loc.setText("Location:   State: " + user.getLocation().getState() +
+                " - City: " + user.getLocation().getCity());
     }
 }
