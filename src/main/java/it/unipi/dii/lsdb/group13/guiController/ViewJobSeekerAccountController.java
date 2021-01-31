@@ -6,7 +6,7 @@ import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 
-public class ViewJobSeekerAccount {
+public class ViewJobSeekerAccountController {
     @FXML
     private Text firstName;
 
@@ -22,10 +22,9 @@ public class ViewJobSeekerAccount {
     @FXML
     private Text birthdate;
 
-    /*
     @FXML
-    private Text location;
-
+    private Text loc;
+    /*
     @FXML
     private Text skills;
      */
@@ -40,5 +39,6 @@ public class ViewJobSeekerAccount {
         gender.setText("Gender: " + user.getGender());
         email.setText("Email: " + user.getEmail());
         birthdate.setText("BirthDate: " + user.getBirthdate());
+        loc.setText("Location:   State: " + user.getLocationState() + " - City: " + user.getLocationCity());
     }
 }

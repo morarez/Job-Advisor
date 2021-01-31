@@ -1,30 +1,35 @@
 package it.unipi.dii.lsdb.group13.database;
 
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.*;
 
 public class JobSeekerDao {
 
-    public boolean signUp(String fname, String lname, String username, String birthday, String g, String password, String email, String city, String state, String skill) {
+    public boolean signUp(String fname, String lname, String username, LocalDate birthdate, String g, String password,
+                          String email, String city, String state, String skill) {
         try {
             char gender= g.charAt(0);
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate.toString());
+            //in the database we have
+            String formattedDate = new SimpleDateFormat("M/d/yy").format(date);
             List<String> skills = new ArrayList<>(Arrays.asList(skill.split(",")));
             MongoDBManager mongoDB = MongoDBManager.getInstance();
-            MongoCollection mongodb= mongoDB.getJobSeekersCollection();
-            Document doc= new Document("_id",username).append("password",password).append("first_name",fname).append("last_name",lname).append("birthdate",birthday).append("gender",gender).append("email",email).append("location", new Document("city",city).append("state",state)).append("skills",skills);
-            mongodb.insertOne(doc);
+            Document doc = new Document("_id",username).append("password",password).append("first_name",fname)
+                    .append("last_name",lname).append("birthdate",formattedDate).append("gender",gender).append("email",email)
+                    .append("location", new Document("city",city).append("state",state)).append("skills",skills);
+            mongoDB.getJobSeekersCollection().insertOne(doc);
             return true;
         }
         catch(Exception e) {
@@ -36,30 +41,28 @@ public class JobSeekerDao {
     public void delJobSeekerAccount()
     {
         Session.getSingleton();
-        String username= Session.getLoggedUser();
+        String username = Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
-        MongoCollection mongodb= mongoDB.getJobSeekersCollection();
-        DeleteResult deleteresult= mongodb.deleteOne(eq("_id",username));
-        System.out.println(deleteresult.getDeletedCount()+" document has been deleted.");
+        DeleteResult deleteResult= mongoDB.getJobSeekersCollection().deleteOne(eq("_id",username));
+        System.out.println(deleteResult.getDeletedCount()+" document has been deleted.");
     }
 
     public boolean changePassword(String newpwd, String pwdagain) {
-        Session.getSingleton();
+         Session.getSingleton();
          String username= Session.getLoggedUser();
          MongoDBManager mongoDB = MongoDBManager.getInstance();
-         MongoCollection col= mongoDB.getJobSeekersCollection();
          try {
-                         col.updateOne(eq("_id",username),set("password",newpwd));
-                         return true;
-                 }
+             mongoDB.getJobSeekersCollection().updateOne(eq("_id",username),set("password",newpwd));
+             return true;
+         }
          catch(Exception e) {
              System.out.println(e.getMessage());
              return false;
          }
      }
-        
 
-  /*  public void changeFirstName()
+  /*
+    public void changeFirstName()
     {
         Scanner sc= new Scanner(System.in);
         Session.getSingleton();
@@ -173,14 +176,14 @@ public class JobSeekerDao {
             System.out.println(e.getMessage());
         }
     }*/
+
     public boolean addSkill(String skill)
     {
         Session.getSingleton();
         String username= Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         try {
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),push("skills",skill));
+            mongoDB.getJobSeekersCollection().updateOne(eq("_id",username),push("skills",skill));
             return true;
         }
         catch(Exception e)
@@ -189,14 +192,15 @@ public class JobSeekerDao {
             return false;
         }
     }
+
+    @SuppressWarnings("if the skill is not in the database, it still says skill deleted")
     public boolean deleteSkill(String skill)
     {
         Session.getSingleton();
         String username= Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         try {
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),pull("skills",skill));
+            mongoDB.getJobSeekersCollection().updateOne(eq("_id",username),pull("skills",skill));
             return true;
         }
         catch(Exception e)
@@ -205,6 +209,7 @@ public class JobSeekerDao {
             return false;
         }
     }
+
     public String searchUsername(String username) {
         String foundedPw;
         Document doc;
@@ -223,10 +228,15 @@ public class JobSeekerDao {
 
     public JobSeeker findUser(String username){
         MongoDBManager mongoDB = MongoDBManager.getInstance();
-        System.out.println(username);
-        Document user = (Document) mongoDB.getJobSeekersCollection().find(eq("id", username)).first();
-        return new JobSeeker(username, user.get("first_name").toString(), user.get("last_name").toString(),
-                user.get("gender").toString(), user.get("birthdate").toString(), user.get("email").toString());
+        Document user = (Document) mongoDB.getJobSeekersCollection().find(eq("_id", username)).first();
+        // handle nullPointerException
+        if (user != null) {
+            Document loc = (Document) user.get("location");
+            return new JobSeeker(username, user.get("first_name").toString(), user.get("last_name").toString(),
+                    user.get("gender").toString(), user.get("birthdate").toString(), user.get("email").toString(),
+                    loc.get("state").toString(), loc.get("city").toString());
+        } else {
+            return new JobSeeker();
+        }
     }
-
 }

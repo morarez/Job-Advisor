@@ -119,16 +119,6 @@ public class MainApp {
 									//employer.changePassword();
 									break;
 								}
-								case 2: {
-									EmployerDao employer = new EmployerDao();
-									employer.addLocation();
-									break;
-								}
-								case 3: {
-									EmployerDao employer = new EmployerDao();
-									employer.changeEmail();
-									break;
-								}
 								default: {
 									System.out.println("Invalid Input!");
 									break;

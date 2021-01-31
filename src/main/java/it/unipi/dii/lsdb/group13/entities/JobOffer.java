@@ -1,7 +1,6 @@
 package it.unipi.dii.lsdb.group13.entities;
 
 import org.bson.Document;
-
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -9,6 +8,91 @@ public class JobOffer {
     String id;
     String title;
     String companyName;
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getPostDate() {
+        return postDate;
+    }
+
+    public void setPostDate(String postDate) {
+        this.postDate = postDate;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getJobType() {
+        return jobType;
+    }
+
+    public void setJobType(String jobType) {
+        this.jobType = jobType;
+    }
+
+    public String getSalaryFrom() {
+        return salaryFrom;
+    }
+
+    public void setSalaryFrom(String salaryFrom) {
+        this.salaryFrom = salaryFrom;
+    }
+
+    public String getSalaryTo() {
+        return salaryTo;
+    }
+
+    public void setSalaryTo(String salaryTo) {
+        this.salaryTo = salaryTo;
+    }
+
+    public String getSalaryUnit() {
+        return salaryUnit;
+    }
+
+    public void setSalaryUnit(String salaryUnit) {
+        this.salaryUnit = salaryUnit;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     String postDate;
     String description;
     String jobType;

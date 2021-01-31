@@ -10,7 +10,7 @@
 
 <?import javafx.collections.FXCollections?>
 <VBox alignment="CENTER_LEFT" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="it.unipi.dii.lsdb.group13.guiController.CreateJobOffer" prefHeight="400.0" prefWidth="600.0">
+      fx:controller="it.unipi.dii.lsdb.group13.guiController.CreateJobOfferController" prefHeight="400.0" prefWidth="600.0">
     <children>
         <TextField fx:id="usernameField" promptText="Insert the job type" />
         <TextField fx:id="cityField" promptText="Insert the job city" />
