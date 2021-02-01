@@ -34,7 +34,8 @@ public class SignUpEmployerController {
         else
         {
         	EmployerDao employer= new EmployerDao();
-        	boolean isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText());
+
+			boolean isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText());
         	if(isValid==true)
         	App.setRoot("SignUpConfirmation");
         	else

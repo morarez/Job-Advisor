@@ -9,7 +9,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class ViewJobSeekerAccountController {
+public class JobSeekerInfoController {
     @FXML
     private Text firstName;
 

@@ -1,11 +1,9 @@
 package it.unipi.dii.lsdb.group13.database;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
+import it.unipi.dii.lsdb.group13.entities.Employer;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
@@ -30,6 +28,7 @@ public class EmployerDao {
 	            return true;
 	        }
 	        catch(Exception e) {
+	    	    // throw the expcetion
 	            System.out.println(e.getMessage());
 	            return false;
 	        }
@@ -101,22 +100,34 @@ public class EmployerDao {
             System.out.println(e.getMessage());
         }
     }
+
     public void createNewJobOffer(String title, String description, String city, String state,
                                   String salaryTimeUnit,String minSalary, String maxSalary){
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         Session.getSingleton();
         String companyName = Session.getLoggedUser();
-        JobOffer jobOffer = new JobOffer(title,companyName,description,"",minSalary,maxSalary,salaryTimeUnit,state,city);
+        JobOffer jobOffer = new JobOffer(title,companyName,description,"",minSalary,maxSalary,
+                salaryTimeUnit,state,city);
         try {
             MongoCollection jobOffers= mongoDB.getJobOffersCollection();
-            jobOffers.insertOne(jobOffer.createDoc());
+            Document locationDoc = new Document("city", jobOffer.getLocation().getCity())
+                    .append("state", jobOffer.getLocation().getState());
+            Document salaryDoc = new Document("from", jobOffer.getSalary().getFrom())
+                    .append("to", jobOffer.getSalary().getTo()).append("time_unit",jobOffer.getSalary().getTimeUnit());
+            Document job = new Document("_id", jobOffer.getId()).append("job_title", jobOffer.getTitle())
+                    .append("company_name", jobOffer.getCompanyName()).append("location", locationDoc)
+                    .append("salary", salaryDoc).append("post_date",jobOffer.getPostDate())
+                    .append("job_description",description);
+            jobOffers.insertOne(job);
             MongoCollection companies = mongoDB.getCompaniesCollection();
             // Add the job offer to the list of company's job offers
-            companies.updateOne(eq("_id", companyName), Updates.addToSet("job_offers", jobOffer.getId()));
+            companies.updateOne(eq("_id", companyName),
+                    Updates.addToSet("job_offers", jobOffer.getId()));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     //depending on the role, the appropriate collection in MongoDB is opened and the username is searched into it
     // if it is founded, returns the corresponding password, otherwise returns null
     public String searchUsername(String username) {
@@ -131,5 +142,15 @@ public class EmployerDao {
         }
         System.out.println("check founded password: "+ foundedPw);
         return foundedPw;
+    }
+    public Employer findUser(String username) {
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        Document user = (Document) mongoDB.getCompaniesCollection().find(eq("_id", username)).first();
+        // handle nullPointerException
+        if (user != null) {
+            return new Employer(username, user.getString("email"));
+        } else {
+            return new Employer();
+        }
     }
 }

@@ -1,6 +1,5 @@
 package it.unipi.dii.lsdb.group13.entities;
 
-import org.bson.Document;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -79,18 +78,5 @@ public class JobOffer {
         this.salary.to = salaryTo;
         this.salary.from = salaryFrom;
         this.salary.timeUnit = salaryUnit;
-    }
-
-    public Document createDoc(){
-        Document locationDoc = new Document("city", this.location.city).append("state", this.location.state);
-        Document salaryDoc = new Document("from", this.salary.from).append("to", this.salary.to)
-                .append("time_unit",salary.timeUnit);
-        return new Document("_id", this.id)
-                .append("job_title", this.title)
-                .append("company_name", this.companyName)
-                .append("location", locationDoc)
-                .append("salary", salaryDoc)
-                .append("post_date",this.postDate)
-                .append("job_description",description);
     }
 }

@@ -6,4 +6,24 @@ public class Employer {
     String password = null;
     String email = null;
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Employer(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public Employer() {
+        System.out.println("user not found");
+    }
 }

@@ -13,7 +13,7 @@ public class EmployerHomePageController {
     }
     @FXML
     private void pressViewAccount() throws IOException {
-        /*App.setRoot("...");*/
+        App.setRoot("EmployerInfo");
     }
     @FXML
     private void pressUpdateAccount() throws IOException {
