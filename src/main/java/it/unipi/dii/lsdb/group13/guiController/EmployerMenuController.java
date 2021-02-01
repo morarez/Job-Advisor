@@ -34,4 +34,9 @@ public class EmployerMenuController {
         VBox vbox = (VBox) App.loadFXML("EmployerHomePage");
         menuEmployer.setCenter(vbox);
     }
+    @FXML
+    private void pressPublishNewJob() throws IOException {
+        VBox vbox = (VBox) App.loadFXML("CreateJobOffer");
+        menuEmployer.setCenter(vbox);
+    }
 }

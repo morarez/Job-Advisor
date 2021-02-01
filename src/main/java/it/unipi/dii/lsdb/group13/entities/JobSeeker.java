@@ -12,12 +12,11 @@ public class JobSeeker{
     String password;
     String email = null;
     Location location;
+    List<String> skills;
 
     public List<String> getSkills() {
         return skills;
     }
-
-    List<String> skills;
 
     public Location getLocation(){ return location; }
 

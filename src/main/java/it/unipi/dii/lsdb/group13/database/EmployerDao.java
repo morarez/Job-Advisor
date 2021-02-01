@@ -108,14 +108,10 @@ public class EmployerDao {
         }
     }
 
-    public void createNewJobOffer(String title, String description, String city, String state,
-                                  String salaryTimeUnit,String minSalary, String maxSalary){
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
+    public void createNewJobOffer(JobOffer jobOffer){
         Session.getSingleton();
-        String companyName = Session.getLoggedUser();
-        JobOffer jobOffer = new JobOffer(title,companyName,description,"",minSalary,maxSalary,
-                salaryTimeUnit,state,city);
         try {
+            MongoDBManager mongoDB = MongoDBManager.getInstance();
             MongoCollection jobOffers= mongoDB.getJobOffersCollection();
             Document locationDoc = new Document("city", jobOffer.getLocation().getCity())
                     .append("state", jobOffer.getLocation().getState());
@@ -124,11 +120,11 @@ public class EmployerDao {
             Document job = new Document("_id", jobOffer.getId()).append("job_title", jobOffer.getTitle())
                     .append("company_name", jobOffer.getCompanyName()).append("location", locationDoc)
                     .append("salary", salaryDoc).append("post_date",jobOffer.getPostDate())
-                    .append("job_description",description);
+                    .append("job_type",jobOffer.getJobType()).append("job_description",jobOffer.getDescription());
             jobOffers.insertOne(job);
             MongoCollection companies = mongoDB.getCompaniesCollection();
             // Add the job offer to the list of company's job offers
-            companies.updateOne(eq("_id", companyName),
+            companies.updateOne(eq("_id", jobOffer.getCompanyName()),
                     Updates.addToSet("job_offers", jobOffer.getId()));
         } catch (Exception e) {
             e.printStackTrace();

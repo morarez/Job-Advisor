@@ -127,91 +127,9 @@ public class MainApp {
 							}
 						} else {
 							System.out.println("To change password type 1: ");
-							System.out.println("To change first name type 2: ");
-							System.out.println("To change last name type 3: ");
-							System.out.println("To change birthday type 4: ");
-							System.out.println("To change gender type 5: ");
-							System.out.println("To change email type 6: ");
-							System.out.println("To change location type 7: ");
-							System.out.println("To add a skill type 8: ");
-							System.out.println("To remove a skill type 9: ");
-							switch (sc.nextInt()) {
-								case 1: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.changePassword();
-									break;
-								}
-								case 2: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.changeFirstName();
-									break;
-								}
-								case 3: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.changeLastName();
-									break;
-								}
-								case 4: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.changeBirthday();
-									break;
-								}
-								case 5: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.changeGender();
-									break;
-								}
-								case 6: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.changeEmail();
-									break;
-								}
-								case 7: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.changeLocation();
-									break;
-								}
-								case 8: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.addSkill();
-									break;
-								}
-								case 9: {
-									JobSeekerDao jobSeeker = new JobSeekerDao();
-									//jobSeeker.deleteSkill();
-									break;
-								}
-								default: {
-									System.out.println("Invalid Input!");
-									break;
-								}
-							}
 						}
 						break;
 					}
-					case 3:
-						if(role.equals("employer")){
-							System.out.println("Insert the Job Title:");
-							String title = sc.nextLine();
-							System.out.println("Insert the Job Description:");
-							String description = sc.nextLine();
-							System.out.println("Insert the Job Location:(city)");
-							String city = sc.nextLine();
-							System.out.println("Insert the Job Location:(state)");
-							String state = sc.nextLine();
-							System.out.println("Insert the Job salary time unit: (type 'year' or 'hour')");
-							String timeUnit = sc.nextLine();
-							System.out.println("Insert the Job salary:(minimum)");
-							String minSalary = sc.nextLine();
-							System.out.println("Insert the Job salary:(maximum)");
-							String maxSalary = sc.nextLine();
-							EmployerDao employer = new EmployerDao();
-							employer.createNewJobOffer(title,description,city,state,
-									timeUnit,minSalary,maxSalary);
-						} else {
-							System.out.println("Invalid input");
-						}
-						break;
 					default: {
 						System.out.println("Invalid input");
 						break;

@@ -44,7 +44,8 @@ public class JobSeekerInfoController {
         birthdate.setText("BirthDate: " + user.getBirthdate());
         loc.setText("Location:   State: " + user.getLocation().getState() +
                 " - City: " + user.getLocation().getCity());
-        skills.setText("Skills: " +  user.getSkills().toString());
+        if (user.getSkills() != null)
+            skills.setText("Skills: " +  user.getSkills().toString());
     }
 
     @FXML
