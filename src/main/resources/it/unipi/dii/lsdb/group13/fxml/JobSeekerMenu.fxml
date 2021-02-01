@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="it.unipi.dii.lsdb.group13.guiController.JobSeekerMenuController"
+            fx:id="menuJobSeeker"
+            prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/style.css">
+    <top>
+        <MenuBar id="menuBar" fx:id="menuBar" layoutY="-3.0" prefHeight="26.0"> <!--onKeyPressed="#handleKeyInput"> -->
+            <menus>
+                <Menu text="Homepage" onShowing="#pressHomePage">
+                    <items>
+                        <MenuItem text="HomePage"/>
+                    </items>
+                </Menu>
+                <Menu text="Job offers">
+                    <items>
+                        <MenuItem text="Saved job offers" />
+                        <MenuItem text="Search a job offer" />
+                    </items>
+                </Menu>
+                <Menu text="Companies">
+                    <items>
+                        <MenuItem text="Followed companies" />
+                    </items>
+                </Menu>
+                <Menu text="Account">
+                    <items>
+                        <MenuItem onAction="#pressViewAccount" text="View your account" />
+                        <MenuItem onAction="#pressUpdateAccount" text="Update your account" />
+                        <SeparatorMenuItem />
+                        <MenuItem onAction="#pressExit" text="Exit" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+</BorderPane>

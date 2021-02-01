@@ -76,7 +76,7 @@ public class LoginController {
                     //created session to test update account code
                     Session.getSingleton();
                     Session.setLoggedUser(username);
-                    App.setRoot("JobSeekerHomePage");
+                    App.setRoot("JobSeekerMenu");
                 }
             } catch (Exception e) {
                 // e.printStackTrace();
@@ -94,7 +94,8 @@ public class LoginController {
                     //created session to test update account code
                     Session.getSingleton();
                     Session.setLoggedUser(username);
-                    App.setRoot("EmployerHomePage");
+                    //App.setRoot("EmployerHomePage");
+                    App.setRoot("EmployerMenu");
                 }
             } catch (Exception e) {
                 //e.printStackTrace();
