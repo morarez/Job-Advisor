@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox id="vbox" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.dii.lsdb.group13.guiController.JobSeekerHomePageController">
+<VBox id="vbox" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.dii.lsdb.group13.guiController.EmployerHomePageController">
    <Pane prefHeight="237.0" prefWidth="337.0">
       <children>
           <MenuBar id="menuBar" fx:id="menuBar" layoutY="-3.0" prefHeight="26.0" style="-fx-background-color: cadetblue;"> <!--onKeyPressed="#handleKeyInput"> -->

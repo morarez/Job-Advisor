@@ -52,9 +52,7 @@ public class LoginController {
 
         if (choice.equals("Who are you?")) {
             if (username.equals("admin") && password.equals("admin")) {
-                errorMessage.setText("you are the admin"); /* only for testing */
-                errorMessage.setVisible(true);
-                /* show admin page*/
+                App.setRoot("AdminHomePage");
                 return;
             } else if (username.equals("admin") && !password.equals("admin")) {
                 errorMessage.setText("Wrong password \nfor the admin");
