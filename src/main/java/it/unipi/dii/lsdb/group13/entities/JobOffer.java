@@ -65,18 +65,30 @@ public class JobOffer {
         this.jobType = jobType;
     }
 
-    public JobOffer(String title, String companyName, String description, String jobType, String salaryFrom,
-                    String salaryTo, String salaryUnit, String state, String city) {
+    //Job offer with salary
+    public JobOffer(String title, String companyName, String description, String jobType, String state, String city,
+                    String salaryFrom, String salaryTo, String salaryTimeUnit) {
         this.id = UUID.randomUUID().toString().replace("-","");
+        System.out.println(this.id);
         this.title = title;
         this.companyName = companyName;
         this.description = description;
         this.jobType = jobType;
         this.postDate = LocalDate.now().toString();
-        this.location.city = city;
-        this.location.state = state;
-        this.salary.to = salaryTo;
-        this.salary.from = salaryFrom;
-        this.salary.timeUnit = salaryUnit;
+        location = new Location(state, city);
+        String formattedTimeUnit = ((salaryTimeUnit.equals("Year")) ? "/year" : "/hour");
+        salary = new Salary(salaryFrom, salaryTo, formattedTimeUnit);
+    }
+
+    //Job offer without salary
+    public JobOffer(String title, String companyName, String description, String jobType, String state, String city) {
+        this.id = UUID.randomUUID().toString().replace("-","");
+        System.out.println(this.id);
+        this.title = title;
+        this.companyName = companyName;
+        this.description = description;
+        this.jobType = jobType;
+        this.postDate = LocalDate.now().toString();
+        location = new Location(state, city);
     }
 }

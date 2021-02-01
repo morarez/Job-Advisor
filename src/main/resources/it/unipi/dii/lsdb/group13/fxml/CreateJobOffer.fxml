@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
 
 <?import javafx.collections.FXCollections?>
 <VBox alignment="CENTER_LEFT" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
       fx:controller="it.unipi.dii.lsdb.group13.guiController.CreateJobOfferController" prefHeight="400.0" prefWidth="600.0">
     <children>
-        <TextField fx:id="usernameField" promptText="Insert the job type" />
-        <TextField fx:id="cityField" promptText="Insert the job city" />
-        <TextField fx:id="stateField" promptText="Insert the job state(e.g TX for Texas)" />
+        <Label fx:id="errorMsg" textFill="darkred" text="" />
+        <Label text="Job Title*:" />
+        <TextField fx:id="titleField" promptText="Enter the job title" />
+        <Label text="Job Location - State*:" />
+        <TextField fx:id="stateField" promptText="Enter the job state (please write the abbreviation for the US state; e.g TX for Texas)" />
+        <Label text="Job Location - City*:" />
+        <TextField fx:id="cityField" promptText="Enter the job city" />
+        <Label text="Salary Section: (If you want to specify salary, you should fill all the fields related to salary! otherwise it won't be affected!)" />
         <ChoiceBox fx:id="salaryUnit" value="Choose the time unit for salary">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -25,7 +27,7 @@
         </ChoiceBox>
         <TextField fx:id="salaryFromField" promptText="Insert the minimum for salary" />
         <TextField fx:id="salaryToField" promptText="Insert the maximum for salary" />
-        <ChoiceBox fx:id="jobType" value="Choose the Job Type">
+        <ChoiceBox fx:id="jobTypeField" value="Choose the Job Type*">
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Full-Time" />
@@ -36,8 +38,9 @@
                 </FXCollections>
             </items>
         </ChoiceBox>
+        <Label text="Enter description for the job*: "/>
         <TextArea fx:id="descriptionField" promptText="Insert job Description" />
-        <Button text="Submit" />
+        <Button onAction="#pressSubmit" text="Submit" />
     </children>
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

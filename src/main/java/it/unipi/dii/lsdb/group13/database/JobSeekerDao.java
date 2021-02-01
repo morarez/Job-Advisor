@@ -231,7 +231,7 @@ public class JobSeekerDao {
         // handle nullPointerException
         if (user != null) {
             Document loc = (Document) user.get("location");
-            if (user.get("skills") != null) {
+            if (user.containsKey("skills")) {
                 return new JobSeeker(username, user.getString("first_name"), user.getString("last_name"),
                         user.getString("gender"), user.getString("birthdate"), user.getString("email"),
                         loc.getString("state"), loc.getString("city"),

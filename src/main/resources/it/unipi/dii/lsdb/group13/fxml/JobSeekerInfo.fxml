@@ -11,13 +11,13 @@
       prefHeight="400.0" prefWidth="600.0">
 
     <children>
-        <Text fx:id="firstName" text="First Name: Empty"/>
-        <Text fx:id="lastName" text="Last Name: Empty"/>
-        <Text fx:id="gender" text="Gender: Empty"/>
-        <Text fx:id="email" text="Email: Empty"/>
-        <Text fx:id="birthdate" text="Email: Empty"/>
-        <Text fx:id="loc" text="Location: Empty"/>
-        <Text fx:id="skills" text="Skills: Empty"/>
+        <Text fx:id="firstName" text="First Name: -"/>
+        <Text fx:id="lastName" text="Last Name: -"/>
+        <Text fx:id="gender" text="Gender: -"/>
+        <Text fx:id="email" text="Email: -"/>
+        <Text fx:id="birthdate" text="Email: -"/>
+        <Text fx:id="loc" text="Location: -"/>
+        <Text fx:id="skills" text="Skills: -"/>
     </children>
 
     <padding>

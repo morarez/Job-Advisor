@@ -24,7 +24,11 @@
                     </items>
                 </Menu>
                 <Menu text="Followers"/>
-                <Menu text="Publish new job offer"/>
+                <Menu text="Publish new job offer">
+                    <items>
+                        <MenuItem onAction="#pressPublishNewJob" text="Publish a new job offer!" />
+                    </items>
+                </Menu>
                 <Menu text="Account">
                     <items>
                         <MenuItem onAction="#pressViewAccount" text="View your account" />
