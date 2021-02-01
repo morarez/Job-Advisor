@@ -35,11 +35,11 @@ public class SignUpEmployerController {
         {
         	EmployerDao employer= new EmployerDao();
 
-			boolean isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText());
-        	if(isValid==true)
+			String isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText());
+        	if(isValid.equals("true"))
         	App.setRoot("SignUpConfirmation");
         	else
-        		error.setText("Sign Up Failed!");
+        		error.setText("Sign Up Failed because: \n"+isValid);
         	error.setTextFill(Color.web("#ff0000",0.8));
         }
 	}

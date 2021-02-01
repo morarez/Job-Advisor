@@ -18,19 +18,18 @@ import static com.mongodb.client.model.Updates.set;
 
 public class EmployerDao {
 
-	 public boolean signUp(String companyName,String email,String password)
+	 public String signUp(String companyName,String email,String password)
 	    {
 	    	try {
 	            MongoDBManager mongoDB = MongoDBManager.getInstance();
 	            MongoCollection companies = mongoDB.getCompaniesCollection();
 	            Document doc= new Document("_id",companyName).append("email",email).append("password",password);
 	            companies.insertOne(doc);
-	            return true;
+	            return "true";
 	        }
 	        catch(Exception e) {
-	    	    // throw the expcetion
-	            System.out.println(e.getMessage());
-	            return false;
+	        	System.out.println(e.getMessage());
+	            return e.getMessage();
 	        }
 	    }
 

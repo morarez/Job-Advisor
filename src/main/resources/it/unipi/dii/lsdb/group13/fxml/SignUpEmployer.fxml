@@ -13,33 +13,29 @@
 
 <GridPane alignment="CENTER" hgap="10" prefHeight="392.0" prefWidth="477.0" vgap="10" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.dii.lsdb.group13.guiController.SignUpEmployerController">
     <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
-
-
-
-
-<Label text="SIGN UP AS AN EMPLOYER" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="1">
+<Label text="SIGN UP AS AN EMPLOYER" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowSpan="1">
         <font>
             <Font name="sans-serif-verdana bold" size="24" />
         </font>
         <GridPane.margin>
-            <Insets bottom="20.0" top="20.0" />
+            <Insets bottom="20.0" left="0" right="0" top="20.0" />
         </GridPane.margin>
  </Label>
 
 
 
-<Label text="Company Name* : " GridPane.columnIndex="1" GridPane.rowIndex="1">
+<Label text="Company Name* : " GridPane.columnIndex="2" GridPane.rowIndex="1">
 </Label>
-<TextField id="companyName" fx:id="companyName" prefHeight="40" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="1" />
+<TextField id="companyName" fx:id="companyName" prefHeight="40" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="1" />
 
-<Label text="Email* : " GridPane.columnIndex="1" GridPane.rowIndex="2">
+<Label text="Email* : " GridPane.columnIndex="2" GridPane.rowIndex="2">
 </Label>
-<TextField id="cemail" fx:id="cemail" prefHeight="40" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="2" />
+<TextField id="cemail" fx:id="cemail" prefHeight="40" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="2" />
 
 
-<Label text="Password* : " GridPane.columnIndex="1" GridPane.rowIndex="3">
+<Label text="Password* : " GridPane.columnIndex="2" GridPane.rowIndex="3">
 </Label>
-<PasswordField id="cpassword" fx:id="cpassword" prefHeight="40" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="3">
+<PasswordField id="cpassword" fx:id="cpassword" prefHeight="40" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.rowIndex="3">
       <GridPane.margin>
          <Insets />
       </GridPane.margin>
@@ -47,14 +43,17 @@
          <Insets top="20.0" />
       </padding></PasswordField>
 
-<Button fx:id="submitButton" defaultButton="true" onAction="#presssubmit" prefHeight="40" prefWidth="100" text="Submit" GridPane.columnIndex="3" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="15" GridPane.rowSpan="1">
+<Button fx:id="submitButton" defaultButton="true" onAction="#presssubmit" prefHeight="40" prefWidth="100" text="Submit" GridPane.columnIndex="4" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="15" GridPane.rowSpan="1">
            
         <GridPane.margin>
             <Insets bottom="20" left="0" right="0" top="20" />
         </GridPane.margin>
 </Button>
-   <Label id="error" fx:id="error" alignment="CENTER" textAlignment="CENTER" textFill="RED" GridPane.columnIndex="1" GridPane.columnSpan="2147483647" GridPane.rowIndex="14" />
-   <Button id="goBack" fx:id="goBack" defaultButton="true" onAction="#goBack" prefHeight="40" text="Go Back" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="15">
+   <Label id="error" fx:id="error" alignment="CENTER" maxWidth="1.7976931348623157E308" textFill="RED" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowIndex="14">
+      <font>
+         <Font size="10.0" />
+      </font></Label>
+   <Button id="goBack" fx:id="goBack" defaultButton="true" onAction="#goBack" prefHeight="40" text="Go Back" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="15">
       <GridPane.margin>
          <Insets bottom="20.0" top="20.0" />
       </GridPane.margin>
@@ -63,12 +62,15 @@
         <URL value="@../css/style.css" />
     </stylesheets>
    <columnConstraints>
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints />
       <ColumnConstraints />
-      <ColumnConstraints maxWidth="187.0" minWidth="62.0" prefWidth="93.0" />
+    <ColumnConstraints maxWidth="187.0" minWidth="62.0" prefWidth="93.0" />
       <ColumnConstraints maxWidth="187.0" minWidth="62.0" prefWidth="93.0" />
       <ColumnConstraints maxWidth="343.0" minWidth="17.0" prefWidth="84.0" />
       <ColumnConstraints maxWidth="395.0" minWidth="68.0" prefWidth="68.0" />
+      <ColumnConstraints maxWidth="395.0" minWidth="68.0" prefWidth="100.0" />
+      <ColumnConstraints maxWidth="395.0" minWidth="68.0" prefWidth="100.0" />
    </columnConstraints>
    <rowConstraints>
       <RowConstraints />
