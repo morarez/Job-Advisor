@@ -17,24 +17,23 @@ import static com.mongodb.client.model.Updates.*;
 
 public class JobSeekerDao {
 
-    public boolean signUp(String fname, String lname, String username, LocalDate birthdate, String g, String password,
-                          String email, String city, String state, String skill) {
+    public String signUp(String fname, String lname, String username, LocalDate birthdate, String g, String password,
+                          String email, String city, String state) {
         try {
             char gender= g.charAt(0);
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate.toString());
             //in the database we have
             String formattedDate = new SimpleDateFormat("M/d/yy").format(date);
-            List<String> skills = new ArrayList<>(Arrays.asList(skill.split(",")));
+           // List<String> skills = new ArrayList<>(Arrays.asList(skill.split(",")));
             MongoDBManager mongoDB = MongoDBManager.getInstance();
             Document doc = new Document("_id",username).append("password",password).append("first_name",fname)
                     .append("last_name",lname).append("birthdate",formattedDate).append("gender",gender).append("email",email)
-                    .append("location", new Document("city",city).append("state",state)).append("skills",skills);
+                    .append("location", new Document("city",city).append("state",state));
             mongoDB.getJobSeekersCollection().insertOne(doc);
-            return true;
+            return "true";
         }
         catch(Exception e) {
-            System.out.println(e.getMessage());
-            return false;
+            return e.getMessage();
         }
     }
 
