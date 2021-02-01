@@ -130,13 +130,13 @@ public class EmployerDao {
 
     //depending on the role, the appropriate collection in MongoDB is opened and the username is searched into it
     // if it is founded, returns the corresponding password, otherwise returns null
-    public String searchUsername(String username) {
+    public String searchUsername(String username)  throws Exception{
         String foundedPw;
         Document doc;
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         doc = (Document) mongoDB.getCompaniesCollection().find(eq("_id", username)).first();
         if (doc == null) {
-            throw new IllegalStateException("Invalid username");
+            throw new Exception("Invalid username");
         } else {
             foundedPw = (String) doc.get("password");
         }

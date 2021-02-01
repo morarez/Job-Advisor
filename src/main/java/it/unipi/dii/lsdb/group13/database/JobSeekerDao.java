@@ -210,15 +210,15 @@ public class JobSeekerDao {
         }
     }
 
-    public String searchUsername(String username) {
+    public String searchUsername(String username) throws Exception{
         String foundedPw;
         Document doc;
         MongoDBManager mongoDB = MongoDBManager.getInstance();
 
         doc = (Document) mongoDB.getJobSeekersCollection().find(eq("_id", username)).first();
         System.out.println("arrived here 2");
-        if (doc == null) {
-            throw new IllegalStateException("Invalid username");
+        if (doc == null) {;
+            throw new Exception("Invalid username");
         } else {
             foundedPw = (String) doc.get("password");
         }

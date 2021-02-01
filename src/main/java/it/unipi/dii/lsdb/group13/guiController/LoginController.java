@@ -25,20 +25,21 @@ public class LoginController {
     @FXML
     private TextField usernameField;
 
-    public LoginController() {}
+    public LoginController() {
+    }
 
     @FXML
     private void pressSignUpEmployerButton() throws IOException {
-    	App.setRoot("SignUpEmployer");
+        App.setRoot("SignUpEmployer");
     }
 
     @FXML
     private void pressSignUpJobSeeekerButton() throws IOException {
-    	App.setRoot("SignUpJobSeeker");
+        App.setRoot("SignUpJobSeeker");
     }
 
     @FXML
-    private void pressLoginButton() throws IOException{
+    private void pressLoginButton() throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String choice = initialChoice.getValue().toString();
@@ -63,32 +64,44 @@ public class LoginController {
                 errorMessage.setVisible(true);
                 return;
             }
-        } else if (choice.equals("Job seeker")){
+        } else if (choice.equals("Job seeker")) {
             JobSeekerDao seeker = new JobSeekerDao();
             System.out.println("inserted pw: " + password);
-            if (!password.equals(seeker.searchUsername(username))) {
-                errorMessage.setText("Wrong password");
+            try {
+                if (!password.equals(seeker.searchUsername(username))) {
+                    errorMessage.setText("Wrong password");
+                    errorMessage.setVisible(true);
+                    return;
+                } else {
+                    //created session to test update account code
+                    Session.getSingleton();
+                    Session.setLoggedUser(username);
+                    App.setRoot("JobSeekerHomePage");
+                }
+            } catch (Exception e) {
+                // e.printStackTrace();
+                errorMessage.setText("Invalid username");
                 errorMessage.setVisible(true);
-                return;
-            } else {
-                //created session to test update account code
-                Session.getSingleton();
-                Session.setLoggedUser(username);
-                App.setRoot("JobSeekerHomePage");
             }
         } else if (choice.equals("Employer")) {
             EmployerDao employer = new EmployerDao();
-            if (!password.equals(employer.searchUsername(username))) {
-                errorMessage.setText("Wrong password");
+            try {
+                if (!password.equals(employer.searchUsername(username))) {
+                    errorMessage.setText("Wrong password");
+                    errorMessage.setVisible(true);
+                    return;
+                } else {
+                    //created session to test update account code
+                    Session.getSingleton();
+                    Session.setLoggedUser(username);
+                    App.setRoot("EmployerHomePage");
+                }
+            } catch (Exception e) {
+                //e.printStackTrace();
+                errorMessage.setText("Invalid username");
                 errorMessage.setVisible(true);
-                return;
-            } else {
-                //created session to test update account code
-                Session.getSingleton();
-                Session.setLoggedUser(username);
-                App.setRoot("EmployerHomePage");
             }
-        }
 
+        }
     }
 }
