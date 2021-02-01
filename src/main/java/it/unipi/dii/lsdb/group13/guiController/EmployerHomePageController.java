@@ -17,6 +17,6 @@ public class EmployerHomePageController {
     }
     @FXML
     private void pressUpdateAccount() throws IOException {
-    	/*App.setRoot("...");*/
+    	App.setRoot("UpdateAccountEmployer");
     }
 }
