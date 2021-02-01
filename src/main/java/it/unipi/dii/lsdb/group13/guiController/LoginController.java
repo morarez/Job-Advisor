@@ -1,5 +1,6 @@
 package it.unipi.dii.lsdb.group13.guiController;
 import it.unipi.dii.lsdb.group13.App;
+import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.fxml.FXML;
@@ -64,7 +65,7 @@ public class LoginController {
                 errorMessage.setVisible(true);
                 return;
             }
-        } else {
+        } else if (choice.equals("Job seeker")){
             JobSeekerDao seeker = new JobSeekerDao();
             System.out.println("inserted pw: " + password);
             if (!password.equals(seeker.searchUsername(username))) {
@@ -72,10 +73,22 @@ public class LoginController {
                 errorMessage.setVisible(true);
                 return;
             } else {
-            	//created session to test update account code
-            	Session.getSingleton();
-    			Session.setLoggedUser(username);
+                //created session to test update account code
+                Session.getSingleton();
+                Session.setLoggedUser(username);
                 App.setRoot("JobSeekerHomePage");
+            }
+        } else if (choice.equals("Employer")) {
+            EmployerDao employer = new EmployerDao();
+            if (!password.equals(employer.searchUsername(username))) {
+                errorMessage.setText("Wrong password");
+                errorMessage.setVisible(true);
+                return;
+            } else {
+                //created session to test update account code
+                Session.getSingleton();
+                Session.setLoggedUser(username);
+                App.setRoot("EmployerHomePage");
             }
         }
 
