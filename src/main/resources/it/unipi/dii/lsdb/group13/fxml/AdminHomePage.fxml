@@ -9,7 +9,11 @@
           <MenuBar id="menuBar" fx:id="menuBar" layoutY="-3.0" prefHeight="26.0" style="-fx-background-color: cadetblue;"> <!--onKeyPressed="#handleKeyInput"> -->
               <menus>
                   <Menu text="Homepage" />
-                  <Menu text="Exit" onAction="#pressExit"/>
+                  <Menu text="Exit" onShowing="#pressExit">
+                    <items>
+                        <MenuItem text="Exit"/>
+                    </items>
+                  </Menu>
               </menus>
           </MenuBar>
       </children>
