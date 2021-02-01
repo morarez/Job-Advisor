@@ -16,7 +16,7 @@ public class MainApp {
 		mongo.openDB();
 	} */
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		System.out.println("For Sign Up, type 1,\n For Login, type 2.");
 		Scanner s = new Scanner(System.in);
 		int input = s.nextInt();
@@ -32,7 +32,8 @@ public class MainApp {
 				break;
 		}
 	}
-	private static boolean checkCredentials(String role, String username, String password) {
+
+	private static boolean checkCredentials(String role, String username, String password) throws Exception {
 		if (username == null || password == null) {
 			System.out.println("Please insert username and password.");
 			return false;
@@ -50,7 +51,7 @@ public class MainApp {
 		}
 	}
 
-	private static void showLogin() {
+	private static void showLogin() throws Exception{
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert username: ");
 		String username = sc.nextLine();
