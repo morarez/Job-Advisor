@@ -28,19 +28,27 @@ public class EmployerDao {
 	            return "true";
 	        }
 	        catch(Exception e) {
-	        	System.out.println(e.getMessage());
 	            return e.getMessage();
 	        }
 	    }
 
     public void deleteAccount()
     {
+    	try {
         Session.getSingleton();
         String username = Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
-        MongoCollection mongodb= mongoDB.getCompaniesCollection();
-        DeleteResult deleteresult= mongodb.deleteOne(eq("_id",username));
-        System.out.println(deleteresult.getDeletedCount()+" document has been deleted.");
+        MongoCollection<Document> companies= mongoDB.getCompaniesCollection();
+        MongoCollection<Document> joboffers= mongoDB.getJobOffersCollection();
+        DeleteResult offers= joboffers.deleteMany(eq("company_name",username));
+        System.out.println(offers.getDeletedCount()+" Job Offers have been deleted.");
+        DeleteResult deleteresult= companies.deleteOne(eq("_id",username));
+        System.out.println(deleteresult.getDeletedCount()+" company has been deleted.");
+    	}
+    	catch(Exception e)
+    	{
+    		System.out.println(e.getMessage());
+    	}
     }
 
     public boolean changePassword(String newpwd, String pwdagain) {
