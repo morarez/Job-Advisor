@@ -91,4 +91,14 @@ public class JobOffer {
         this.postDate = LocalDate.now().toString();
         location = new Location(state, city);
     }
+
+    public JobOffer(String id, String title, String companyName, String postDate, String description, String jobType, String state, String city) {
+        this.id = id;
+        this.title = title;
+        this.companyName = companyName;
+        this.postDate = postDate;
+        this.description = description;
+        this.jobType = jobType;
+        location = new Location(state, city);
+    }
 }

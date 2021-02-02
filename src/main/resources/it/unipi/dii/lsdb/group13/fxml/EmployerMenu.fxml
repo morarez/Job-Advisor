@@ -6,6 +6,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.geometry.Insets?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="it.unipi.dii.lsdb.group13.guiController.EmployerMenuController"
@@ -41,4 +42,7 @@
         </MenuBar>
     </top>
 
+    <!-- <padding>
+        <Insets right="30" left="30"/>
+    </padding> -->
 </BorderPane>

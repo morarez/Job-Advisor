@@ -1,5 +1,6 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
@@ -8,9 +9,7 @@ import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.push;
@@ -155,5 +154,18 @@ public class EmployerDao {
         } else {
             return new Employer();
         }
+    }
+
+    public List<JobOffer> findPublished(String username) {
+	     List<JobOffer> jobOffers = new ArrayList<>();
+	     MongoDBManager mongoDB = new MongoDBManager().getInstance();
+
+        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("company_name", username)).sort(new Document("post_date", -1));
+        for(Document doc: founded) {
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+        }
+
+        return jobOffers;
     }
 }

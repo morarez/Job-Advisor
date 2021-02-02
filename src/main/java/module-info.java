@@ -11,5 +11,6 @@ module it.unipi.dii.lsdb.group13 {
     requires jdk.net;
 
     opens it.unipi.dii.lsdb.group13.guiController to javafx.fxml;
+    opens it.unipi.dii.lsdb.group13.entities to javafx.base;
     exports it.unipi.dii.lsdb.group13;
 }
