@@ -41,7 +41,7 @@ public class EmployerTableViewController {
             Label jobTitle = new Label("TITLE: " + selected.getTitle());
             Label company = new Label("COMPANY: " + selected.getCompanyName());
             Label postDate = new Label("POST DATE: " + selected.getPostDate());
-            Label jobType = new Label("JOB TYPE: " + selected.getPostDate());
+            Label jobType = new Label("JOB TYPE: " + selected.getJobType());
             Label jobDescription = new Label("DESCRIPTION: " +  selected.getDescription());
             jobDescription.wrapTextProperty().setValue(true);
 
