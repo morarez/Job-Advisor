@@ -10,7 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,7 +26,6 @@ public class EmployerTableViewController {
 
     @FXML
     private void initialize() {
-        //tableEmployer.setRowFactory();
         EmployerDao employer = new EmployerDao();
         published = FXCollections.observableArrayList(employer.findPublished(Session.getLoggedUser()));
         tableEmployer.setItems(published);
@@ -38,14 +39,27 @@ public class EmployerTableViewController {
 
             VBox vbox = new VBox(10);
 
-            Label jobTitle = new Label("TITLE: " + selected.getTitle());
-            Label company = new Label("COMPANY: " + selected.getCompanyName());
-            Label postDate = new Label("POST DATE: " + selected.getPostDate());
-            Label jobType = new Label("JOB TYPE: " + selected.getJobType());
-            Label jobDescription = new Label("DESCRIPTION: " +  selected.getDescription());
-            jobDescription.wrapTextProperty().setValue(true);
+            TextFlow flowTitle = new TextFlow();
+            Label title = new Label("TITLE: "); title.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            flowTitle.getChildren().addAll(title, new Label (selected.getTitle()));
 
-            vbox.getChildren().addAll(jobTitle, company, postDate, jobType, jobDescription);
+            TextFlow flowCompanyName = new TextFlow();
+            Label companyName = new Label("COMPANY NAME: "); companyName.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            flowCompanyName.getChildren().addAll(companyName, new Label(selected.getCompanyName()));
+
+            TextFlow flowPostDate = new TextFlow();
+            Label postDate = new Label("POST DATE: "); postDate.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            flowPostDate.getChildren().addAll(postDate, new Label(selected.getPostDate()));
+
+            TextFlow flowJobType = new TextFlow();
+            Label jobType = new Label("JOB TYPE: "); jobType.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            flowJobType.getChildren().addAll(jobType, new Label(selected.getJobType()));
+
+            Label jobDescription = new Label("DESCRIPTION: "); jobDescription.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            Label description = new Label(selected.getDescription());
+            description.wrapTextProperty().setValue(true);
+
+            vbox.getChildren().addAll(flowTitle, flowCompanyName, flowPostDate, flowJobType, jobDescription, description);
             vbox.setStyle("-fx-background-color: #ADD8E6 ; -fx-font-family: sans-serif-verdana ; -fx-font-size: 15px ; -fx-padding: 40");
             Stage jobOfferPage = new Stage();
             jobOfferPage.setTitle("---- JobOffer info ----");
