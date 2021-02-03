@@ -18,6 +18,7 @@
         <Text fx:id="birthdate" text="Email: -"/>
         <Text fx:id="loc" text="Location: -"/>
         <Text fx:id="skills" text="Skills: -"/>
+        <Button onAction="#deleteAccount" text="Delete My Account"/>
     </children>
 
     <padding>

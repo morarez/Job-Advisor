@@ -13,6 +13,7 @@
     <children>
         <Text fx:id="companyName" text="First Name: Empty"/>
         <Text fx:id="companyEmail" text="Last Name: Empty"/>
+        <Button onAction="#deleteAccount" text="Delete My Account"/>
     </children>
 
     <padding>

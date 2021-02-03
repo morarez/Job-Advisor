@@ -10,6 +10,9 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 
 public class JobSeekerInfoController {
+
+    private JobSeekerDao jobSeekerDao = new JobSeekerDao();
+
     @FXML
     private Text firstName;
 
@@ -34,9 +37,8 @@ public class JobSeekerInfoController {
 
     @FXML
     private void initialize(){
-        JobSeekerDao jobSeeker = new JobSeekerDao();
         Session.getSingleton();
-        JobSeeker user = jobSeeker.findUser(Session.getLoggedUser());
+        JobSeeker user = jobSeekerDao.findUser(Session.getLoggedUser());
         firstName.setText("First Name: " + user.getFirstName());
         lastName.setText("Last Name: " + user.getLastName());
         gender.setText("Gender: " + user.getGender());
@@ -46,5 +48,10 @@ public class JobSeekerInfoController {
                 " - City: " + user.getLocation().getCity());
         if (user.getSkills() != null)
             skills.setText("Skills: " +  user.getSkills().toString());
+    }
+    @FXML
+    private void deleteAccount() throws IOException {
+        if(jobSeekerDao.deleteAccount())
+            App.setRoot("LoginPage");
     }
 }

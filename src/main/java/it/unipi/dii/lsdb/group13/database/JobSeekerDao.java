@@ -37,13 +37,19 @@ public class JobSeekerDao {
         }
     }
 
-    public void delJobSeekerAccount()
-    {
+    public boolean deleteAccount() {
+        boolean ret = true;
         Session.getSingleton();
         String username = Session.getLoggedUser();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        DeleteResult deleteResult= mongoDB.getJobSeekersCollection().deleteOne(eq("_id",username));
-        System.out.println(deleteResult.getDeletedCount()+" document has been deleted.");
+        try {
+            MongoDBManager mongoDB = MongoDBManager.getInstance();
+            DeleteResult deleteResult= mongoDB.getJobSeekersCollection().deleteOne(eq("_id",username));
+            System.out.println(deleteResult.getDeletedCount() + " document has been deleted.");
+        }catch (Exception e){
+            e.printStackTrace();
+            ret = false;
+        }
+        return ret;
     }
 
     public boolean changePassword(String newpwd, String pwdagain) {
@@ -59,122 +65,6 @@ public class JobSeekerDao {
              return false;
          }
      }
-
-  /*
-    public void changeFirstName()
-    {
-        Scanner sc= new Scanner(System.in);
-        Session.getSingleton();
-        String username= Session.getLoggedUser();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        try {
-            System.out.println("Enter first name: ");
-            String fname= sc.nextLine();
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),set("first_name",fname));
-            System.out.println("First Name updated!");
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void changeLastName()
-    {
-        Scanner sc= new Scanner(System.in);
-        Session.getSingleton();
-        String username= Session.getLoggedUser();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        try {
-            System.out.println("Enter last name: ");
-            String lname= sc.nextLine();
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),set("last_name",lname));
-            System.out.println("Last Name updated!");
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void changeBirthday()
-    {
-        Scanner sc= new Scanner(System.in);
-        Session.getSingleton();
-        String username= Session.getLoggedUser();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        try {
-            System.out.println("Enter your birthdate (mm/dd/yy): ");
-            String birthday= sc.nextLine();
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),set("birthdate",birthday));
-            System.out.println("Birthday updated!");
-            mongoDB.closeDB();
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void changeGender()
-    {
-        Scanner sc= new Scanner(System.in);
-        Session.getSingleton();
-        String username= Session.getLoggedUser();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        try {
-            System.out.println("Enter gender (M/F): ");
-            char gender= sc.nextLine().charAt(0);
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),set("gender",gender));
-            System.out.println("Gender updated!");
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void changeEmail()
-    {
-        Scanner sc= new Scanner(System.in);
-        Session.getSingleton();
-        String username= Session.getLoggedUser();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        try {
-            System.out.println("Enter new email: ");
-            String email= sc.nextLine();
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),set("email",email));
-            System.out.println("Email updated!");
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }
-    public void changeLocation()
-    {
-        Scanner sc= new Scanner(System.in);
-        Session.getSingleton();
-        String username= Session.getLoggedUser();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        try {
-            System.out.println("Enter city: ");
-            String city= sc.nextLine();
-            System.out.println("Enter state: ");
-            String state= sc.nextLine();
-            Document loc= new Document();
-            loc.put("city",city);
-            loc.put("state",state);
-            MongoCollection col= mongoDB.getJobSeekersCollection();
-            col.updateOne(eq("_id",username),set("location",loc));
-            System.out.println("Location updated!");
-        }
-        catch(Exception e)
-        {
-            System.out.println(e.getMessage());
-        }
-    }*/
 
     public boolean addSkill(String skill)
     {

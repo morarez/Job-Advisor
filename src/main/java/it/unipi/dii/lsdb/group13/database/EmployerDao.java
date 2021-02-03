@@ -31,8 +31,8 @@ public class EmployerDao {
 	        }
 	    }
 
-    public void deleteAccount()
-    {
+    public boolean deleteAccount() {
+	     boolean ret = true;
     	try {
         Session.getSingleton();
         String username = Session.getLoggedUser();
@@ -44,10 +44,11 @@ public class EmployerDao {
         DeleteResult deleteresult= companies.deleteOne(eq("_id",username));
         System.out.println(deleteresult.getDeletedCount()+" company has been deleted.");
     	}
-    	catch(Exception e)
-    	{
-    		System.out.println(e.getMessage());
+    	catch(Exception e) {
+    		e.printStackTrace();
+    		ret = false;
     	}
+    	return ret;
     }
 
     public boolean changePassword(String newpwd, String pwdagain) {

@@ -99,16 +99,6 @@ public class MainApp {
 						exit = true;
 						break;
 					}
-					case 1: {
-						if(role.equals("employer")){
-							EmployerDao employer = new EmployerDao();
-							employer.deleteAccount();
-						} else if(role.equals("seeker")){
-							JobSeekerDao jobSeeker = new JobSeekerDao();
-							jobSeeker.delJobSeekerAccount();
-						}
-						break;
-					}
 					case 2: {
 						if (role.equals("employer")) {
 							System.out.println("To update password, press 1: ");

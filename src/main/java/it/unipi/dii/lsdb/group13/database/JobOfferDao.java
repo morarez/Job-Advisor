@@ -1,6 +1,7 @@
 package it.unipi.dii.lsdb.group13.database;
 
 import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import org.bson.Document;
 
@@ -33,6 +34,19 @@ public class JobOfferDao {
             mongoDB.getCompaniesCollection().updateOne(eq("_id", jobOffer.getCompanyName()),
                     Updates.addToSet("job_offers", jobOffer.getId()));
         } catch (Exception e) {
+            e.printStackTrace();
+            ret = false;
+        }
+        return ret;
+    }
+
+    public boolean deleteJobOffer(String id){
+        boolean ret = true;
+        try {
+            MongoDBManager mongoDB = MongoDBManager.getInstance();
+            DeleteResult deleteResult= mongoDB.getJobOffersCollection().deleteOne(eq("_id",id));
+            System.out.println(deleteResult.getDeletedCount()+" job has been deleted.");
+        }catch (Exception e){
             e.printStackTrace();
             ret = false;
         }
