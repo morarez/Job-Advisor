@@ -16,6 +16,11 @@ public class EmployerMenuController {
     public BorderPane menuEmployer;
 
     @FXML
+    private void initialize() throws IOException {
+        pressHomePage();
+    }
+
+    @FXML
     private void pressExit() throws IOException {
         App.setRoot("LoginPage");
     }
@@ -36,7 +41,6 @@ public class EmployerMenuController {
     private void pressHomePage() throws IOException {
         VBox vbox = (VBox) App.loadFXML("EmployerHomePage");
         GridPane tableJobOffers = (GridPane) App.loadFXML("EmployerTableView");
-        //menuEmployer.setCenter(vbox);
         menuEmployer.setCenter(tableJobOffers);
         menuEmployer.setMargin(menuEmployer.getCenter(), new Insets(30, 40, 30, 30));
     }
