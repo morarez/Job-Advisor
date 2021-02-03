@@ -17,6 +17,11 @@
                         <MenuItem text="HomePage"/>
                     </items>
                 </Menu>
+                <Menu text="Analytics">
+                    <items>
+                        <MenuItem onAction="#pressCitiesAnalytic" text="Cities with Most jobs"/>
+                    </items>
+                </Menu>
                 <Menu text="Exit">
                     <items>
                         <MenuItem text="Exit" onAction="#pressExit"/>

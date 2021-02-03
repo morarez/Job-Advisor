@@ -106,30 +106,6 @@ public class EmployerDao {
             System.out.println(e.getMessage());
         }
     }
-
-    public void createNewJobOffer(JobOffer jobOffer){
-        Session.getSingleton();
-        try {
-            MongoDBManager mongoDB = MongoDBManager.getInstance();
-            MongoCollection jobOffers= mongoDB.getJobOffersCollection();
-            Document locationDoc = new Document("city", jobOffer.getLocation().getCity())
-                    .append("state", jobOffer.getLocation().getState());
-            Document salaryDoc = new Document("from", jobOffer.getSalary().getFrom())
-                    .append("to", jobOffer.getSalary().getTo()).append("time_unit",jobOffer.getSalary().getTimeUnit());
-            Document job = new Document("_id", jobOffer.getId()).append("job_title", jobOffer.getTitle())
-                    .append("company_name", jobOffer.getCompanyName()).append("location", locationDoc)
-                    .append("salary", salaryDoc).append("post_date",jobOffer.getPostDate())
-                    .append("job_type",jobOffer.getJobType()).append("job_description",jobOffer.getDescription());
-            jobOffers.insertOne(job);
-            MongoCollection companies = mongoDB.getCompaniesCollection();
-            // Add the job offer to the list of company's job offers
-            companies.updateOne(eq("_id", jobOffer.getCompanyName()),
-                    Updates.addToSet("job_offers", jobOffer.getId()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     //depending on the role, the appropriate collection in MongoDB is opened and the username is searched into it
     // if it is founded, returns the corresponding password, otherwise returns null
     public String searchUsername(String username)  throws Exception{

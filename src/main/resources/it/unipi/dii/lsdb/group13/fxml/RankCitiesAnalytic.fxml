@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+
+<VBox alignment="TOP_CENTER" spacing="10.0" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="it.unipi.dii.lsdb.group13.guiController.RankCitiesAnalyticController"
+      prefHeight="400.0" prefWidth="600.0">
+    <ChoiceBox fx:id="jobType" value="Choose the Job Type">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Full-Time" />
+                <String fx:value="Part-Time" />
+                <String fx:value="Full-Time/Part-Time" />
+                <String fx:value="Contractor" />
+                <String fx:value="Seasonal/Temp" />
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+    <Button onAction="#pressSubmit" text="Show Top 10 Cities"/>
+    <Label fx:id="label" wrapText="true" text=""/>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+</VBox>

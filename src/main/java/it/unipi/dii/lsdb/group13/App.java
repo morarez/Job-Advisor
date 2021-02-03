@@ -1,5 +1,6 @@
 package it.unipi.dii.lsdb.group13;
 
+import it.unipi.dii.lsdb.group13.database.AdminDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

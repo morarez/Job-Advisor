@@ -2,6 +2,7 @@ package it.unipi.dii.lsdb.group13.guiController;
 
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
+import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.fxml.FXML;
@@ -44,7 +45,7 @@ public class CreateJobOfferController {
 
     @FXML
     public void pressSubmit() throws IOException{
-        EmployerDao employerDao = new EmployerDao();
+        JobOfferDao jobOfferDao = new JobOfferDao();
         Session.getSingleton();
         String companyName =Session.getLoggedUser();
         if(titleField.getText().isEmpty() || stateField.getText().isEmpty() || cityField.getText().isEmpty() ||
@@ -56,12 +57,20 @@ public class CreateJobOfferController {
             JobOffer jobOffer = new JobOffer(titleField.getText(),companyName,descriptionField.getText()
                     ,jobTypeField.getValue().toString(),stateField.getText(),cityField.getText(),
                     salaryFromField.getText(),salaryToField.getText(), salaryUnit.getValue().toString());
-            employerDao.createNewJobOffer(jobOffer);
+            if (!jobOfferDao.createNewJobOffer(jobOffer))
+                errorMsg.setText("Something went wrong! please try again!");
+            else
+                //Erica please fix this :)
+                App.setRoot("JobCreationConfirmation");
         }  else{
             // When user DOES NOT fill the required fields for salary
             JobOffer jobOffer = new JobOffer(titleField.getText(),companyName,descriptionField.getText()
                     ,jobTypeField.getValue().toString(),stateField.getText(),cityField.getText());
-            employerDao.createNewJobOffer(jobOffer);
+            if (!jobOfferDao.createNewJobOffer(jobOffer))
+                errorMsg.setText("Something went wrong! please try again!");
+            else
+                //Erica please fix this :)
+                App.setRoot("JobCreationConfirmation");
         }
     }
 }

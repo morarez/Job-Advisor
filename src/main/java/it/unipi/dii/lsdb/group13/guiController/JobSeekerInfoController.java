@@ -33,7 +33,7 @@ public class JobSeekerInfoController {
 
 
     @FXML
-    public void initialize(){
+    private void initialize(){
         JobSeekerDao jobSeeker = new JobSeekerDao();
         Session.getSingleton();
         JobSeeker user = jobSeeker.findUser(Session.getLoggedUser());
@@ -46,10 +46,5 @@ public class JobSeekerInfoController {
                 " - City: " + user.getLocation().getCity());
         if (user.getSkills() != null)
             skills.setText("Skills: " +  user.getSkills().toString());
-    }
-
-    @FXML
-    private void goHome() throws IOException {
-        App.setRoot("JobSeekerHomePage");
     }
 }

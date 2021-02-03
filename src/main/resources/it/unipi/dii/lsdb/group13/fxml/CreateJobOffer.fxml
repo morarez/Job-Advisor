@@ -25,8 +25,8 @@
                 </FXCollections>
             </items>
         </ChoiceBox>
-        <TextField fx:id="salaryFromField" promptText="Insert the minimum for salary" />
-        <TextField fx:id="salaryToField" promptText="Insert the maximum for salary" />
+        <TextField fx:id="salaryFromField" promptText="Enter the minimum for salary" />
+        <TextField fx:id="salaryToField" promptText="Enter the maximum for salary" />
         <ChoiceBox fx:id="jobTypeField" value="Choose the Job Type*">
             <items>
                 <FXCollections fx:factory="observableArrayList">
@@ -39,7 +39,7 @@
             </items>
         </ChoiceBox>
         <Label text="Enter description for the job*: "/>
-        <TextArea fx:id="descriptionField" promptText="Insert job Description" />
+        <TextArea fx:id="descriptionField" promptText="Entert job Description" />
         <Button onAction="#pressSubmit" text="Submit" />
     </children>
     <padding>
