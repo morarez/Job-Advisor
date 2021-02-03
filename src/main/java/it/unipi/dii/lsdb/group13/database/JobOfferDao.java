@@ -36,9 +36,7 @@ public class JobOfferDao {
             e.printStackTrace();
             ret = false;
         }
-        finally {
-            return ret;
-        }
+        return ret;
     }
 
 }
