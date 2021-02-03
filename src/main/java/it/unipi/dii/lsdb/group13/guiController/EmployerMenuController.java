@@ -13,7 +13,8 @@ import java.io.IOException;
 
 public class EmployerMenuController {
 
-    public BorderPane menuEmployer;
+    @FXML
+    private BorderPane menuEmployer;
 
     @FXML
     private void initialize() throws IOException {
@@ -44,6 +45,7 @@ public class EmployerMenuController {
         menuEmployer.setCenter(tableJobOffers);
         menuEmployer.setMargin(menuEmployer.getCenter(), new Insets(30, 40, 30, 30));
     }
+
     @FXML
     private void pressPublishNewJob() throws IOException {
         VBox vbox = (VBox) App.loadFXML("CreateJobOffer");

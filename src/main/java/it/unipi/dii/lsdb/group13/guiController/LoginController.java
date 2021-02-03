@@ -52,7 +52,7 @@ public class LoginController {
 
         if (choice.equals("Who are you?")) {
             if (username.equals("admin") && password.equals("admin")) {
-                App.setRoot("AdminHomePage");
+                App.setRoot("AdminMenu");
                 return;
             } else if (username.equals("admin") && !password.equals("admin")) {
                 errorMessage.setText("Wrong password \nfor the admin");
@@ -93,7 +93,6 @@ public class LoginController {
                     //created session to test update account code
                     Session.getSingleton();
                     Session.setLoggedUser(username);
-                    //App.setRoot("EmployerHomePage");
                     App.setRoot("EmployerMenu");
                 }
             } catch (Exception e) {
