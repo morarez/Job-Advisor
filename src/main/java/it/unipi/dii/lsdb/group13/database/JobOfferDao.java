@@ -10,6 +10,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class JobOfferDao {
 
@@ -96,4 +97,21 @@ public class JobOfferDao {
         System.out.println(jobOffers);
         return jobOffers;
     }
+    
+    public List<JobOffer> getJobOffersByJobTitle(String jobtitle){
+    	List<JobOffer> jobOffers = new ArrayList<>();
+		MongoDBManager mongoDB = MongoDBManager.getInstance();
+	    Document regQuery = new Document();
+	    regQuery.append("$regex", ".*(?).*" + Pattern.quote(jobtitle));
+	    regQuery.append("$options", "i");
+		FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
+		System.out.println(founded);
+        for(Document doc: founded) {
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+        }
+        System.out.println(jobOffers);
+        return jobOffers;
+    }
+
 }

@@ -24,6 +24,8 @@ public class SearchJobOfferController {
 	@FXML
 	ChoiceBox jobType;
 	@FXML
+	TextField jobTitle;
+	@FXML
 	Label error;
 
 
@@ -64,6 +66,32 @@ public class SearchJobOfferController {
 	
 	@FXML
 	private void searchByJobTitle() throws IOException{
+		if(jobTitle.getText().isEmpty()) {
+			error.setText("Please enter Job Title!");
+			error.setTextFill(Color.web("#ff0000",0.8));
+            return;
+			
+		}
+		else {
+       String jobtitle= jobTitle.getText();
+		System.out.println(jobtitle);
+		JobOfferDao offer= new JobOfferDao();
+		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersByJobTitle(jobtitle));
+		System.out.println(published);
+        TableView tableView= new TableView();
+        TableColumn<JobOffer, String> column1 = new TableColumn<>("Job Title");
+        column1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
+        column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        tableView.setItems(published);
+        VBox vbox = new VBox(tableView);
+        Scene scene = new Scene(vbox);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+		}
 		
 	}
 	
