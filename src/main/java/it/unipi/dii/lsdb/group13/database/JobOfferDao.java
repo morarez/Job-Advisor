@@ -3,6 +3,7 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
+import it.unipi.dii.lsdb.group13.entities.Employer;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import org.bson.Document;
 
@@ -114,4 +115,14 @@ public class JobOfferDao {
         return jobOffers;
     }
 
+    public JobOffer getById(String Id) {
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        Document doc = (Document) mongoDB.getJobOffersCollection().find(eq("_id", Id)).first();
+        if (doc != null) {
+            return new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                    doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city"));
+        } else {
+            return null;
+        }
+    }
 }

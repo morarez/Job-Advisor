@@ -18,7 +18,7 @@ public class AdminMenuController {
     private BorderPane menuAdmin;
 
     @FXML
-    private void initialize() {
+    private void initialize() throws IOException {
         pressHomePage();
     }
 
@@ -28,9 +28,11 @@ public class AdminMenuController {
     }
 
     @FXML
-    private void pressHomePage() {
-        menuAdmin.setCenter(new Label("Home page for admin"));
-        menuAdmin.setMargin(menuAdmin.getCenter(), new Insets(30, 40, 30, 30));
+    private void pressHomePage() throws IOException {
+        //menuAdmin.setCenter(new Label("Home page for admin"));
+        GridPane searchPage = (GridPane) App.loadFXML("AdminHomePage");
+        menuAdmin.setCenter(searchPage);
+        menuAdmin.setMargin(menuAdmin.getCenter(), new Insets(10, 20, 10, 20));
     }
     @FXML
     private void pressCitiesAnalytic() throws IOException {

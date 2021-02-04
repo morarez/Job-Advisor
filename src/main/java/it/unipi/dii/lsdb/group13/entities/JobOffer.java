@@ -101,4 +101,12 @@ public class JobOffer {
         this.jobType = jobType;
         location = new Location(state, city);
     }
+
+    public String toStringWithoutDescription() {
+
+        String s = " JOB TITLE: " + this.title + "\nCOMPANY NAME: " + this.companyName + "\nPOST DATE: " + this.postDate +
+                "\nJOB TYPE: " + this.jobType;
+
+        return s;
+    }
 }

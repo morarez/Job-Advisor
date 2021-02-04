@@ -122,6 +122,7 @@ public class EmployerDao {
         System.out.println("check founded password: "+ foundedPw);
         return foundedPw;
     }
+
     public Employer findUser(String username) {
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         Document user = (Document) mongoDB.getCompaniesCollection().find(eq("_id", username)).first();
