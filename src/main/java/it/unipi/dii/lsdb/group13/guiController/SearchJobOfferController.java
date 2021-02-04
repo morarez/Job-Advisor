@@ -20,6 +20,8 @@ public class SearchJobOfferController {
 	@FXML
 	TextField city;
 	@FXML
+	TextField company;
+	@FXML
 	Label error;
 
 
@@ -37,7 +39,7 @@ public class SearchJobOfferController {
        String cityEntered= city.getText();
 		System.out.println(cityEntered);
 		JobOfferDao offer= new JobOfferDao();
-		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersByCity(cityEntered.toLowerCase()));
+		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersByCity(cityEntered));
 		System.out.println(published);
         TableView tableView= new TableView();
         TableColumn<JobOffer, String> column1 = new TableColumn<>("Job Title");
@@ -70,6 +72,32 @@ public class SearchJobOfferController {
 	
 	@FXML
 	private void searchByCompany() throws IOException{
+		if(company.getText().isEmpty()) {
+			error.setText("Please enter city!");
+			error.setTextFill(Color.web("#ff0000",0.8));
+            return;
+			
+		}
+		else {
+       String companyEntered= company.getText();
+		System.out.println(companyEntered);
+		JobOfferDao offer= new JobOfferDao();
+		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersByCompany(companyEntered));
+		System.out.println(published);
+        TableView tableView= new TableView();
+        TableColumn<JobOffer, String> column1 = new TableColumn<>("Job Title");
+        column1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
+        column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        tableView.setItems(published);
+        VBox vbox = new VBox(tableView);
+        Scene scene = new Scene(vbox);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+		}
 		
 	}
 	
