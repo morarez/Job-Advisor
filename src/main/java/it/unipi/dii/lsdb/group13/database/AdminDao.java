@@ -52,10 +52,6 @@ public class AdminDao {
         return map;
     }
 
-    private static Consumer<Document> printDocuments() {
-        return doc -> System.out.println(doc.toJson(JsonWriterSettings.builder().indent(true).build()));
-   }
-
    public void rankCompanies(){
 
    }

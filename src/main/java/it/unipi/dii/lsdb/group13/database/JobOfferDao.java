@@ -70,9 +70,8 @@ public class JobOfferDao {
         }
         System.out.println(jobOffers);
         return jobOffers;
-		
-		
 	}
+
     public List<JobOffer> getJobOffersByCompany(String company){
     	List<JobOffer> jobOffers = new ArrayList<>();
 		MongoDBManager mongoDB = MongoDBManager.getInstance();
