@@ -1,11 +1,17 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import static com.mongodb.client.model.Filters.eq;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class JobOfferDao {
 
@@ -52,5 +58,20 @@ public class JobOfferDao {
         }
         return ret;
     }
+    
+    public List<JobOffer> getJobOffersByCity(String city){
+		List<JobOffer> jobOffers = new ArrayList<>();
+		MongoDBManager mongoDB = MongoDBManager.getInstance();
+		FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("location.city", city));
+		System.out.println(founded);
+        for(Document doc: founded) {
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+        }
+        System.out.println(jobOffers);
+        return jobOffers;
+		
+		
+	}
 
 }

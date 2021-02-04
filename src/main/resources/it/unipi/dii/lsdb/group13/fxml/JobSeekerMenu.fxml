@@ -22,7 +22,7 @@
                 <Menu text="Job offers">
                     <items>
                         <MenuItem text="Saved job offers" />
-                        <MenuItem text="Search a job offer" />
+                        <MenuItem text="Search a job offer" onAction="#pressSearchJobOffer" />
                     </items>
                 </Menu>
                 <Menu text="Companies">
