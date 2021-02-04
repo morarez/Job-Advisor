@@ -57,7 +57,7 @@
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="Full-Time" />
                 <String fx:value="Part-Time" />
-                 <String fx:value="Full-Time/Part-time" />
+                 <String fx:value="Full-Time/Part-Time" />
                 <String fx:value="Contractor" />
                  <String fx:value="Seasonal/Temp" />
             </FXCollections>

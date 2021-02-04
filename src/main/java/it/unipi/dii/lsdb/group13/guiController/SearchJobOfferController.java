@@ -22,6 +22,8 @@ public class SearchJobOfferController {
 	@FXML
 	TextField company;
 	@FXML
+	ChoiceBox jobType;
+	@FXML
 	Label error;
 
 
@@ -67,13 +69,41 @@ public class SearchJobOfferController {
 	
 	@FXML
 	private void searchByJobType() throws IOException{
-		
+		if(jobType.getValue()== null) {
+			error.setText("Please select Job Type!");
+			error.setTextFill(Color.web("#ff0000",0.8));
+            return;
+			
+		}
+		else {
+       String jobtype= jobType.getValue().toString();
+		System.out.println(jobtype);
+		JobOfferDao offer= new JobOfferDao();
+		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersByJobType(jobtype));
+		System.out.println(published);
+        TableView tableView= new TableView();
+        TableColumn<JobOffer, String> column1 = new TableColumn<>("Job Title");
+        column1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
+        column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        TableColumn<JobOffer, String> column3 = new TableColumn<>("Job Type");
+        column3.setCellValueFactory(new PropertyValueFactory<>("jobType"));
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        tableView.getColumns().add(column3);
+        tableView.setItems(published);
+        VBox vbox = new VBox(tableView);
+        Scene scene = new Scene(vbox);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+		}
 	}
 	
 	@FXML
 	private void searchByCompany() throws IOException{
 		if(company.getText().isEmpty()) {
-			error.setText("Please enter city!");
+			error.setText("Please enter company name!");
 			error.setTextFill(Color.web("#ff0000",0.8));
             return;
 			
