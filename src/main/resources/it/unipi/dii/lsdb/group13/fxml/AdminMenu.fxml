@@ -12,21 +12,11 @@
     <top>
         <MenuBar id="menuBar" fx:id="menuBar" layoutY="-3.0" prefHeight="26.0">
             <menus>
-                <Menu text="Homepage" onShowing="#pressHomePage" onHiding="#pressHomePage">
-                    <items>
-                        <MenuItem text="HomePage"/>
-                    </items>
-                </Menu>
-                <Menu text="Analytics">
-                    <items>
-                        <MenuItem onAction="#pressCitiesAnalytic" text="Cities with Most jobs"/>
-                        <MenuItem onAction="#pressSkillsAnalytic" text="Most Repeated Skills"/>
-                    </items>
-                </Menu>
-                <Menu text="Exit">
-                    <items>
-                        <MenuItem text="Exit" onAction="#pressExit"/>
-                    </items>
+                <Menu text = "Menu">
+                    <MenuItem text="HomePage" onAction="#pressHomePage"/>
+                    <MenuItem text="Cities with Most jobs" onAction="#pressCitiesAnalytic"/>
+                    <MenuItem text="Most Repeated Skills" onAction="#pressSkillsAnalytic"/>
+                    <MenuItem text = "Exit" onAction="#pressExit"/>
                 </Menu>
             </menus>
         </MenuBar>
