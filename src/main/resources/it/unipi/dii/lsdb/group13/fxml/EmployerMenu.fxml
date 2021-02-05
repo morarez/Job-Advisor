@@ -10,32 +10,22 @@
             fx:id="menuEmployer"
 >
     <top>
-        <MenuBar id="menuBar" fx:id="menuBar" layoutY="-3.0" prefHeight="26.0"> <!--onKeyPressed="#handleKeyInput"> -->
-            <menus>
-                <Menu text="Homepage" onShowing="#pressHomePage" onHiding="#pressHomePage">
-                    <items>
-                        <MenuItem text="HomePage"/>
-                    </items>
-                </Menu>
-                <Menu text="Followers"/>
-                <Menu text="Publish new job offer">
-                    <items>
-                        <MenuItem onAction="#pressPublishNewJob" text="Publish a new job offer!" />
-                    </items>
-                </Menu>
-                <Menu text="Account">
-                    <items>
-                        <MenuItem onAction="#pressViewAccount" text="View your account" />
-                        <MenuItem onAction="#pressUpdateAccount" text="Update your account" />
-                        <SeparatorMenuItem />
-                        <MenuItem onAction="#pressExit" text="Exit" />
-                    </items>
-                </Menu>
-            </menus>
+        <MenuBar id="menuBar" fx:id="menuBar" layoutY="-3.0" prefHeight="26.0">
+            <Menu text = "Menu">
+                <items>
+                    <MenuItem text = "HomePage" onAction="#pressHomePage"/>
+                    <MenuItem text="View followers"/>
+                    <MenuItem text="Publish new job offer" onAction="#pressPublishNewJob"/>
+                </items>
+            </Menu>
+            <Menu text = "Account">
+                <items>
+                    <MenuItem onAction="#pressViewAccount" text="View your account" />
+                    <MenuItem onAction="#pressUpdateAccount" text="Update your account" />
+                    <SeparatorMenuItem />
+                    <MenuItem onAction="#pressExit" text="Exit" />
+                </items>
+            </Menu>
         </MenuBar>
     </top>
-
-    <!-- <padding>
-        <Insets right="30" left="30"/>
-    </padding> -->
 </BorderPane>
