@@ -22,12 +22,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
-import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.gte;
 
 public class JobOfferDao {
 
-	public boolean createNewJobOffer(JobOffer jobOffer){
+    public boolean createNewJobOffer(JobOffer jobOffer){
         boolean ret = true;
         Document job;
         try {
@@ -36,11 +35,11 @@ public class JobOfferDao {
                     .append("state", jobOffer.getLocation().getState());
             if(jobOffer.getSalary() != null){
                 Document salaryDoc = new Document("from", jobOffer.getSalary().getFrom())
-                    .append("to", jobOffer.getSalary().getTo()).append("time_unit",jobOffer.getSalary().getTimeUnit());
+                        .append("to", jobOffer.getSalary().getTo()).append("time_unit",jobOffer.getSalary().getTimeUnit());
                 job = new Document("_id", jobOffer.getId()).append("job_title", jobOffer.getTitle())
-                    .append("company_name", jobOffer.getCompanyName()).append("location", locationDoc)
-                    .append("salary", salaryDoc).append("post_date",jobOffer.getPostDate())
-                    .append("job_type",jobOffer.getJobType()).append("job_description",jobOffer.getDescription());
+                        .append("company_name", jobOffer.getCompanyName()).append("location", locationDoc)
+                        .append("salary", salaryDoc).append("post_date",jobOffer.getPostDate())
+                        .append("job_type",jobOffer.getJobType()).append("job_description",jobOffer.getDescription());
             }else {
                 job = new Document("_id", jobOffer.getId()).append("job_title", jobOffer.getTitle())
                         .append("company_name", jobOffer.getCompanyName()).append("location", locationDoc)
@@ -63,95 +62,108 @@ public class JobOfferDao {
         try {
             MongoDBManager mongoDB = MongoDBManager.getInstance();
             DeleteResult deleteResult= mongoDB.getJobOffersCollection().deleteOne(eq("_id",id));
-            System.out.println(deleteResult.getDeletedCount()+" job has been deleted.");
+            System.out.println(deleteResult.getDeletedCount() + "job has been deleted.");
         }catch (Exception e){
             e.printStackTrace();
             ret = false;
         }
         return ret;
     }
-    
+
     public List<JobOffer> getJobOffersByCity(String city){
-		List<JobOffer> jobOffers = new ArrayList<>();
-		MongoDBManager mongoDB = MongoDBManager.getInstance();
-		MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
-		AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(include("job_title", "job_type", "job_description", "company_name", "location", "post_date"), computed("lower", eq("$toLower", "$location.city")))), match(eq("lower", city))));
-		for(Document doc: founded) {
-			//Calling Constructor to display city Name in Table View
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),
-            		doc.getString("location.state"), doc.getString("location.city"), doc.getString("lower")));
-		}
+        List<JobOffer> jobOffers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
+        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(include("job_title",
+                "job_type", "job_description", "company_name", "location", "post_date"), computed("lower",
+                eq("$toLower", "$location.city")))), match(eq("lower", city))));
+        for(Document doc: founded) {
+            //Calling Constructor to display city Name in Table View
+            Document loc = (Document) doc.get("location");
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
+                    doc.getString("company_name"), doc.getString("post_date"), doc.getString("description"),
+                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
+        }
         return jobOffers;
-	}
+    }
 
     public List<JobOffer> getJobOffersByCompany(String company){
-    	List<JobOffer> jobOffers = new ArrayList<>();
-		MongoDBManager mongoDB = MongoDBManager.getInstance();
-		MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
-		AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(include("job_title", "job_type", "job_description", "company_name", "location", "post_date"), computed("lower", eq("$toLower", "$company_name")))), match(eq("lower", company))));
+        List<JobOffer> jobOffers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
+        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(
+                include("job_title", "job_type", "job_description", "company_name", "location", "post_date"),
+                computed("lower", eq("$toLower", "$company_name")))), match(eq("lower", company))));
         for(Document doc: founded) {
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+            Document loc = (Document) doc.get("location");
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
+                    doc.getString("company_name"), doc.getString("post_date"), doc.getString("job_description"),
+                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
         }
         return jobOffers;
     }
 
-    public List<JobOffer> getJobOffersByJobType(String jobtype){
-    	List<JobOffer> jobOffers = new ArrayList<>();
-		MongoDBManager mongoDB = MongoDBManager.getInstance();
-		FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_type", jobtype));
-		System.out.println(founded);
-        for(Document doc: founded) {
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                    doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+    public List<JobOffer> getJobOffersByJobType(String jobType){
+        List<JobOffer> jobOffers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_type", jobType));
+        for (Document doc: founded) {
+            Document loc = (Document) doc.get("location");
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
+                    doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
         }
         return jobOffers;
     }
-    
-    public List<JobOffer> getJobOffersByJobTitle(String jobtitle){
-    	List<JobOffer> jobOffers = new ArrayList<>();
-		MongoDBManager mongoDB = MongoDBManager.getInstance();
-	    Document regQuery = new Document();
-	    regQuery.append("$regex", ".*(?).*" + Pattern.quote(jobtitle));
-	    regQuery.append("$options", "i");
-		FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
+
+    public List<JobOffer> getJobOffersByJobTitle(String jobTitle){
+        List<JobOffer> jobOffers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        Document regQuery = new Document();
+        regQuery.append("$regex", ".*(?).*" + Pattern.quote(jobTitle));
+        regQuery.append("$options", "i");
+        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
         for(Document doc: founded) {
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+            Document loc = (Document) doc.get("location");
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
+                    doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
         }
-        System.out.println(jobOffers);
         return jobOffers;
     }
-    
+
     public List<JobOffer> getJobOffersBySalary(String timeunit, Double minimum){
-    	List<JobOffer> jobOffers = new ArrayList<>();
-		MongoDBManager mongoDB = MongoDBManager.getInstance();
-		MongoCollection collection = mongoDB.getJobOffersCollection();
-		Bson m = match(eq("salary.time_unit", timeunit));
-		//Bson p = project(fields(include("job_title", "company_name", "salary", "post_date"),computed("time", "$salary.time_unit"), computed("min", eq("$convert", and(eq("input", eq("$reduce", and(eq("input", eq("$split", Arrays.asList("$salary.from", ","))), eq("initialValue", ""), eq("in", eq("$concat", Arrays.asList("$$value", "$$this")))))), eq("to", "double"), eq("onError", 0L))))));
-		Bson p = project(fields(include("job_title", "company_name", "salary", "post_date"),
-				computed("time", "$salary.time_unit"),
-				computed("min",
-				eq("$convert",
-						new BsonDocument("input", new BsonDocument("$reduce",
-			    new BsonDocument("input", new BsonDocument("$split",new BsonArray(Arrays.asList(
-			    		new BsonString("$salary.from"),
-			    		new BsonString(",")))))
-			        .append("initialValue", new BsonString(""))
-			        .append("in", new BsonDocument("$concat", new BsonArray(Arrays.asList(
-			            new BsonString("$$value"),
-			            new BsonString("$$this")))))))
-						.append("to",new BsonString("double"))
-								.append("onError",new BsonString("0"))))));
-		Bson n = match(gte("min", minimum));
-		AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(m, p , n));
-		for(Document doc: founded) {
-			 jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getDouble("min"),doc.getString("time")));
+        List<JobOffer> jobOffers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCollection collection = mongoDB.getJobOffersCollection();
+        Bson m = match(eq("salary.time_unit", timeunit));
+        Bson p = project(fields(include("job_title", "company_name", "job_type","location", "salary", "post_date"),
+                computed("time", "$salary.time_unit"),
+                computed("min",
+                        eq("$convert",
+                                new BsonDocument("input", new BsonDocument("$reduce",
+                                        new BsonDocument("input", new BsonDocument("$split",new BsonArray(Arrays.asList(
+                                                new BsonString("$salary.from"),
+                                                new BsonString(",")))))
+                                                .append("initialValue", new BsonString(""))
+                                                .append("in", new BsonDocument("$concat", new BsonArray(Arrays.asList(
+                                                        new BsonString("$$value"),
+                                                        new BsonString("$$this")))))))
+                                        .append("to",new BsonString("double"))
+                                        .append("onError",new BsonString("0"))))));
+        Bson n = match(gte("min", minimum));
+        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(m, p , n));
+        for(Document doc: founded) {
+            Document loc = (Document) doc.get("location");
+            Document sal = (Document) doc.get("salary");
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
+                    doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                    doc.getString("job_type"), loc.getString("state"), loc.getString("city"),
+                    sal.getString("from"),sal.getString("to"),sal.getString("time_unit")));
 
-}
-		return jobOffers;
-    	
-    } 
+        }
+        return jobOffers;
+    }
 
     public JobOffer getById(String Id) {
         MongoDBManager mongoDB = MongoDBManager.getInstance();

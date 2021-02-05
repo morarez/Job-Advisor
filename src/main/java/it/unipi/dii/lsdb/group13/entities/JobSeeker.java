@@ -48,10 +48,6 @@ public class JobSeeker{
         return email;
     }
 
-    public JobSeeker(){
-        System.out.println("found null user");
-    }
-
     //User without skills
     public JobSeeker(String username, String firstName, String lastName, String gender, String birthdate,
                      String email, String state, String city) {

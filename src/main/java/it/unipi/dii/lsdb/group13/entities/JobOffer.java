@@ -12,13 +12,14 @@ public class JobOffer {
     String jobType;
     Salary salary;
     Location location;
-    String city_name;
-    Double minSalary;
-    String timeUnit;
+    String locStr;
+    String salaryStr;
 
-    public String getId() {
-        return id;
-    }
+    public String getLocStr(){ return location.getState() + ", " + location.getCity(); }
+
+    public String getSalaryStr(){ return salary.from + " - " + salary.to + " (" + salary.timeUnit + ")"; }
+
+    public String getId() { return id; }
 
     public void setId(String id) {
         this.id = id;
@@ -32,64 +33,23 @@ public class JobOffer {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getCompanyName() {
         return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
     }
 
     public String getPostDate() {
         return postDate;
     }
 
-    public void setPostDate(String postDate) {
-        this.postDate = postDate;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getJobType() {
         return jobType;
     }
 
-    public void setJobType(String jobType) {
-        this.jobType = jobType;
-    }
-    //getter to display City Name in Table View of Search Job Offer By City
-    public String getCity_name() {
-    	return city_name;
-    }
-    //setter to display City Name in Table View of Search Job Offer By City
-    public void setCity_name(String city_name) {
-    	this.city_name = city_name;
-    }
-    //getters and setters to display Minimum Salary and Time Unit in Table View of Search Job Offer By Salary
-    public String getTimeUnit() {
-    	return timeUnit;
-    }
-    public void setTimeUnit(String timeUnit) {
-    	this.timeUnit = timeUnit;
-    }
-    public Double getMinSalary() {
-    	return minSalary;
-    }
-    public void setMinSalary(Double minSalary) {
-    	this.minSalary = minSalary;
-    }
-
-    //Job offer with salary
+    //Create job offer with salary
     public JobOffer(String title, String companyName, String description, String jobType, String state, String city,
                     String salaryFrom, String salaryTo, String salaryTimeUnit) {
         this.id = UUID.randomUUID().toString().replace("-","");
@@ -104,7 +64,7 @@ public class JobOffer {
         salary = new Salary(salaryFrom, salaryTo, formattedTimeUnit);
     }
 
-    //Job offer without salary
+    //Create job offer without salary
     public JobOffer(String title, String companyName, String description, String jobType, String state, String city) {
         this.id = UUID.randomUUID().toString().replace("-","");
         System.out.println(this.id);
@@ -115,8 +75,9 @@ public class JobOffer {
         this.postDate = LocalDate.now().toString();
         location = new Location(state, city);
     }
-
-    public JobOffer(String id, String title, String companyName, String postDate, String description, String jobType, String state, String city) {
+    //get job offer from DB
+    public JobOffer(String id, String title, String companyName, String postDate, String description, String jobType,
+                    String state, String city) {
         this.id = id;
         this.title = title;
         this.companyName = companyName;
@@ -126,6 +87,18 @@ public class JobOffer {
         location = new Location(state, city);
     }
 
+    public JobOffer(String id, String title, String companyName, String postDate, String description, String jobType,
+                    String state, String city,String from,String to,String timeUnit) {
+        this.id = id;
+        this.title = title;
+        this.companyName = companyName;
+        this.postDate = postDate;
+        this.description = description;
+        this.jobType = jobType;
+        location = new Location(state, city);
+        salary = new Salary(from,to,timeUnit);
+    }
+
     public String toStringWithoutDescription() {
 
         String s = " JOB TITLE: " + this.title + "\nCOMPANY NAME: " + this.companyName + "\nPOST DATE: " + this.postDate +
@@ -133,25 +106,4 @@ public class JobOffer {
 
         return s;
     }
-    
-    //Constructor to display city name in the table view when searching Job Offer By City
-    public JobOffer(String id, String title, String companyName, String postDate, String state, String city, String city_name)
-    {
-        this.id = id;
-        this.title = title;
-        this.companyName = companyName;
-        this.postDate = postDate;
-        location = new Location(state, city);
-        this.city_name = city_name;
-    }
-    //Constructor to display salary in table view when searching Job Offer By Salary
-    public JobOffer(String id, String title, String companyName, String postDate, Double minSalary, String timeUnit) {
-    	this.id = id;
-    	this.title = title;
-        this.companyName = companyName;
-        this.postDate = postDate;
-        this.minSalary = minSalary;
-        this.timeUnit = timeUnit;
-    }
-
 }
