@@ -26,6 +26,10 @@ public class SearchJobOfferController {
 	@FXML
 	TextField jobTitle;
 	@FXML
+	TextField minSalary;
+	@FXML
+	ChoiceBox timeUnit;
+	@FXML
 	Label error;
 
 
@@ -40,7 +44,8 @@ public class SearchJobOfferController {
 			
 		}
 		else {
-       String cityEntered= city.getText();
+			String cityy= city.getText();
+       String cityEntered= cityy.toLowerCase();
 		System.out.println(cityEntered);
 		JobOfferDao offer= new JobOfferDao();
 		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersByCity(cityEntered));
@@ -50,11 +55,8 @@ public class SearchJobOfferController {
         column1.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
         column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-        TableColumn<JobOffer, Location> column3 = new TableColumn<>("Job Description");
-        column3.setCellValueFactory(new PropertyValueFactory<>("description"));
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
-        tableView.getColumns().add(column3);
         tableView.setItems(published);
         VBox vbox = new VBox(tableView);
         Scene scene = new Scene(vbox);
@@ -137,7 +139,7 @@ public class SearchJobOfferController {
 			
 		}
 		else {
-       String companyEntered= company.getText();
+       String companyEntered= company.getText().toLowerCase();
 		System.out.println(companyEntered);
 		JobOfferDao offer= new JobOfferDao();
 		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersByCompany(companyEntered));
@@ -161,7 +163,35 @@ public class SearchJobOfferController {
 	
 	@FXML
 	private void searchBySalary() throws IOException{
-		
+	/*	if((minSalary.getText().isEmpty()) || (timeUnit.getValue()== null)) {
+			error.setText("Please enter both Minimum Salary and Time Unit!");
+			error.setTextFill(Color.web("#ff0000",0.8));
+            return;
+			
+		}
+		else {
+       String min= minSalary.getText();
+		System.out.println(min);
+		String timeunit= timeUnit.getValue().toString();
+		JobOfferDao offer= new JobOfferDao();
+		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersBySalary(timeunit,min));
+		System.out.println(published);
+        TableView tableView= new TableView();
+        TableColumn<JobOffer, String> column1 = new TableColumn<>("Job Title");
+        column1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
+        column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        tableView.setItems(published);
+        VBox vbox = new VBox(tableView);
+        Scene scene = new Scene(vbox);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
+		}
+		*/	
 	}
+
 
 }
