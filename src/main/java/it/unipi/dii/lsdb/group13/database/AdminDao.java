@@ -1,19 +1,24 @@
 package it.unipi.dii.lsdb.group13.database;
 
 import com.mongodb.client.AggregateIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.json.JsonWriterSettings;
-
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.function.Consumer;
-
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Aggregates.limit;
+import static com.mongodb.client.model.Aggregates.sortByCount;
+import static com.mongodb.client.model.Aggregates.unwind;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoDatabase;
+import java.util.concurrent.TimeUnit;
 
 public class AdminDao {
 
@@ -39,10 +44,12 @@ public class AdminDao {
 
     public LinkedHashMap<String, Integer> rankSkills(){
         MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCollection collection = mongoDB.getJobSeekersCollection();
         Bson uw = unwind("$skills");
-        Bson sbc = sortByCount("$toLower:{$trim:{input:\"$skills\"}}");
+      //  Bson sbc = sortByCount("$toLower:{$trim:{input:\"$skills\"}}");
+        Bson sb = sortByCount(eq("$toLower", eq("$trim", eq("input", "$skills"))));
         Bson limit = limit(10);
-        AggregateIterable aggregate = mongoDB.getJobSeekersCollection().aggregate(Arrays.asList(uw, sbc,limit));
+        AggregateIterable aggregate = collection.aggregate(Arrays.asList(uw, sb, limit));
         LinkedHashMap<String, Integer> map = new LinkedHashMap<String, Integer>();
         MongoCursor<Document> iterator = aggregate.iterator();
         while (iterator.hasNext()) {
