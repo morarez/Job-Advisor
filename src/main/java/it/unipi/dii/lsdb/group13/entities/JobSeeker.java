@@ -48,6 +48,8 @@ public class JobSeeker{
         return email;
     }
 
+    public String getUsername() {return username;}
+
     //User without skills
     public JobSeeker(String username, String firstName, String lastName, String gender, String birthdate,
                      String email, String state, String city) {

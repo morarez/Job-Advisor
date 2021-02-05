@@ -130,7 +130,7 @@ public class EmployerDao {
         if (user != null) {
             return new Employer(username, user.getString("email"));
         } else {
-            return new Employer();
+            return null;
         }
     }
 
@@ -145,5 +145,11 @@ public class EmployerDao {
         }
 
         return jobOffers;
+    }
+
+    public int deleteEmployer(String username) {
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        DeleteResult deleted = mongoDB.getCompaniesCollection().deleteOne(eq("_id", username));
+        return (int) deleted.getDeletedCount();
     }
 }

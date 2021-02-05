@@ -135,4 +135,10 @@ public class JobSeekerDao {
             return null;
         }
     }
+
+    public int deleteJobSeeker(String username) {
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        DeleteResult deleted = mongoDB.getJobSeekersCollection().deleteOne(eq("_id", username));
+        return (int) deleted.getDeletedCount();
+    }
 }
