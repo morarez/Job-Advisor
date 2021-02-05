@@ -12,7 +12,7 @@ public class JobSeeker{
     String password;
     String email = null;
     Location location;
-    List<String> skills;
+    List<String> skills = new ArrayList<>();
 
     public List<String> getSkills() {
         return skills;
@@ -74,5 +74,28 @@ public class JobSeeker{
         this.email = email;
         this.location = new Location(state, city);
         this.skills = skills;
+    }
+
+    public String toStringWithoutPassword() {
+
+        String s = "FIRST NAME: " + this.firstName + "\nLAST NAME: " + this.lastName + "\nBIRTHDAY: " + this.birthdate +
+                "\nGENDER: " + this.gender + "\nEMAIL: " + this.email + "\nLOCATION: " + this.location.city + " (" + this.location.getState() + ")";
+
+        if(!this.skills.isEmpty()) {
+            s = s.concat("\nSKILLS: " + this.getSkillsAsString());
+        } else {
+            s = s.concat("\nNo skills");
+        }
+
+        return s;
+    }
+
+    private String getSkillsAsString() {
+        String s = "";
+        for(String skill : this.skills) {
+            s = skill + "    " + s;
+        }
+
+        return s;
     }
 }

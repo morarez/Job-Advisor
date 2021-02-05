@@ -132,7 +132,7 @@ public class JobSeekerDao {
                         loc.getString("state"), loc.getString("city"));
             }
         } else {
-            return new JobSeeker();
+            return null;
         }
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.collections.FXCollections?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          prefHeight="400.0" prefWidth="600.0" hgap="10" vgap="8"
+          stylesheets="@../css/style.css" fx:controller="it.unipi.dii.lsdb.group13.guiController.AdminHomePageController">
+    <ChoiceBox fx:id="toSearchChoice" value="Search by Id" GridPane.columnIndex="5" GridPane.rowIndex="1" onAction="#searchById">
+        <items>
+            <FXCollections fx:factory="observableArrayList">
+                <String fx:value="Job seeker" />
+                <String fx:value="Employer" />
+                <String fx:value='Job offer' />
+            </FXCollections>
+        </items>
+    </ChoiceBox>
+
+    <TextField fx:id="id" promptText="Insert the id" GridPane.columnIndex="0" GridPane.rowIndex="1" prefWidth="380" onMouseClicked="#emptyChoiceBox"/>
+
+    <Label fx:id="errorMessage" visible="false" style="-fx-text-fill: RED ; -fx-font-size: 12" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"/>
+
+    <TextArea fx:id="textArea" editable="false" GridPane.rowIndex="3" GridPane.columnIndex="0" prefWidth="380" prefHeight="180"
+              onMouseClicked="#clickOnTextArea" />
+
+</GridPane>

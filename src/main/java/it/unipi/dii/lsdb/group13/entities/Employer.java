@@ -26,4 +26,9 @@ public class Employer {
     public Employer() {
         System.out.println("user not found");
     }
+
+    public String toStringWithoutPassword() {
+        String s = "COMPANY NAME: " + this.name + "\nEMAIL: " + this.email;
+        return s;
+    }
 }

@@ -7,6 +7,7 @@ import com.mongodb.client.model.Aggregates;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
+import it.unipi.dii.lsdb.group13.entities.Employer;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -80,9 +81,8 @@ public class JobOfferDao {
                                         doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
 		}
         return jobOffers;
-		
-		
 	}
+
     public List<JobOffer> getJobOffersByCompany(String company){
     	List<JobOffer> jobOffers = new ArrayList<>();
 		MongoDBManager mongoDB = MongoDBManager.getInstance();
@@ -140,4 +140,14 @@ public class JobOfferDao {
     	
     } */
 
+    public JobOffer getById(String Id) {
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        Document doc = (Document) mongoDB.getJobOffersCollection().find(eq("_id", Id)).first();
+        if (doc != null) {
+            return new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                    doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city"));
+        } else {
+            return null;
+        }
+    }
 }
