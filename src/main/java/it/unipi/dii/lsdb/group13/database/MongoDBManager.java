@@ -5,7 +5,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-public class MongoDBManager implements DatabaseManager {
+class MongoDBManager implements DatabaseManager {
      private MongoClient mongoClient;
      private MongoDatabase database;
      private static MongoDBManager dbManager = null;
@@ -18,27 +18,23 @@ public class MongoDBManager implements DatabaseManager {
      }
 
     //@Override
-    public static MongoDBManager getInstance() {
+    static MongoDBManager getInstance() {
     	if(dbManager == null){
     	    dbManager = new MongoDBManager();
         }
     	return dbManager;
     }
 
-    @Override
-    public void closeDB() {
+    //@Override
+    void closeDB() {
         mongoClient.close();
         System.out.println("Connection closed");
     }
 
-    public MongoCollection getJobSeekersCollection(){System.out.println("arrived here 1"); return database.getCollection("job_seekers"); }
+    MongoCollection getJobSeekersCollection(){ return database.getCollection("job_seekers"); }
 
-    public MongoCollection getCompaniesCollection() {
-        return database.getCollection("companies");
-    }
+    MongoCollection getCompaniesCollection() { return database.getCollection("companies"); }
 
-    public MongoCollection getJobOffersCollection() {
-        return database.getCollection("job_offers");
-    }
+    MongoCollection getJobOffersCollection() { return database.getCollection("job_offers"); }
 
 }

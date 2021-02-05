@@ -20,6 +20,7 @@
                 <Menu text="Analytics">
                     <items>
                         <MenuItem onAction="#pressCitiesAnalytic" text="Cities with Most jobs"/>
+                        <MenuItem onAction="#pressSkillsAnalytic" text="Most Repeated Skills"/>
                     </items>
                 </Menu>
                 <Menu text="Exit">

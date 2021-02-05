@@ -15,6 +15,7 @@ public class RankCitiesAnalyticController {
     @FXML
     private void pressSubmit(){
         AdminDao adminDao = new AdminDao();
+        adminDao.rankSkills();
         label.setText(adminDao.rankCities(jobType.getValue().toString()).toString());
     }
 }

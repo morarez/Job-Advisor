@@ -39,4 +39,10 @@ public class AdminMenuController {
         VBox vbox = (VBox) loadFXML("RankCitiesAnalytic");
         menuAdmin.setCenter(vbox);
     }
+
+    @FXML
+    private void pressSkillsAnalytic() throws IOException {
+        VBox vbox = (VBox) loadFXML("RankSkillsAnalytic");
+        menuAdmin.setCenter(vbox);
+    }
 }

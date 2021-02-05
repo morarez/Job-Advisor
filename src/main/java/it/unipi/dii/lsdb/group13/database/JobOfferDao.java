@@ -27,8 +27,6 @@ import static com.mongodb.client.model.Filters.gte;
 
 public class JobOfferDao {
 
-    private static final String String = null;
-
 	public boolean createNewJobOffer(JobOffer jobOffer){
         boolean ret = true;
         Document job;
@@ -105,9 +103,8 @@ public class JobOfferDao {
 		System.out.println(founded);
         for(Document doc: founded) {
             jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+                    doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
         }
-        System.out.println(jobOffers);
         return jobOffers;
     }
     
@@ -118,7 +115,6 @@ public class JobOfferDao {
 	    regQuery.append("$regex", ".*(?).*" + Pattern.quote(jobtitle));
 	    regQuery.append("$options", "i");
 		FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
-		System.out.println(founded);
         for(Document doc: founded) {
             jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
                                         doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));

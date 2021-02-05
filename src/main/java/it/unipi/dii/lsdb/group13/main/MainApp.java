@@ -2,7 +2,6 @@ package it.unipi.dii.lsdb.group13.main;
 
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
-import it.unipi.dii.lsdb.group13.database.MongoDBManager;
 
 import java.util.Scanner;
 
@@ -21,9 +20,6 @@ public class MainApp {
 		Scanner s = new Scanner(System.in);
 		int input = s.nextInt();
 		switch (input) {
-			case 1:
-				signup();
-				break;
 			case 2:
 				showLogin();
 				break;
@@ -94,8 +90,6 @@ public class MainApp {
 						System.out.println("Exit in progress ...");
 						Session.getSingleton();
 						System.out.println("Bye " + Session.getLoggedUser());
-						MongoDBManager mongoDB = MongoDBManager.getInstance();
-						mongoDB.closeDB();
 						exit = true;
 						break;
 					}
@@ -126,28 +120,6 @@ public class MainApp {
 					}
 				}
 			}
-		}
-	}
-
-	private static void signup() {
-		System.out.println("Who are you? \n If you are a job seeker, type 'seeker'" +
-				" \n If you are an employer, type 'employer'\n ");
-		Scanner sc = new Scanner(System.in);
-		String input = sc.nextLine();
-		switch (input) {
-			case "seeker": {
-				JobSeekerDao jobSeeker = new JobSeekerDao();
-				//jobSeeker.signUp();
-				break;
-			}
-			case "employer": {
-				EmployerDao employer = new EmployerDao();
-				//employer.signUp();
-				break;
-			}
-			default:
-				System.out.println("You did not enter the right choice!");
-				break;
 		}
 	}
 }
