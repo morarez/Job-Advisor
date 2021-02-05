@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.geometry.Insets?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="it.unipi.dii.lsdb.group13.guiController.EmployerTableViewController"
           prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/style.css"
-          alignment="CENTER_LEFT" hgap="8" vgap="8"
+          alignment="CENTER" hgap="8" vgap="8"
 >
     <Label text="This are the job offers you published:" GridPane.rowIndex="1" GridPane.columnIndex="2" GridPane.columnSpan="3"/>
     <TableView fx:id="tableEmployer"  GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#rowsSelected">
@@ -28,4 +26,13 @@
             </TableColumn>
         </columns>
     </TableView>
+
+    <VBox GridPane.rowIndex="4" GridPane.columnIndex="4" spacing="15">
+        <Button text="Delete"/>
+        <Button text="Update"/>
+    </VBox>
+
+    <padding>
+        <Insets bottom="15" left="25" right="25" top="15"/>
+    </padding>
 </GridPane>
