@@ -76,9 +76,9 @@ public class JobOfferDao {
 		MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
 		AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(include("job_title", "job_type", "job_description", "company_name", "location", "post_date"), computed("lower", eq("$toLower", "$location.city")))), match(eq("lower", city))));
 		for(Document doc: founded) {
-			System.out.println(doc.toJson());
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+			//Calling Constructor to display city Name in Table View
+            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),
+            		doc.getString("location.state"), doc.getString("location.city"), doc.getString("lower")));
 		}
         return jobOffers;
 	}

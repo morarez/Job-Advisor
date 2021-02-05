@@ -55,8 +55,11 @@ public class SearchJobOfferController {
         column1.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
         column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        TableColumn<JobOffer, String> column3 = new TableColumn<>("City");
+        column3.setCellValueFactory(new PropertyValueFactory<>("city_name"));
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
+        tableView.getColumns().add(column3);
         tableView.setItems(published);
         VBox vbox = new VBox(tableView);
         Scene scene = new Scene(vbox);
