@@ -12,33 +12,21 @@
             fx:id="menuJobSeeker"
             prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/style.css">
     <top>
-        <MenuBar id="menuBar" fx:id="menuBar" layoutY="-3.0" prefHeight="26.0"> <!--onKeyPressed="#handleKeyInput"> -->
-            <menus>
-                <Menu text="Homepage" onShowing="#pressHomePage">
-                    <items>
-                        <MenuItem text="HomePage"/>
-                    </items>
-                </Menu>
-                <Menu text="Job offers">
-                    <items>
-                        <MenuItem text="Saved job offers" />
-                        <MenuItem text="Search a job offer" onAction="#pressSearchJobOffer" />
-                    </items>
-                </Menu>
-                <Menu text="Companies">
-                    <items>
-                        <MenuItem text="Followed companies" />
-                    </items>
-                </Menu>
-                <Menu text="Account">
-                    <items>
-                        <MenuItem onAction="#pressViewAccount" text="View your account" />
-                        <MenuItem onAction="#pressUpdateAccount" text="Update your account" />
-                        <SeparatorMenuItem />
-                        <MenuItem onAction="#pressExit" text="Exit" />
-                    </items>
-                </Menu>
-            </menus>
+        <MenuBar>
+            <Menu text="Menu">
+                <MenuItem text="HomePage" onAction="#pressHomePage"/>
+                <MenuItem text="View saved job offers" />
+                <MenuItem text="Search a job offer" onAction="#pressSearchJobOffer" />
+                <MenuItem text="View followed companies" />
+            </Menu>
+            <Menu text="Account">
+                <items>
+                    <MenuItem onAction="#pressViewAccount" text="View your account" />
+                    <MenuItem onAction="#pressUpdateAccount" text="Update your account" />
+                    <SeparatorMenuItem />
+                    <MenuItem onAction="#pressExit" text="Exit" />
+                </items>
+            </Menu>
         </MenuBar>
     </top>
 </BorderPane>
