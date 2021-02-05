@@ -65,7 +65,6 @@ public class EmployerTableViewController {
             jobOfferPage.setTitle("---- JobOffer info ----");
             jobOfferPage.setScene(new Scene(vbox, 440, 500));
             jobOfferPage.show();
-            //tableEmployer.getSelectionModel().clearSelection();
         }
     }
 }
