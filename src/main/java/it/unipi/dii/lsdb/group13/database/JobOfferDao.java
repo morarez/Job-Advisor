@@ -1,20 +1,31 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import org.bson.Document;
-
+import org.bson.conversions.Bson;
+import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Filters.eq;
-
+import java.util.Arrays;
+import static com.mongodb.client.model.Aggregates.project;
+import static com.mongodb.client.model.Projections.computed;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
 
 public class JobOfferDao {
 
-    public boolean createNewJobOffer(JobOffer jobOffer){
+    private static final String String = null;
+
+	public boolean createNewJobOffer(JobOffer jobOffer){
         boolean ret = true;
         Document job;
         try {
@@ -61,13 +72,13 @@ public class JobOfferDao {
     public List<JobOffer> getJobOffersByCity(String city){
 		List<JobOffer> jobOffers = new ArrayList<>();
 		MongoDBManager mongoDB = MongoDBManager.getInstance();
-		FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("location.city", city));
-		System.out.println(founded);
-        for(Document doc: founded) {
+		MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
+		AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(include("job_title", "job_type", "job_description", "company_name", "location", "post_date"), computed("lower", eq("$toLower", "$location.city")))), match(eq("lower", city))));
+		for(Document doc: founded) {
+			System.out.println(doc.toJson());
             jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
                                         doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
-        }
-        System.out.println(jobOffers);
+		}
         return jobOffers;
 		
 		
@@ -75,13 +86,12 @@ public class JobOfferDao {
     public List<JobOffer> getJobOffersByCompany(String company){
     	List<JobOffer> jobOffers = new ArrayList<>();
 		MongoDBManager mongoDB = MongoDBManager.getInstance();
-		FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("company_name", company));
-		System.out.println(founded);
+		MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
+		AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(include("job_title", "job_type", "job_description", "company_name", "location", "post_date"), computed("lower", eq("$toLower", "$company_name")))), match(eq("lower", company))));
         for(Document doc: founded) {
             jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
                                         doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
         }
-        System.out.println(jobOffers);
         return jobOffers;
     }
 
@@ -113,5 +123,21 @@ public class JobOfferDao {
         System.out.println(jobOffers);
         return jobOffers;
     }
+    
+  /*  public List<JobOffer> getJobOffersBySalary(String timeunit, String min){
+    	List<JobOffer> jobOffers = new ArrayList<>();
+		MongoDBManager mongoDB = MongoDBManager.getInstance();
+		Bson mymatch = Aggregates.match(Filters.eq("salary.time_unit",timeunit));
+		Bson mymatch1= Aggregates.match(Filters.gte("salary.from",min));
+		AggregateIterable<Document> founded = mongoDB.getJobOffersCollection().aggregate(Arrays.asList(mymatch,mymatch1));
+		System.out.println(founded);
+		for(Document doc: founded) {
+			 jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
+                     doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+}
+		System.out.println(jobOffers);
+		return jobOffers;
+    	
+    } */
 
 }
