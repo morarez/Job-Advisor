@@ -166,15 +166,15 @@ public class SearchJobOfferController {
 	
 	@FXML
 	private void searchBySalary() throws IOException{
-	/*	if((minSalary.getText().isEmpty()) || (timeUnit.getValue()== null)) {
+		if((minSalary.getText().isEmpty()) || (timeUnit.getValue()== null)) {
 			error.setText("Please enter both Minimum Salary and Time Unit!");
 			error.setTextFill(Color.web("#ff0000",0.8));
             return;
 			
 		}
 		else {
-       String min= minSalary.getText();
-		System.out.println(min);
+       String minimum= minSalary.getText();
+       double min = Double.parseDouble(minimum);
 		String timeunit= timeUnit.getValue().toString();
 		JobOfferDao offer= new JobOfferDao();
 		ObservableList<JobOffer> published = FXCollections.observableArrayList(offer.getJobOffersBySalary(timeunit,min));
@@ -184,8 +184,14 @@ public class SearchJobOfferController {
         column1.setCellValueFactory(new PropertyValueFactory<>("title"));
         TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
         column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        TableColumn<JobOffer, Double> column3 = new TableColumn<>("Minimum Salary");
+        column3.setCellValueFactory(new PropertyValueFactory<>("minSalary"));
+        TableColumn<JobOffer, String> column4 = new TableColumn<>("Time Unit");
+        column4.setCellValueFactory(new PropertyValueFactory<>("timeUnit"));
         tableView.getColumns().add(column1);
         tableView.getColumns().add(column2);
+        tableView.getColumns().add(column3);
+        tableView.getColumns().add(column4);
         tableView.setItems(published);
         VBox vbox = new VBox(tableView);
         Scene scene = new Scene(vbox);
@@ -193,7 +199,7 @@ public class SearchJobOfferController {
         stage.setScene(scene);
         stage.show();
 		}
-		*/	
+			
 	}
 
 

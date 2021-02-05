@@ -3,12 +3,13 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
-import it.unipi.dii.lsdb.group13.entities.Employer;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
+
+import org.bson.BsonArray;
+import org.bson.BsonDocument;
+import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import static com.mongodb.client.model.Aggregates.match;
@@ -21,6 +22,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.gte;
 
 public class JobOfferDao {
 
@@ -124,21 +127,35 @@ public class JobOfferDao {
         return jobOffers;
     }
     
-  /*  public List<JobOffer> getJobOffersBySalary(String timeunit, String min){
+    public List<JobOffer> getJobOffersBySalary(String timeunit, Double minimum){
     	List<JobOffer> jobOffers = new ArrayList<>();
 		MongoDBManager mongoDB = MongoDBManager.getInstance();
-		Bson mymatch = Aggregates.match(Filters.eq("salary.time_unit",timeunit));
-		Bson mymatch1= Aggregates.match(Filters.gte("salary.from",min));
-		AggregateIterable<Document> founded = mongoDB.getJobOffersCollection().aggregate(Arrays.asList(mymatch,mymatch1));
-		System.out.println(founded);
+		MongoCollection collection = mongoDB.getJobOffersCollection();
+		Bson m = match(eq("salary.time_unit", timeunit));
+		//Bson p = project(fields(include("job_title", "company_name", "salary", "post_date"),computed("time", "$salary.time_unit"), computed("min", eq("$convert", and(eq("input", eq("$reduce", and(eq("input", eq("$split", Arrays.asList("$salary.from", ","))), eq("initialValue", ""), eq("in", eq("$concat", Arrays.asList("$$value", "$$this")))))), eq("to", "double"), eq("onError", 0L))))));
+		Bson p = project(fields(include("job_title", "company_name", "salary", "post_date"),
+				computed("time", "$salary.time_unit"),
+				computed("min",
+				eq("$convert",
+						new BsonDocument("input", new BsonDocument("$reduce",
+			    new BsonDocument("input", new BsonDocument("$split",new BsonArray(Arrays.asList(
+			    		new BsonString("$salary.from"),
+			    		new BsonString(",")))))
+			        .append("initialValue", new BsonString(""))
+			        .append("in", new BsonDocument("$concat", new BsonArray(Arrays.asList(
+			            new BsonString("$$value"),
+			            new BsonString("$$this")))))))
+						.append("to",new BsonString("double"))
+								.append("onError",new BsonString("0"))))));
+		Bson n = match(gte("min", minimum));
+		AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(m, p , n));
 		for(Document doc: founded) {
-			 jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                     doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
+			 jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getDouble("min"),doc.getString("time")));
+
 }
-		System.out.println(jobOffers);
 		return jobOffers;
     	
-    } */
+    } 
 
     public JobOffer getById(String Id) {
         MongoDBManager mongoDB = MongoDBManager.getInstance();

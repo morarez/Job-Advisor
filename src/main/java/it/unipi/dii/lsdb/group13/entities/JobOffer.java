@@ -13,6 +13,8 @@ public class JobOffer {
     Salary salary;
     Location location;
     String city_name;
+    Double minSalary;
+    String timeUnit;
 
     public String getId() {
         return id;
@@ -73,6 +75,19 @@ public class JobOffer {
     public void setCity_name(String city_name) {
     	this.city_name = city_name;
     }
+    //getters and setters to display Minimum Salary and Time Unit in Table View of Search Job Offer By Salary
+    public String getTimeUnit() {
+    	return timeUnit;
+    }
+    public void setTimeUnit(String timeUnit) {
+    	this.timeUnit = timeUnit;
+    }
+    public Double getMinSalary() {
+    	return minSalary;
+    }
+    public void setMinSalary(Double minSalary) {
+    	this.minSalary = minSalary;
+    }
 
     //Job offer with salary
     public JobOffer(String title, String companyName, String description, String jobType, String state, String city,
@@ -129,4 +144,14 @@ public class JobOffer {
         location = new Location(state, city);
         this.city_name = city_name;
     }
+    //Constructor to display salary in table view when searching Job Offer By Salary
+    public JobOffer(String id, String title, String companyName, String postDate, Double minSalary, String timeUnit) {
+    	this.id = id;
+    	this.title = title;
+        this.companyName = companyName;
+        this.postDate = postDate;
+        this.minSalary = minSalary;
+        this.timeUnit = timeUnit;
+    }
+
 }
