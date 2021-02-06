@@ -1,6 +1,7 @@
 package it.unipi.dii.lsdb.group13;
 
 import it.unipi.dii.lsdb.group13.database.AdminDao;
+import it.unipi.dii.lsdb.group13.database.MongoDBManager;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +24,12 @@ public class App extends Application {
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();
+    }
+    @Override
+    public void stop() {
+        //We need to set mongoDB public. How should we solve this???
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        mongoDB.closeDB();
     }
 
     public static void setRoot(String fxml) throws IOException {

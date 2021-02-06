@@ -33,13 +33,26 @@ public class SearchJobOfferController {
 
     private final JobOfferDao jobOfferDao = new JobOfferDao();
 
-    private final TableView tableView = new TableView();
-    private final TableColumn<JobOffer, String> column1 = new TableColumn<>("Job Title");
-    private final TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
-    private final TableColumn<JobOffer, String> column3 = new TableColumn<>("Post Date");
-    private final TableColumn<JobOffer, String> column4 = new TableColumn<>("Location");
-    private final TableColumn<JobOffer, String> column5 = new TableColumn<>("Job Type");
+    private final TableView tableView = new TableView();;
 
+    @FXML
+    private void initialize(){
+        final TableColumn<JobOffer, String> column1 = new TableColumn<>("Job Title");
+        final TableColumn<JobOffer, String> column2 = new TableColumn<>("Company");
+        final TableColumn<JobOffer, String> column3 = new TableColumn<>("Post Date");
+        final TableColumn<JobOffer, String> column4 = new TableColumn<>("Location");
+        final TableColumn<JobOffer, String> column5 = new TableColumn<>("Job Type");
+        column1.setCellValueFactory(new PropertyValueFactory<>("title"));
+        column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
+        column3.setCellValueFactory(new PropertyValueFactory<>("postDate"));
+        column4.setCellValueFactory(new PropertyValueFactory<>("locStr"));
+        column5.setCellValueFactory(new PropertyValueFactory<>("jobType"));
+        tableView.getColumns().add(column1);
+        tableView.getColumns().add(column2);
+        tableView.getColumns().add(column3);
+        tableView.getColumns().add(column4);
+        tableView.getColumns().add(column5);
+    }
 
     @FXML
     private void searchByCity(){
@@ -49,7 +62,6 @@ public class SearchJobOfferController {
         } else {
             String cityEntered= city.getText().toLowerCase();
             ObservableList<JobOffer> published = FXCollections.observableArrayList(jobOfferDao.getJobOffersByCity(cityEntered));
-            setDefaultColumns();
             showTableView(published);
         }
     }
@@ -63,7 +75,6 @@ public class SearchJobOfferController {
         else {
             String titleText= jobTitle.getText();
             ObservableList<JobOffer> published = FXCollections.observableArrayList(jobOfferDao.getJobOffersByJobTitle(titleText));
-            setDefaultColumns();
             showTableView(published);
         }
     }
@@ -76,7 +87,6 @@ public class SearchJobOfferController {
         } else {
             String jobTypeText = jobType.getValue().toString();
             ObservableList<JobOffer> published = FXCollections.observableArrayList(jobOfferDao.getJobOffersByJobType(jobTypeText));
-            setDefaultColumns();
             showTableView(published);
         }
     }
@@ -90,7 +100,6 @@ public class SearchJobOfferController {
         } else {
             String companyEntered= company.getText().toLowerCase();
             ObservableList<JobOffer> published = FXCollections.observableArrayList(jobOfferDao.getJobOffersByCompany(companyEntered));
-            setDefaultColumns();
             showTableView(published);
         }
 
@@ -109,24 +118,11 @@ public class SearchJobOfferController {
             ObservableList<JobOffer> published = FXCollections.observableArrayList(jobOfferDao.getJobOffersBySalary(timeunit,min));
             TableColumn<JobOffer, Double> column6 = new TableColumn<>("Salary");
             column6.setCellValueFactory(new PropertyValueFactory<>("salaryStr"));
-            setDefaultColumns();
             tableView.getColumns().add(column6);
             showTableView(published);
         }
     }
-    private void setDefaultColumns(){
-        column1.setCellValueFactory(new PropertyValueFactory<>("title"));
-        column2.setCellValueFactory(new PropertyValueFactory<>("companyName"));
-        column3.setCellValueFactory(new PropertyValueFactory<>("postDate"));
-        column4.setCellValueFactory(new PropertyValueFactory<>("locStr"));
-        column5.setCellValueFactory(new PropertyValueFactory<>("jobType"));
-        tableView.getColumns().clear();
-        tableView.getColumns().add(column1);
-        tableView.getColumns().add(column2);
-        tableView.getColumns().add(column3);
-        tableView.getColumns().add(column4);
-        tableView.getColumns().add(column5);
-    }
+
     private void showTableView(ObservableList<JobOffer> published){
         tableView.setItems(published);
         VBox vbox = new VBox(tableView);

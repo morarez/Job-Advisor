@@ -11,9 +11,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.text.NumberFormat;
 
 public class CreateJobOfferController {
 
@@ -49,38 +51,44 @@ public class CreateJobOfferController {
         JobOfferDao jobOfferDao = new JobOfferDao();
         Session.getSingleton();
         String companyName = Session.getLoggedUser();
-
+        // When user fill all the required fields for salary
         if(titleField.getText().isEmpty() || stateField.getText().isEmpty() || cityField.getText().isEmpty() ||
                 jobTypeField.getValue() == null || descriptionField.getText().isEmpty() ){
             errorMsg.setText("Please enter all the required Fields!");
+            errorMsg.setTextFill(Paint.valueOf("red"));
         } else if (salaryUnit.getValue() != null && !salaryFromField.getText().isEmpty() &&
                 !salaryToField.getText().isEmpty()) {
-            // When user fill all the required fields for salary
-            JobOffer jobOffer = new JobOffer(titleField.getText(),companyName,descriptionField.getText()
-                    ,jobTypeField.getValue().toString(),stateField.getText(),cityField.getText(),
-                    salaryFromField.getText(),salaryToField.getText(), salaryUnit.getValue().toString());
-            if (!jobOfferDao.createNewJobOffer(jobOffer))
-                errorMsg.setText("Something went wrong! please try again!");
-            else {
-                loadConfirmationPage();
-                App.setRoot("EmployerMenu");
-                //App.setRoot("JobCreationConfirmation");
+            try{
+                Float.parseFloat(salaryFromField.getText().replaceAll(",", ""));
+                Float.parseFloat(salaryToField.getText().replaceAll(",", ""));
+                JobOffer jobOffer = new JobOffer(titleField.getText(),companyName,descriptionField.getText()
+                        ,jobTypeField.getValue().toString(),stateField.getText(),cityField.getText(),
+                        salaryFromField.getText(),salaryToField.getText(), salaryUnit.getValue().toString());
+                if (jobOfferDao.createNewJobOffer(jobOffer)){
+                    loadConfirmationPage();
+                    App.setRoot("EmployerMenu");
+                }
+                else errorMsg.setText("Something went wrong! please try again!");
+            }catch (NumberFormatException e){
+                errorMsg.setText("You should enter numbers for salary fields!");
+                errorMsg.setTextFill(Paint.valueOf("red"));
             }
         }  else{
             // When user DOES NOT fill the required fields for salary
             JobOffer jobOffer = new JobOffer(titleField.getText(),companyName,descriptionField.getText()
                     ,jobTypeField.getValue().toString(),stateField.getText(),cityField.getText());
-            if (!jobOfferDao.createNewJobOffer(jobOffer))
-                errorMsg.setText("Something went wrong! please try again!");
-            else {
+            if (jobOfferDao.createNewJobOffer(jobOffer)) {
                 loadConfirmationPage();
                 App.setRoot("EmployerMenu");
-                //App.setRoot("JobCreationConfirmation");
+            }
+            else {
+                errorMsg.setText("Something went wrong! please try again!");
+                errorMsg.setTextFill(Paint.valueOf("red"));
             }
         }
     }
 
-    private void loadConfirmationPage() throws IOException {
+    private void loadConfirmationPage() {
         Label confirmMsg = new Label("JOB OFFER HAS BEEN CREATED SUCCESSFULLY!");
         confirmMsg.setStyle("-fx-font-weight: bold ; -fx-font-size: 18");
         confirmMsg.setPadding(new Insets(15));

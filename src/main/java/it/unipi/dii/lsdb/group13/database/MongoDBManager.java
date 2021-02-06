@@ -5,7 +5,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-class MongoDBManager implements DatabaseManager {
+public class MongoDBManager implements DatabaseManager {
      private MongoClient mongoClient;
      private MongoDatabase database;
      private static MongoDBManager dbManager = null;
@@ -18,15 +18,15 @@ class MongoDBManager implements DatabaseManager {
      }
 
     //@Override
-    static MongoDBManager getInstance() {
+    public static MongoDBManager getInstance() {
     	if(dbManager == null){
     	    dbManager = new MongoDBManager();
         }
     	return dbManager;
     }
 
-    //@Override
-    void closeDB() {
+    @Override
+    public void closeDB() {
         mongoClient.close();
         System.out.println("Connection closed");
     }
