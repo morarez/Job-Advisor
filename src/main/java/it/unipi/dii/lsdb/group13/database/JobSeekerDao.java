@@ -147,9 +147,10 @@ public class JobSeekerDao {
 
         while ( cursor.hasNext() ) {
             Document doc = cursor.next();
+            Document loc = doc.get("location", Document.class);
             seekers.add( new JobSeeker(doc.getString("_id"), doc.getString("first_name"), doc.getString("last_name"),
                     doc.getString("gender"), doc.getString("birthdate"), doc.getString("email"),
-                    doc.getString("location.state"), doc.getString("location.city"), doc.getList("skills", String.class)) );
+                    loc.getString("state"), loc.getString("city"), doc.getList("skills", String.class)) );
         }
 
         return seekers;
