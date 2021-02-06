@@ -100,7 +100,7 @@ public class LoginController {
                 errorMessage.setText("Invalid username");
                 errorMessage.setVisible(true);
             }
-
         }
+        initialChoice.getSelectionModel().select("Who are you?");
     }
 }

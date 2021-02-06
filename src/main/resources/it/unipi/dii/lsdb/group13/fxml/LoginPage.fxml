@@ -47,9 +47,6 @@
                 onAction="#pressLoginButton"  />
     </HBox>
 
-    <!-- <Text fx:id="actiontarget"
-          GridPane.columnIndex="1" GridPane.rowIndex="6"/> -->
-
     <Text text="Or if you are not yet registered ..." GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="8" />
 
     <VBox alignment="center" spacing="10" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="9" GridPane.rowSpan="5">
