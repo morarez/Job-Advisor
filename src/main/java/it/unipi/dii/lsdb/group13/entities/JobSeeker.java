@@ -88,7 +88,7 @@ public class JobSeeker{
         return s;
     }
 
-    private String getSkillsAsString() {
+    public String getSkillsAsString() {
         String s = "";
         for(String skill : this.skills) {
             s = skill + "    " + s;

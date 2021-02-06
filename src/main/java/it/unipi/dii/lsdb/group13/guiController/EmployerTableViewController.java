@@ -47,6 +47,10 @@ public class EmployerTableViewController {
             Label companyName = new Label("COMPANY NAME: "); companyName.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
             flowCompanyName.getChildren().addAll(companyName, new Label(selected.getCompanyName()));
 
+            TextFlow flowLocation = new TextFlow();
+            Label location = new Label("LOCATION: "); location.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            flowLocation.getChildren().addAll(location, new Label(selected.getLocStr()));
+
             TextFlow flowPostDate = new TextFlow();
             Label postDate = new Label("POST DATE: "); postDate.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
             flowPostDate.getChildren().addAll(postDate, new Label(selected.getPostDate()));
@@ -59,7 +63,8 @@ public class EmployerTableViewController {
             Label description = new Label(selected.getDescription());
             description.wrapTextProperty().setValue(true);
 
-            vbox.getChildren().addAll(flowTitle, flowCompanyName, flowPostDate, flowJobType, jobDescription, description);
+
+            vbox.getChildren().addAll(flowTitle, flowCompanyName, flowLocation, flowPostDate, flowJobType, jobDescription, description);
             vbox.setStyle("-fx-background-color: #ADD8E6 ; -fx-font-family: sans-serif-verdana ; -fx-font-size: 15px ; -fx-padding: 40");
             Stage jobOfferPage = new Stage();
             jobOfferPage.setTitle("---- JobOffer info ----");

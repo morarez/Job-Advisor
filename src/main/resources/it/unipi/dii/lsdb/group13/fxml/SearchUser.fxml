@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="it.unipi.dii.lsdb.group13.guiController.SearchUserController"
+      prefHeight="400.0" prefWidth="600.0"
+      stylesheets="@../css/style.css" alignment="CENTER" fillWidth="false" spacing="10">
+
+    <Label fx:id="errorMsg" visible="false" style="-fx-font-weight: bold ; -fx-text-fill: RED ; -fx-font-size: 14"/>
+
+    <GridPane hgap="10" vgap="5">
+        <Label text = "by skill" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <TextField fx:id="skillField" promptText="insert a skill" GridPane.rowIndex="1" GridPane.columnIndex="1" onMouseClicked="#emptyFields"/>
+
+        <Label text = "by location" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+        <TextField fx:id="locField" promptText="insert city(state)" GridPane.rowIndex="1" GridPane.columnIndex="3" onMouseClicked="#emptyFields"/>
+
+        <Button text="Search" GridPane.rowIndex="1" GridPane.columnIndex="5" onAction="#pressSearch"/>
+    </GridPane>
+
+    <TableView fx:id="tableFoundedUsers" prefWidth="360" onMouseClicked="#rowSelected">
+        <columns>
+            <TableColumn text = "Username" prefWidth="120">
+                <cellValueFactory>
+                    <PropertyValueFactory property="Username"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text = "Name" prefWidth="120">
+                <cellValueFactory>
+                    <PropertyValueFactory property="firstName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text = "Surname" prefWidth="120">
+                <cellValueFactory>
+                    <PropertyValueFactory property="lastName"/>
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <padding>
+        <Insets bottom="15" left="35" right="35" top="15"/>
+    </padding>
+
+</VBox>

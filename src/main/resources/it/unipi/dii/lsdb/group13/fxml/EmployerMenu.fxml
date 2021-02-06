@@ -16,6 +16,7 @@
                     <MenuItem text = "HomePage" onAction="#pressHomePage"/>
                     <MenuItem text="View followers"/>
                     <MenuItem text="Publish new job offer" onAction="#pressPublishNewJob"/>
+                    <MenuItem text = "Search a user" onAction="#pressSearchUser"/>
                 </items>
             </Menu>
             <Menu text = "Account">

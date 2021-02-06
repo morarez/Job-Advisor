@@ -52,4 +52,11 @@ public class EmployerMenuController {
         menuEmployer.getChildren().removeAll();
         menuEmployer.setCenter(vbox);
     }
+
+    @FXML
+    private void pressSearchUser() throws IOException {
+        VBox vbox = (VBox) App.loadFXML("SearchUser");
+        menuEmployer.getChildren().removeAll();
+        menuEmployer.setCenter(vbox);
+    }
 }

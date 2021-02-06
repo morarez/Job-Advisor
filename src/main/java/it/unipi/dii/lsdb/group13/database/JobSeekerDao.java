@@ -1,17 +1,14 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import java.util.*;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.*;
 
@@ -140,5 +137,21 @@ public class JobSeekerDao {
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         DeleteResult deleted = mongoDB.getJobSeekersCollection().deleteOne(eq("_id", username));
         return (int) deleted.getDeletedCount();
+    }
+
+    public List<JobSeeker> searchSkill(String skill) {
+        List<JobSeeker> seekers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        FindIterable findIterable = mongoDB.getJobSeekersCollection().find(eq("skills", skill));
+        MongoCursor<Document> cursor = findIterable.iterator();
+
+        while ( cursor.hasNext() ) {
+            Document doc = cursor.next();
+            seekers.add( new JobSeeker(doc.getString("_id"), doc.getString("first_name"), doc.getString("last_name"),
+                    doc.getString("gender"), doc.getString("birthdate"), doc.getString("email"),
+                    doc.getString("location.state"), doc.getString("location.city"), doc.getList("skills", String.class)) );
+        }
+
+        return seekers;
     }
 }
