@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.Button?>
+
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="it.unipi.dii.lsdb.group13.guiController.SearchUserController"
@@ -22,7 +23,10 @@
         <TextField fx:id="skillField" promptText="insert a skill" GridPane.rowIndex="1" GridPane.columnIndex="1" onMouseClicked="#emptyFields"/>
 
         <Label text = "by location" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-        <TextField fx:id="locField" promptText="insert city(state)" GridPane.rowIndex="1" GridPane.columnIndex="3" onMouseClicked="#emptyFields"/>
+        <HBox GridPane.rowIndex="1" GridPane.columnIndex="3" spacing="5">
+            <TextField fx:id="cityField" promptText="city" prefWidth="150" onMouseClicked="#emptyFields"/>
+            <TextField fx:id="stateField" promptText="state" prefWidth="60" onMouseClicked="#emptyFields"/>
+        </HBox>
 
         <Button text="Search" GridPane.rowIndex="1" GridPane.columnIndex="5" onAction="#pressSearch"/>
     </GridPane>

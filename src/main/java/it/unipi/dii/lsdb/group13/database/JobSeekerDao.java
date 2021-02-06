@@ -9,7 +9,8 @@ import org.bson.Document;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-import static com.mongodb.client.model.Filters.eq;
+
+import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
 
 public class JobSeekerDao {
@@ -152,6 +153,59 @@ public class JobSeekerDao {
                     doc.getString("gender"), doc.getString("birthdate"), doc.getString("email"),
                     loc.getString("state"), loc.getString("city"), doc.getList("skills", String.class)) );
         }
+        cursor.close();
+
+        return seekers;
+    }
+
+    public List<JobSeeker> searchLocation(String city, String state) {
+
+        List<JobSeeker> seekers = new ArrayList<>();
+
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCursor<Document> cursor = mongoDB.getJobSeekersCollection().find(and(eq("location.city", city), eq("location.state", state))).iterator();
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            Document loc = doc.get("location", Document.class);
+            seekers.add(new JobSeeker(doc.getString("_id"), doc.getString("first_name"), doc.getString("last_name"),
+                    doc.getString("gender"), doc.getString("birthdate"), doc.getString("email"),
+                    loc.getString("state"), loc.getString("city"), doc.getList("skills", String.class)) );
+        }
+        cursor.close();
+
+        return seekers;
+    }
+
+    public List<JobSeeker> searchByCity(String city) {
+        List<JobSeeker> seekers = new ArrayList<>();
+
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCursor<Document> cursor = mongoDB.getJobSeekersCollection().find(eq("location.city", city)).iterator();
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            Document loc = doc.get("location", Document.class);
+            seekers.add(new JobSeeker(doc.getString("_id"), doc.getString("first_name"), doc.getString("last_name"),
+                    doc.getString("gender"), doc.getString("birthdate"), doc.getString("email"),
+                    loc.getString("state"), loc.getString("city"), doc.getList("skills", String.class)) );
+        }
+        cursor.close();
+
+        return seekers;
+    }
+
+    public List<JobSeeker> searchByState(String state) {
+        List<JobSeeker> seekers = new ArrayList<>();
+
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCursor<Document> cursor = mongoDB.getJobSeekersCollection().find(eq("location.state", state)).iterator();
+        while (cursor.hasNext()) {
+            Document doc = cursor.next();
+            Document loc = doc.get("location", Document.class);
+            seekers.add(new JobSeeker(doc.getString("_id"), doc.getString("first_name"), doc.getString("last_name"),
+                    doc.getString("gender"), doc.getString("birthdate"), doc.getString("email"),
+                    loc.getString("state"), loc.getString("city"), doc.getList("skills", String.class)));
+        }
+        cursor.close();
 
         return seekers;
     }

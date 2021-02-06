@@ -26,7 +26,10 @@ public class SearchUserController {
     private TableView tableFoundedUsers;
 
     @FXML
-    private TextField locField;
+    private TextField cityField;
+
+    @FXML
+    private TextField stateField;
 
     @FXML
     private TextField skillField;
@@ -36,13 +39,37 @@ public class SearchUserController {
     @FXML
     private void pressSearch() {
 
-        if ( !locField.getText().isEmpty() && !skillField.getText().isEmpty()) {
-            errorMsg.setText("Insert only one field");
+        if ( (!cityField.getText().isEmpty() && !skillField.getText().isEmpty()) || (!stateField.getText().isEmpty() && !skillField.getText().isEmpty())) {
+            errorMsg.setText("Search only by skill or by location, no both");
             errorMsg.setVisible(true);
         }
 
-        if ( !locField.getText().isEmpty() ) {
+        if ( !cityField.getText().isEmpty() && !stateField.getText().isEmpty()) {
             System.out.println("Search by location");
+
+            JobSeekerDao jobSeekerDao = new JobSeekerDao();
+            List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchLocation(cityField.getText(), stateField.getText()));
+            oList = FXCollections.observableArrayList(seekers);
+            tableFoundedUsers.setItems(oList);
+
+        } else if (!cityField.getText().isEmpty()) {
+
+            System.out.println("Search by city");
+
+            JobSeekerDao jobSeekerDao = new JobSeekerDao();
+            List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchByCity(cityField.getText()));
+            oList = FXCollections.observableArrayList(seekers);
+            tableFoundedUsers.setItems(oList);
+
+        } else if (!stateField.getText().isEmpty()) {
+
+            System.out.println("Search by state");
+
+            JobSeekerDao jobSeekerDao = new JobSeekerDao();
+            List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchByState(stateField.getText()));
+            oList = FXCollections.observableArrayList(seekers);
+            tableFoundedUsers.setItems(oList);
+
         } else if ( !skillField.getText().isEmpty() ) {
 
             System.out.println("Search by skill");
@@ -86,10 +113,16 @@ public class SearchUserController {
             Label location = new Label("LOCATION: "); location.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
             flowLocation.getChildren().addAll(location, new Label(selected.getLocation().getCity() + " (" + selected.getLocation().getState() + ")"));
 
-            Label skillsLabel = new Label("SKILLS: "); skillsLabel.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
-            Label skills = new Label(selected.getSkillsAsString());
-            skills.wrapTextProperty().setValue(true);
-
+            Label skillsLabel = new Label("SKILLS: ");
+            skillsLabel.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            Label skills = null;
+            if (selected.getSkills() != null) {
+                skills = new Label(selected.getSkillsAsString());
+                skills.wrapTextProperty().setValue(true);
+            } else {
+                skills = new Label("No skills");
+                skills.wrapTextProperty().setValue(true);
+            }
 
             vbox.getChildren().addAll(flowName, flowGender, flowBirthday, flowEmail, flowLocation, skillsLabel, skills);
             vbox.setStyle("-fx-background-color: #ADD8E6 ; -fx-font-family: sans-serif-verdana ; -fx-font-size: 15px ; -fx-padding: 40");
@@ -102,6 +135,7 @@ public class SearchUserController {
 
     @FXML
     private void emptyFields() {
+        errorMsg.setVisible(false);
         oList = null;
         tableFoundedUsers.setItems(null);
         System.out.println("arrived here");
