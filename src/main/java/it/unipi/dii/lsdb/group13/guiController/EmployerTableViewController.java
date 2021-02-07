@@ -59,8 +59,8 @@ public class EmployerTableViewController {
             flowJobType.getChildren().addAll(jobType, new Label(selected.getJobType()));
 
             TextFlow flowSalary = new TextFlow();
-            Label salary = new Label("Salary: "); salary.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
-            flowJobType.getChildren().addAll(salary, new Label(selected.getSalaryStr()));
+            Label salary = new Label("SALARY: "); salary.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            flowSalary.getChildren().addAll(salary, new Label(selected.getSalaryStr()));
 
             Label jobDescription = new Label("DESCRIPTION: "); jobDescription.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
             Label description = new Label(selected.getDescription());
