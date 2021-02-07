@@ -1,6 +1,6 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
-import it.unipi.dii.lsdb.group13.database.EmployerDao;
+import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.collections.FXCollections;
@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -26,8 +25,8 @@ public class EmployerTableViewController {
 
     @FXML
     private void initialize() {
-        EmployerDao employer = new EmployerDao();
-        published = FXCollections.observableArrayList(employer.findPublished(Session.getLoggedUser()));
+        JobOfferDao jobOfferDao = new JobOfferDao();
+        published = FXCollections.observableArrayList(jobOfferDao.findPublished(Session.getLoggedUser()));
         tableEmployer.setItems(published);
     }
 
@@ -59,12 +58,15 @@ public class EmployerTableViewController {
             Label jobType = new Label("JOB TYPE: "); jobType.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
             flowJobType.getChildren().addAll(jobType, new Label(selected.getJobType()));
 
+            TextFlow flowSalary = new TextFlow();
+            Label salary = new Label("Salary: "); salary.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
+            flowJobType.getChildren().addAll(salary, new Label(selected.getSalaryStr()));
+
             Label jobDescription = new Label("DESCRIPTION: "); jobDescription.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
             Label description = new Label(selected.getDescription());
             description.wrapTextProperty().setValue(true);
 
-
-            vbox.getChildren().addAll(flowTitle, flowCompanyName, flowLocation, flowPostDate, flowJobType, jobDescription, description);
+            vbox.getChildren().addAll(flowTitle, flowCompanyName, flowLocation, flowPostDate, flowJobType, flowSalary, jobDescription, description);
             vbox.setStyle("-fx-background-color: #ADD8E6 ; -fx-font-family: sans-serif-verdana ; -fx-font-size: 15px ; -fx-padding: 40");
             Stage jobOfferPage = new Stage();
             jobOfferPage.setTitle("---- JobOffer info ----");

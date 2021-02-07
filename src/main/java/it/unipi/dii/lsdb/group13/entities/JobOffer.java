@@ -17,7 +17,9 @@ public class JobOffer {
 
     public String getLocStr(){ return location.getState() + ", " + location.getCity(); }
 
-    public String getSalaryStr(){ return salary.from + " - " + salary.to + " (" + salary.timeUnit + ")"; }
+    public String getSalaryStr(){
+        if (salary.from == null) return "-";
+        else return salary.from + " - " + salary.to + " (" + salary.timeUnit + ")"; }
 
     public String getId() { return id; }
 
@@ -76,17 +78,6 @@ public class JobOffer {
         location = new Location(state, city);
     }
     //get job offer from DB
-    public JobOffer(String id, String title, String companyName, String postDate, String description, String jobType,
-                    String state, String city) {
-        this.id = id;
-        this.title = title;
-        this.companyName = companyName;
-        this.postDate = postDate;
-        this.description = description;
-        this.jobType = jobType;
-        location = new Location(state, city);
-    }
-
     public JobOffer(String id, String title, String companyName, String postDate, String description, String jobType,
                     String state, String city,String from,String to,String timeUnit) {
         this.id = id;

@@ -79,10 +79,7 @@ public class JobOfferDao {
                 eq("$toLower", "$location.city")))), match(eq("lower", city))));
         for(Document doc: founded) {
             //Calling Constructor to display city Name in Table View
-            Document loc = (Document) doc.get("location");
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
-                    doc.getString("company_name"), doc.getString("post_date"), doc.getString("description"),
-                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
+            jobOffers.add(parseJobOffer(doc));
         }
         return jobOffers;
     }
@@ -95,10 +92,7 @@ public class JobOfferDao {
                 include("job_title", "job_type", "job_description", "company_name", "location", "post_date"),
                 computed("lower", eq("$toLower", "$company_name")))), match(eq("lower", company))));
         for(Document doc: founded) {
-            Document loc = (Document) doc.get("location");
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
-                    doc.getString("company_name"), doc.getString("post_date"), doc.getString("job_description"),
-                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
+            jobOffers.add(parseJobOffer(doc));
         }
         return jobOffers;
     }
@@ -108,10 +102,7 @@ public class JobOfferDao {
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_type", jobType));
         for (Document doc: founded) {
-            Document loc = (Document) doc.get("location");
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
-                    doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
+            jobOffers.add(parseJobOffer(doc));
         }
         return jobOffers;
     }
@@ -124,10 +115,7 @@ public class JobOfferDao {
         regQuery.append("$options", "i");
         FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
         for(Document doc: founded) {
-            Document loc = (Document) doc.get("location");
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
-                    doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                    doc.getString("job_type"), loc.getString("state"), loc.getString("city")));
+            jobOffers.add(parseJobOffer(doc));
         }
         return jobOffers;
     }
@@ -154,12 +142,7 @@ public class JobOfferDao {
         Bson n = match(gte("min", minimum));
         AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(m, p , n));
         for(Document doc: founded) {
-            Document loc = (Document) doc.get("location");
-            Document sal = (Document) doc.get("salary");
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"),
-                    doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                    doc.getString("job_type"), loc.getString("state"), loc.getString("city"),
-                    sal.getString("from"),sal.getString("to"),sal.getString("time_unit")));
+            jobOffers.add(parseJobOffer(doc));
 
         }
         return jobOffers;
@@ -169,10 +152,30 @@ public class JobOfferDao {
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         Document doc = (Document) mongoDB.getJobOffersCollection().find(eq("_id", Id)).first();
         if (doc != null) {
-            return new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                    doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city"));
+            return parseJobOffer(doc);
         } else {
             return null;
         }
     }
+
+    public List<JobOffer> findPublished(String username) {
+        List<JobOffer> jobOffers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+
+        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("company_name", username))
+                .sort(new Document("post_date", -1));
+        for(Document doc: founded) {
+            jobOffers.add(parseJobOffer(doc));
+        }
+        return jobOffers;
+    }
+
+    private JobOffer parseJobOffer(Document doc){
+        return new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"),
+                doc.getString("post_date"),  doc.getString("job_description"), doc.getString("job_type"),
+                doc.getEmbedded(List.of("location", "state"), String.class), doc.getEmbedded(List.of("location", "city"), String.class),
+                doc.getEmbedded(List.of("salary", "from"), String.class),doc.getEmbedded(List.of("salary", "to"), String.class),
+                doc.getEmbedded(List.of("salary", "time_unit"), String.class));
+    }
+
 }

@@ -134,19 +134,6 @@ public class EmployerDao {
         }
     }
 
-    public List<JobOffer> findPublished(String username) {
-	     List<JobOffer> jobOffers = new ArrayList<>();
-	     MongoDBManager mongoDB = new MongoDBManager().getInstance();
-
-        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("company_name", username)).sort(new Document("post_date", -1));
-        for(Document doc: founded) {
-            jobOffers.add(new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"), doc.getString("post_date"),  doc.getString("job_description"),
-                                        doc.getString("job_type"), doc.getString("location.state"), doc.getString("location.city")));
-        }
-
-        return jobOffers;
-    }
-
     public int deleteEmployer(String username) {
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         DeleteResult deleted = mongoDB.getCompaniesCollection().deleteOne(eq("_id", username));
