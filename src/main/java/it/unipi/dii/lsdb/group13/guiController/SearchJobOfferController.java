@@ -6,12 +6,14 @@ import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class SearchJobOfferController {
 
@@ -122,12 +124,16 @@ public class SearchJobOfferController {
     }
 
     @FXML
-    private void rowSelected() {
+    private void rowSelected() throws IOException {
         JobOffer selected = (JobOffer) tableJobOffers.getSelectionModel().getSelectedItem();
         if(selected != null) {
             System.out.println("Rows selected! " + selected.getTitle() + " " + selected.getCompanyName());
 
             VBox vbox = new VBox(10);
+
+            Button saveBu = new Button("SAVE");
+            saveBu.setPadding(new Insets(2, 20, 2, 20));
+            saveBu.setStyle("-fx-border-color: darkgray; -fx-border-radius: 8px; -fx-border-width: 2px; -fx-padding: 5px 22px; -fx-text-align: center; -fx-background-radius: 8px;");
 
             TextFlow flowTitle = new TextFlow();
             Label title = new Label("TITLE: "); title.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
@@ -157,7 +163,8 @@ public class SearchJobOfferController {
             Label description = new Label(selected.getDescription());
             description.wrapTextProperty().setValue(true);
 
-            vbox.getChildren().addAll(flowTitle, flowCompanyName, flowLocation, flowPostDate, flowJobType, flowSalary, jobDescription, description);
+
+            vbox.getChildren().addAll(saveBu, flowTitle, flowCompanyName, flowLocation, flowPostDate, flowJobType, flowSalary, jobDescription, description);
             vbox.setStyle("-fx-background-color: #ADD8E6 ; -fx-font-family: sans-serif-verdana ; -fx-font-size: 15px ; -fx-padding: 40");
             Stage jobOfferPage = new Stage();
             jobOfferPage.setTitle("---- JobOffer info ----");
