@@ -5,8 +5,8 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
-
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
 import org.bson.BsonString;
@@ -61,8 +61,16 @@ public class JobOfferDao {
         boolean ret = true;
         try {
             MongoDBManager mongoDB = MongoDBManager.getInstance();
+            Document d = (Document) mongoDB.getJobOffersCollection().find(eq("_id", id)).first();
+            String companyName = d.getString("company_name");
             DeleteResult deleteResult= mongoDB.getJobOffersCollection().deleteOne(eq("_id",id));
-            System.out.println(deleteResult.getDeletedCount() + "job has been deleted.");
+            if (deleteResult.getDeletedCount() == 1) {
+                Bson filter = eq("_id", companyName);
+                Bson delete = Updates.pull("job_offers", id);
+                UpdateResult updateResult = mongoDB.getCompaniesCollection().updateOne(filter, delete);
+                if (updateResult.getModifiedCount() != 1 ) { return false; }
+            }
+            System.out.println(deleteResult.getDeletedCount() + " job has been deleted.");
         }catch (Exception e){
             e.printStackTrace();
             ret = false;
