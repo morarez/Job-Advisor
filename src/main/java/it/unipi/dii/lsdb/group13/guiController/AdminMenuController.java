@@ -20,6 +20,7 @@ public class AdminMenuController {
     @FXML
     private void initialize() throws IOException {
         pressHomePage();
+        App.setDimStage(640.0, 550.0);
     }
 
     @FXML
@@ -29,7 +30,6 @@ public class AdminMenuController {
 
     @FXML
     private void pressHomePage() throws IOException {
-        //menuAdmin.setCenter(new Label("Home page for admin"));
         GridPane searchPage = (GridPane) App.loadFXML("AdminHomePage");
         menuAdmin.setCenter(searchPage);
         menuAdmin.setMargin(menuAdmin.getCenter(), new Insets(10, 20, 10, 20));

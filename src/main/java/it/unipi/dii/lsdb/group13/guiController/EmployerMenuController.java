@@ -19,12 +19,15 @@ public class EmployerMenuController {
     @FXML
     private void initialize() throws IOException {
         pressHomePage();
+        App.setDimStage(700.0, 700.0);
     }
 
     @FXML
     private void pressExit() throws IOException {
         App.setRoot("LoginPage");
+        App.setDimStage(640.0, 550.0);
     }
+
     @FXML
     private void pressViewAccount() throws IOException {
         VBox vbox = (VBox) App.loadFXML("EmployerInfo");

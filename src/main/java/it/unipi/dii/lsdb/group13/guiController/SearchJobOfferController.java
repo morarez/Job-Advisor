@@ -1,6 +1,5 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
-import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.collections.FXCollections;
@@ -48,7 +47,6 @@ public class SearchJobOfferController {
 
     @FXML
     private void initialize() {
-        App.setDimStage(900.0, 600.0);
         error.setVisible(false);
     }
 

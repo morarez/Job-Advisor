@@ -1,8 +1,6 @@
 package it.unipi.dii.lsdb.group13;
 
-import it.unipi.dii.lsdb.group13.database.AdminDao;
 import it.unipi.dii.lsdb.group13.database.MongoDBManager;
-import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +22,7 @@ public class App extends Application {
         this.stage = stage;
         scene = new Scene(loadFXML("LoginPage"), 640, 480);
         stage.setScene(scene);
-        stage.setFullScreen(true);
+        //stage.setFullScreen(true);
         stage.show();
     }
     @Override
