@@ -17,9 +17,11 @@ import java.io.IOException;
 public class App extends Application {
 
     private static Scene scene;
+    private static Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage = stage;
         scene = new Scene(loadFXML("LoginPage"), 640, 480);
         stage.setScene(scene);
         stage.setFullScreen(true);
@@ -39,6 +41,11 @@ public class App extends Application {
     public static Parent loadFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("fxml/" + fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    public static void setDimStage(Double width, Double height) {
+        stage.setWidth(width);
+        stage.setHeight(height);
     }
 
     public static void main(String[] args) {

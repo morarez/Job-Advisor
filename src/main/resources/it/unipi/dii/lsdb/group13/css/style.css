@@ -53,3 +53,7 @@
 .table-view .virtual-flow .scroll-bar {
     -fx-background-color: darkgrey;
 }
+
+.text-field {
+    -fx-border-color: gray;
+}

@@ -40,7 +40,5 @@ public class JobSeekerMenuController {
     	GridPane pane = (GridPane) App.loadFXML("SearchJobOffer");
     	menuJobSeeker.getChildren().removeAll();
     	menuJobSeeker.setCenter(pane);
-    	pane.setPrefWidth(1000);
-    	pane.setPrefHeight(500);
     }
 }

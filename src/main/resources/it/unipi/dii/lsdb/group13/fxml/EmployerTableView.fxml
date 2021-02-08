@@ -2,9 +2,9 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.geometry.Insets?>
+
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="it.unipi.dii.lsdb.group13.guiController.EmployerTableViewController"
