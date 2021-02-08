@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.net.*?>
 <?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -9,18 +8,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<!-- <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.dii.esercizi.PrimaryController">
-   <children>
-      <Label text="Primary View" />
-      <Button fx:id="primaryButton" text="Switch to Secondary View" onAction="#switchToSecondary"/>
-   </children>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox> -->
-
 <GridPane alignment="CENTER" hgap="10" vgap="16" xmlns="http://javafx.com/javafx/10.0.2-internal"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.dii.lsdb.group13.guiController.LoginController" >
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unipi.dii.lsdb.group13.guiController.LoginController" stylesheets="@../css/style.css">
     <padding><Insets bottom="15" left="25" right="25" top="15" /></padding>
 
     <ChoiceBox fx:id="initialChoice" value="Who are you?" GridPane.columnIndex="0" GridPane.columnSpan="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
@@ -70,9 +59,4 @@
     <Text fx:id="errorMessage" text = "error message" GridPane.columnIndex="6" GridPane.rowIndex="0" fill="RED" visible="false">
         <font> <Font size="12"/> </font>
     </Text>
-
-    <stylesheets>
-        <URL value="@../css/style.css" />
-    </stylesheets>
-
 </GridPane>
