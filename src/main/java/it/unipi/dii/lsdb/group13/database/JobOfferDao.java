@@ -47,9 +47,6 @@ public class JobOfferDao {
                         .append("job_description",jobOffer.getDescription());
             }
             mongoDB.getJobOffersCollection().insertOne(job);
-            // Add the job offer to the list of company's job offers
-            mongoDB.getCompaniesCollection().updateOne(eq("_id", jobOffer.getCompanyName()),
-                    Updates.addToSet("job_offers", jobOffer.getId()));
         } catch (Exception e) {
             e.printStackTrace();
             ret = false;
@@ -61,16 +58,7 @@ public class JobOfferDao {
         boolean ret = true;
         try {
             MongoDBManager mongoDB = MongoDBManager.getInstance();
-            Document d = (Document) mongoDB.getJobOffersCollection().find(eq("_id", id)).first();
-            String companyName = d.getString("company_name");
-            DeleteResult deleteResult= mongoDB.getJobOffersCollection().deleteOne(eq("_id",id));
-            if (deleteResult.getDeletedCount() == 1) {
-                Bson filter = eq("_id", companyName);
-                Bson delete = Updates.pull("job_offers", id);
-                UpdateResult updateResult = mongoDB.getCompaniesCollection().updateOne(filter, delete);
-                if (updateResult.getModifiedCount() != 1 ) { return false; }
-            }
-            System.out.println(deleteResult.getDeletedCount() + " job has been deleted.");
+            mongoDB.getJobOffersCollection().deleteOne(eq("_id",id));
         }catch (Exception e){
             e.printStackTrace();
             ret = false;
