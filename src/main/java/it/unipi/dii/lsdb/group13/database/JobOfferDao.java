@@ -86,7 +86,6 @@ public class JobOfferDao {
                 "job_type", "job_description", "company_name", "location", "post_date"), computed("lower",
                 eq("$toLower", "$location.city")))), match(eq("lower", city))));
         for(Document doc: founded) {
-            //Calling Constructor to display city Name in Table View
             jobOffers.add(parseJobOffer(doc));
         }
         return jobOffers;

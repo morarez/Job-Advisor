@@ -139,4 +139,5 @@ public class EmployerDao {
         DeleteResult deleted = mongoDB.getCompaniesCollection().deleteOne(eq("_id", username));
         return (int) deleted.getDeletedCount();
     }
+    
 }
