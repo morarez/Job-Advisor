@@ -23,6 +23,10 @@ public class SignUpEmployerController {
 	private Label error;
 	
 	
+	 @FXML
+	    private void initialize() throws IOException {
+	        App.setDimStage(800.0, 600.0);
+	    }
 	@FXML
 	private void presssubmit(ActionEvent event) throws IOException {
         if((companyName.getText().isEmpty()) || (cpassword.getText().isEmpty()) || (cemail.getText().isEmpty()))
