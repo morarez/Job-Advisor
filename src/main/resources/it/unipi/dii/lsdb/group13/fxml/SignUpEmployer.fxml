@@ -43,7 +43,7 @@
          <Insets top="20.0" />
       </padding></PasswordField>
 
-<Button fx:id="submitButton" defaultButton="true" onAction="#presssubmit" prefHeight="40" prefWidth="100" text="Submit" GridPane.columnIndex="4" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="15" GridPane.rowSpan="1">
+<Button fx:id="submitButton" defaultButton="true" onAction="#pressSubmit" prefHeight="40" prefWidth="100" text="Submit" GridPane.columnIndex="4" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="15" GridPane.rowSpan="1">
            
         <GridPane.margin>
             <Insets bottom="20" left="0" right="0" top="20" />

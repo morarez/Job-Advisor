@@ -8,17 +8,18 @@ import it.unipi.dii.lsdb.group13.entities.Employer;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
+import org.neo4j.driver.TransactionWork;
 
 import java.util.*;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.push;
 import static com.mongodb.client.model.Updates.set;
+import static org.neo4j.driver.Values.parameters;
 
 public class EmployerDao {
 
-	 public String signUp(String companyName,String email,String password)
-	    {
+	 public String signUp(String companyName,String email,String password) {
 	    	try {
 	            MongoDBManager mongoDB = MongoDBManager.getInstance();
 	            MongoCollection companies = mongoDB.getCompaniesCollection();
@@ -29,7 +30,19 @@ public class EmployerDao {
 	        catch(Exception e) {
 	            return e.getMessage();
 	        }
-	    }
+	 }
+
+    public void addEmployerToNeo4j(String name){
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run("MERGE (c:Company {name: $name})",
+                        parameters("name", name));
+                return null;
+            });
+            System.out.println("User added to neo4j");
+        }
+    }
 
     public boolean deleteAccount() {
 	     boolean ret = true;

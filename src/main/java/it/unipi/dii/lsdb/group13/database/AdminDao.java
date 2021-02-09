@@ -39,6 +39,8 @@ public class AdminDao {
             Document loc = (Document) next.get("_id");
             map.put(loc.getString("state") + " - " + loc.getString("city"), next.getInteger("count"));
         }
+        iterator.close();
+
         return map;
     }
 
@@ -46,7 +48,8 @@ public class AdminDao {
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         MongoCollection collection = mongoDB.getJobSeekersCollection();
         Bson uw = unwind("$skills");
-      //  Bson sbc = sortByCount("$toLower:{$trim:{input:\"$skills\"}}");
+        // Bson sbc = sortByCount("$toLower:{$trim:{input:\"$skills\"}}");
+        // Remove the whitespace characters and change all to lower case
         Bson sb = sortByCount(eq("$toLower", eq("$trim", eq("input", "$skills"))));
         Bson limit = limit(10);
         AggregateIterable aggregate = collection.aggregate(Arrays.asList(uw, sb, limit));
@@ -56,10 +59,8 @@ public class AdminDao {
             Document next = iterator.next();
             map.put(next.getString("_id"), next.getInteger("count"));
         }
+        iterator.close();
+
         return map;
     }
-
-   public void rankCompanies(){
-
-   }
 }

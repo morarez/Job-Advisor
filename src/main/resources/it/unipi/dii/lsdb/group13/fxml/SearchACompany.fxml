@@ -56,7 +56,7 @@
             <Insets top="-200.0" />
          </GridPane.margin>
       </Label>
-      <Button id="followButton" fx:id="followButton" mnemonicParsing="false" text="Follow" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
+      <Button id="followButton" fx:id="followButton" onAction="#followCompany" mnemonicParsing="false" text="Follow" visible="false" GridPane.columnIndex="3" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets top="-200.0" left="300" />
          </GridPane.margin>

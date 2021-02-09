@@ -18,7 +18,7 @@ public class JobOffer {
     public String getLocStr(){ return location.getState() + ", " + location.getCity(); }
 
     public String getSalaryStr(){
-        if (salary.from == null) return "-";
+        if (salary.from == null) return "Not specified.";
         else return salary.from + " - " + salary.to + " (" + salary.timeUnit + ")"; }
 
     public String getId() { return id; }

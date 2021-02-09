@@ -8,9 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 public class SignUpEmployerController {
-	
-	public void SignUpEmployerController() {}
-	
+
 	@FXML
 	private TextField companyName;
 	@FXML
@@ -18,31 +16,30 @@ public class SignUpEmployerController {
 	@FXML
 	private TextField cemail;
 	@FXML
-	private Button submitButton;
-	@FXML
 	private Label error;
 	
 	
 	 @FXML
-	    private void initialize() throws IOException {
+	    private void initialize(){
 	        App.setDimStage(800.0, 600.0);
 	    }
 	@FXML
-	private void presssubmit(ActionEvent event) throws IOException {
+	private void pressSubmit(ActionEvent event) throws IOException {
         if((companyName.getText().isEmpty()) || (cpassword.getText().isEmpty()) || (cemail.getText().isEmpty()))
         {
         	error.setText("Please enter all required fields!");
         	error.setTextFill(Color.web("#ff0000",0.8));
-            return;
         }
         else
         {
         	EmployerDao employer= new EmployerDao();
 
 			String isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText());
-        	if(isValid.equals("true"))
-        	App.setRoot("SignUpConfirmation");
-        	else
+        	if(isValid.equals("true")){
+				employer.addEmployerToNeo4j(companyName.getText());
+				App.setRoot("SignUpConfirmation");
+
+			} else
         		error.setText("Sign Up Failed because: \n"+isValid);
         	error.setTextFill(Color.web("#ff0000",0.8));
         }

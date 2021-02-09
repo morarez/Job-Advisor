@@ -6,12 +6,15 @@ import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
+import org.neo4j.driver.TransactionWork;
+
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
 
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
+import static org.neo4j.driver.Values.parameters;
 
 public class JobSeekerDao {
 
@@ -32,6 +35,17 @@ public class JobSeekerDao {
         }
         catch(Exception e) {
             return e.getMessage();
+        }
+    }
+    public void addJobSeekerToNeo4j(String username){
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+                session.writeTransaction((TransactionWork<Void>) tx -> {
+                    tx.run("MERGE (js:JobSeeker {username: $username})",
+                            parameters("username", username));
+                    return null;
+                });
+                System.out.println("User added to neo4j");
         }
     }
 
@@ -195,7 +209,6 @@ public class JobSeekerDao {
 
     public List<JobSeeker> searchByState(String state) {
         List<JobSeeker> seekers = new ArrayList<>();
-
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         MongoCursor<Document> cursor = mongoDB.getJobSeekersCollection().find(eq("location.state", state)).iterator();
         while (cursor.hasNext()) {
@@ -208,5 +221,67 @@ public class JobSeekerDao {
         cursor.close();
 
         return seekers;
+    }
+
+    public boolean followCompany(String jobSeekerUsername, String companyName){
+        boolean ret = true;
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run( "MATCH (js:JobSeeker),(c:Company) WHERE js.username = $username AND c.name = $name" +
+                                " Merge (js)-[r:FOLLOWS]->(c)",
+                        parameters( "username", jobSeekerUsername, "name", companyName) );
+                return null;
+            });
+        }catch (Exception e){
+            ret = false;
+        }
+        return ret;
+    }
+
+    public boolean unfollowCompany(String jobSeekerUsername, String companyName){
+        boolean ret = true;
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run( "MATCH (:JobSeeker {username: $username})-[r:FOLLOWS]-(:Company {name: $name}) DELETE r",
+                        parameters( "username", jobSeekerUsername, "name", companyName) );
+                return null;
+            });
+        }catch (Exception e){
+            ret = false;
+        }
+        return ret;
+    }
+
+    public boolean saveJobOffer(String jobSeekerUsername, String JobOfferId){
+        boolean ret = true;
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run( "MATCH (js:JobSeeker),(jo:JobOffer) WHERE js.username = $username AND jo.id = $id" +
+                                " Merge (js)-[r:SAVED]->(jo)",
+                        parameters( "username", jobSeekerUsername, "id", JobOfferId) );
+                return null;
+            });
+        }catch (Exception e){
+            ret = false;
+        }
+        return ret;
+    }
+
+    public boolean unSaveJobOffer(String jobSeekerUsername, String JobOfferId){
+        boolean ret = true;
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run( "MATCH (:JobSeeker {username: $username})-[r:SAVED]-(:JobOffer {id: $id}) DELETE r",
+                        parameters( "username", jobSeekerUsername, "id", JobOfferId) );
+                return null;
+            });
+        }catch (Exception e){
+            ret = false;
+        }
+        return ret;
     }
 }
