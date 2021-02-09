@@ -48,4 +48,10 @@ public class JobSeekerMenuController {
     	menuJobSeeker.getChildren().removeAll();
     	menuJobSeeker.setCenter(pane);
     }
+    @FXML
+    private void pressSearchCompany() throws IOException{
+    	GridPane pane = (GridPane) App.loadFXML("SearchACompany");
+    	menuJobSeeker.getChildren().removeAll();
+    	menuJobSeeker.setCenter(pane);
+    }
 }
