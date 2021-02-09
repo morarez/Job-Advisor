@@ -39,6 +39,8 @@ public class AdminDao {
             Document loc = (Document) next.get("_id");
             map.put(loc.getString("state") + " - " + loc.getString("city"), next.getInteger("count"));
         }
+        iterator.close();
+
         return map;
     }
 
@@ -56,6 +58,8 @@ public class AdminDao {
             Document next = iterator.next();
             map.put(next.getString("_id"), next.getInteger("count"));
         }
+        iterator.close();
+
         return map;
     }
 
