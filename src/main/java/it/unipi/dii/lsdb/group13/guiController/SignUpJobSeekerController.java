@@ -47,8 +47,10 @@ public class SignUpJobSeekerController{
 		{
 			JobSeekerDao seeker= new JobSeekerDao();
 			String isValid = seeker.signUp(fname.getText(),lname.getText(),username.getText(),birthday.getValue(),gender.getValue().toString(),jpassword.getText(),jemail.getText(),jcity.getText(),jstate.getText());
-			if(isValid.equals("true"))
+			if(isValid.equals("true")) {
+				seeker.addJobSeekerToNeo4j(username.getText());
 				App.setRoot("SignUpConfirmation");
+			}
 			else
 				error.setText("Sign Up Failed because of this exception: \n"+isValid);
 			error.setTextFill(Color.web("#ff0000",0.8));

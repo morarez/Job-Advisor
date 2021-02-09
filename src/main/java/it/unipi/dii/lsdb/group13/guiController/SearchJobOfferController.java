@@ -4,6 +4,8 @@ import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -131,6 +133,8 @@ public class SearchJobOfferController {
 
             Button saveBu = new Button("SAVE");
             saveBu.setPadding(new Insets(2, 20, 2, 20));
+            /// what is eventHandler??
+            saveBu.setOnAction(saveJobOffer());
             saveBu.setStyle("-fx-border-color: darkgray; -fx-border-radius: 8px; -fx-border-width: 2px; -fx-padding: 5px 22px; -fx-text-align: center; -fx-background-radius: 8px;");
 
             TextFlow flowTitle = new TextFlow();
@@ -169,5 +173,10 @@ public class SearchJobOfferController {
             jobOfferPage.setScene(new Scene(vbox, 440, 500));
             jobOfferPage.show();
         }
+    }
+
+    private EventHandler<ActionEvent> saveJobOffer() {
+
+        return null;
     }
 }

@@ -29,7 +29,7 @@ public class EmployerTableViewController {
         published = FXCollections.observableArrayList(jobOfferDao.findPublished(Session.getLoggedUser()));
         tableEmployer.setItems(published);
     }
-
+    
     @FXML
     private void rowsSelected(MouseEvent mouseEvent) throws IOException {
         JobOffer selected = (JobOffer) tableEmployer.getSelectionModel().getSelectedItem();

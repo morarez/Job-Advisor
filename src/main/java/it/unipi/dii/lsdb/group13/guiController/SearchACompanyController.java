@@ -2,13 +2,16 @@ package it.unipi.dii.lsdb.group13.guiController;
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
+import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.entities.Employer;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 
 import java.io.IOException;
 
+import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -142,5 +145,21 @@ public class SearchACompanyController {
             jobOfferPage.show();
         }
     }
-		
+	@FXML
+	private void followCompany() {
+		JobSeekerDao jobSeekerDao = new JobSeekerDao();
+		Session.getSingleton();
+		String state = followButton.getText();
+		if(state.equals("Follow")) {
+			if (jobSeekerDao.followCompany(Session.getLoggedUser(), companyFound.getText()))
+				followButton.setText("Unfollow");
+			else
+				System.out.println("Failed to follow!");
+		}else{
+			if (jobSeekerDao.unfollowCompany(Session.getLoggedUser(), companyFound.getText()))
+				followButton.setText("Follow");
+			else
+				System.out.println("Failed to unfollow!");
+		}
 	}
+}
