@@ -30,6 +30,11 @@ public class SignUpJobSeekerController{
 	@FXML
 	private Label error;
 
+	
+	 @FXML
+	    private void initialize() throws IOException {
+	        App.setDimStage(700.0, 650.0);
+	    }
 	@FXML
 	private void presssubmit() throws IOException {
 		if((fname.getText().isEmpty()) || (lname.getText().isEmpty())  || (birthday.getValue() == null) || (gender.getValue()== null) || (jcity.getText().isEmpty()) || (jstate.getText().isEmpty()) || (jemail.getText().isEmpty()) || (jpassword.getText().isEmpty()) || (username.getText().isEmpty()))
