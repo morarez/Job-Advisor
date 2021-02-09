@@ -17,6 +17,7 @@
                 <MenuItem text="HomePage" onAction="#pressHomePage"/>
                 <MenuItem text="View saved job offers" />
                 <MenuItem text="Search a job offer" onAction="#pressSearchJobOffer" />
+                <MenuItem text="Search a Company" onAction="#pressSearchCompany" />
                 <MenuItem text="View followed companies" />
             </Menu>
             <Menu text="Account">
