@@ -118,7 +118,7 @@ public class JobOfferDao {
         List<JobOffer> jobOffers = new ArrayList<>();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         Document regQuery = new Document();
-        regQuery.append("$regex", ".*(?).*" + Pattern.quote(jobTitle));
+        regQuery.append("$regex",Pattern.quote(jobTitle));
         regQuery.append("$options", "i");
         FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
         for(Document doc: founded) {
