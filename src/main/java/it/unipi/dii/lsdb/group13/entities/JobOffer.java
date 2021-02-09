@@ -1,13 +1,13 @@
 package it.unipi.dii.lsdb.group13.entities;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.UUID;
 
 public class JobOffer {
     String id;
     String title;
     String companyName;
-    String postDate;
+    Date postDate;
     String description;
     String jobType;
     Salary salary;
@@ -39,7 +39,7 @@ public class JobOffer {
         return companyName;
     }
 
-    public String getPostDate() {
+    public Date getPostDate() {
         return postDate;
     }
 
@@ -60,7 +60,7 @@ public class JobOffer {
         this.companyName = companyName;
         this.description = description;
         this.jobType = jobType;
-        this.postDate = LocalDate.now().toString();
+        this.postDate = new Date();
         location = new Location(state, city);
         String formattedTimeUnit = ((salaryTimeUnit.equals("Year")) ? "/year" : "/hour");
         salary = new Salary(salaryFrom, salaryTo, formattedTimeUnit);
@@ -74,11 +74,11 @@ public class JobOffer {
         this.companyName = companyName;
         this.description = description;
         this.jobType = jobType;
-        this.postDate = LocalDate.now().toString();
+        this.postDate = new Date();
         location = new Location(state, city);
     }
     //get job offer from DB
-    public JobOffer(String id, String title, String companyName, String postDate, String description, String jobType,
+    public JobOffer(String id, String title, String companyName, Date postDate, String description, String jobType,
                     String state, String city,String from,String to,String timeUnit) {
         this.id = id;
         this.title = title;

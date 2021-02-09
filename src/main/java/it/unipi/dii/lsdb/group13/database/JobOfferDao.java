@@ -3,9 +3,6 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Updates;
-import com.mongodb.client.result.DeleteResult;
-import com.mongodb.client.result.UpdateResult;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
@@ -167,7 +164,7 @@ public class JobOfferDao {
 
     private JobOffer parseJobOffer(Document doc){
         return new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"),
-                doc.getString("post_date"),  doc.getString("job_description"), doc.getString("job_type"),
+                doc.getDate("post_date"),  doc.getString("job_description"), doc.getString("job_type"),
                 doc.getEmbedded(List.of("location", "state"), String.class), doc.getEmbedded(List.of("location", "city"), String.class),
                 doc.getEmbedded(List.of("salary", "from"), String.class),doc.getEmbedded(List.of("salary", "to"), String.class),
                 doc.getEmbedded(List.of("salary", "time_unit"), String.class));

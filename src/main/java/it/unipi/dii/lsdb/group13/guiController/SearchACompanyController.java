@@ -122,7 +122,7 @@ public class SearchACompanyController {
 
             TextFlow flowPostDate = new TextFlow();
             Label postDate = new Label("POST DATE: "); postDate.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
-            flowPostDate.getChildren().addAll(postDate, new Label(selected.getPostDate()));
+            flowPostDate.getChildren().addAll(postDate, new Label(selected.getPostDate().toString()));
 
             TextFlow flowJobType = new TextFlow();
             Label jobType = new Label("JOB TYPE: "); jobType.setStyle("-fx-font-size: 18 ; -fx-font-weight: bold ; -fx-text-fill: cadetblue");
