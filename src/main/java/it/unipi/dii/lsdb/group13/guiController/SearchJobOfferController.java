@@ -1,7 +1,9 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
+import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
+import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -124,17 +126,37 @@ public class SearchJobOfferController {
     }
 
     @FXML
-    private void rowSelected() throws IOException {
+    private void rowSelected(){
         JobOffer selected = (JobOffer) tableJobOffers.getSelectionModel().getSelectedItem();
         if(selected != null) {
             System.out.println("Rows selected! " + selected.getTitle() + " " + selected.getCompanyName());
-
+            JobSeekerDao jobSeekerDao = new JobSeekerDao();
             VBox vbox = new VBox(10);
-
-            Button saveBu = new Button("SAVE");
+            Session.getSingleton();
+            String username = Session.getLoggedUser();
+            Button saveBu;
+            if(jobSeekerDao.isSaved(username, selected.getId()))
+                saveBu = new Button("SAVED");
+            else
+                saveBu = new Button("SAVE");
             saveBu.setPadding(new Insets(2, 20, 2, 20));
-            /// what is eventHandler??
-            saveBu.setOnAction(saveJobOffer());
+            saveBu.setOnAction(new EventHandler<ActionEvent>() {
+                @Override public void handle(ActionEvent e) {
+                    String state = saveBu.getText();
+                    if(state.equals("SAVE")) {
+                        if (jobSeekerDao.saveJobOffer(Session.getLoggedUser(), selected.getId()))
+                            saveBu.setText("SAVED");
+                        else
+                            System.out.println("Failed to save!");
+                    }else{
+                        if (jobSeekerDao.unSaveJobOffer(Session.getLoggedUser(), selected.getId()))
+                            saveBu.setText("SAVE");
+                        else
+                            System.out.println("Failed to unsave!");
+                    }
+                }
+            });
+
             saveBu.setStyle("-fx-border-color: darkgray; -fx-border-radius: 8px; -fx-border-width: 2px; -fx-padding: 5px 22px; -fx-text-align: center; -fx-background-radius: 8px;");
 
             TextFlow flowTitle = new TextFlow();
@@ -173,10 +195,5 @@ public class SearchJobOfferController {
             jobOfferPage.setScene(new Scene(vbox, 440, 500));
             jobOfferPage.show();
         }
-    }
-
-    private EventHandler<ActionEvent> saveJobOffer() {
-
-        return null;
     }
 }

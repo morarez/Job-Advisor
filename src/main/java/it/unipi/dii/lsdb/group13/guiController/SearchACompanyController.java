@@ -42,8 +42,8 @@ public class SearchACompanyController {
 	Button followButton;
 	@FXML
 	TableView tableJobOffers;
-	
-	 @FXML
+
+	@FXML
 	    private void initialize() throws IOException {
 	        App.setDimStage(1000.0, 600.0);
 	    }
@@ -66,20 +66,24 @@ public class SearchACompanyController {
 			EmployerDao employerdao= new EmployerDao();
 			Employer employer= employerdao.findUser(company.getText());
 			if(employer!=null) {
-			label1.setVisible(true);
-			label2.setVisible(true);
-			companyFound.setText(employer.getName());
-            companyFound.setVisible(true);
-			emailFound.setText(employer.getEmail());
-			emailFound.setVisible(true);
-			followButton.setVisible(true);
-			JobOfferDao joboffer= new JobOfferDao();
-			String companyEntered= company.getText().toLowerCase();
-            ObservableList<JobOffer> published = FXCollections.observableArrayList(joboffer.getJobOffersByCompany(companyEntered));
-            jobOffer.setText("Job Offers Posted by the Company are: ");
-            jobOffer.setVisible(true);
-            tableJobOffers.setItems(published);
-            tableJobOffers.setVisible(true);
+				JobSeekerDao jobSeekerDao = new JobSeekerDao();
+				Session.getSingleton();
+				if(jobSeekerDao.isFollowing(Session.getLoggedUser(),employer.getName()))
+					followButton.setText("Followed");
+				label1.setVisible(true);
+				label2.setVisible(true);
+				companyFound.setText(employer.getName());
+            	companyFound.setVisible(true);
+				emailFound.setText(employer.getEmail());
+				emailFound.setVisible(true);
+				followButton.setVisible(true);
+				JobOfferDao joboffer= new JobOfferDao();
+				String companyEntered= company.getText().toLowerCase();
+            	ObservableList<JobOffer> published = FXCollections.observableArrayList(joboffer.getJobOffersByCompany(companyEntered));
+            	jobOffer.setText("Job Offers Posted by the Company are: ");
+            	jobOffer.setVisible(true);
+            	tableJobOffers.setItems(published);
+            	tableJobOffers.setVisible(true);
 			}
 			else
 			{
@@ -152,7 +156,7 @@ public class SearchACompanyController {
 		String state = followButton.getText();
 		if(state.equals("Follow")) {
 			if (jobSeekerDao.followCompany(Session.getLoggedUser(), companyFound.getText()))
-				followButton.setText("Unfollow");
+				followButton.setText("Followed");
 			else
 				System.out.println("Failed to follow!");
 		}else{

@@ -6,6 +6,7 @@ import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
+import org.neo4j.driver.Result;
 import org.neo4j.driver.TransactionWork;
 
 import java.text.SimpleDateFormat;
@@ -254,6 +255,23 @@ public class JobSeekerDao {
         return ret;
     }
 
+    public boolean isFollowing(String jobSeekerUsername, String companyName){
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        boolean following = false;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            following = session.readTransaction((TransactionWork<Boolean>) tx -> {
+                Result result = tx.run( "MATCH (js:JobSeeker) , (c:Company) " +
+                                "WHERE js.username = $username AND c.name=$name " +
+                                "RETURN EXISTS( (js)-[:FOLLOWS]-(c) )",
+                        parameters( "username", jobSeekerUsername, "name", companyName) );
+                return result.single().get(0).asBoolean();
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return following;
+    }
+
     public boolean saveJobOffer(String jobSeekerUsername, String JobOfferId){
         boolean ret = true;
         Neo4jManager neo4j = Neo4jManager.getInstance();
@@ -283,5 +301,21 @@ public class JobSeekerDao {
             ret = false;
         }
         return ret;
+    }
+    public boolean isSaved(String jobSeekerUsername, String JobOfferId){
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        boolean saved = false;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            saved = session.readTransaction((TransactionWork<Boolean>) tx -> {
+                Result result = tx.run( "MATCH (js:JobSeeker) , (jo:JobOffer) " +
+                                "WHERE js.username = $username AND jo.id=$id " +
+                                "RETURN EXISTS( (js)-[:SAVED]-(jo) )",
+                        parameters( "username", jobSeekerUsername, "id", JobOfferId) );
+                return result.single().get(0).asBoolean();
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return saved;
     }
 }
