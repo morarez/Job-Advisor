@@ -34,7 +34,6 @@ public class JobSeekerInfoController {
     @FXML
     private Text skills;
 
-
     @FXML
     private void initialize(){
         Session.getSingleton();

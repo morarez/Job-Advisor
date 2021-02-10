@@ -6,7 +6,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.unipi.dii.lsdb.group13.guiController.SavedJobOffersController"
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="it.unipi.dii.lsdb.group13.guiController.FollowedCompaniesController"
             prefHeight="400.0" prefWidth="600.0">
+
 </VBox>

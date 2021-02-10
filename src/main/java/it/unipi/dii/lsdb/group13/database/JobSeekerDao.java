@@ -331,15 +331,35 @@ public class JobSeekerDao {
                 Result result = tx.run( "MATCH (js:JobSeeker)-[:SAVED]->(jo) WHERE js.username = $username" +
                                 " RETURN jo.title as Title",
                         parameters( "username", username) );
-                ArrayList<String> movies = new ArrayList<>();
+                ArrayList<String> titles = new ArrayList<>();
                 while(result.hasNext())
                 {
                     Record r = result.next();
-                    movies.add(r.get("Title").asString());
+                    titles.add(r.get("Title").asString());
                 }
-                return movies;
+                return titles;
             });
         }
         return jobTitles;
+    }
+
+    public List<String> followedCompanies(String username) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<String> companies;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            companies = session.readTransaction((TransactionWork<List<String>>) tx -> {
+                Result result = tx.run( "MATCH (js:JobSeeker)-[:FOLLOWS]->(c) WHERE js.username = $username" +
+                                " RETURN c.name as Name",
+                        parameters( "username", username) );
+                ArrayList<String> comps = new ArrayList<>();
+                while(result.hasNext())
+                {
+                    Record r = result.next();
+                    comps.add(r.get("Name").asString());
+                }
+                return comps;
+            });
+        }
+        return companies;
     }
 }
