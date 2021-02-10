@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
@@ -15,7 +12,7 @@
         <MenuBar>
             <Menu text="Menu">
                 <MenuItem text="HomePage" onAction="#pressHomePage"/>
-                <MenuItem text="View saved job offers" />
+                <MenuItem text="View saved job offers" onAction="#pressSavedJobOffers"/>
                 <MenuItem text="Search a job offer" onAction="#pressSearchJobOffer" />
                 <MenuItem text="Search a Company" onAction="#pressSearchCompany" />
                 <MenuItem text="View followed companies" />

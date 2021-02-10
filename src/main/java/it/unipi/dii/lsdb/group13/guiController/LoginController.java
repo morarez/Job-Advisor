@@ -78,7 +78,7 @@ public class LoginController {
                     App.setRoot("JobSeekerMenu");
                 }
             } catch (Exception e) {
-                // e.printStackTrace();
+                e.printStackTrace();
                 errorMessage.setText("Invalid username");
                 errorMessage.setVisible(true);
             }
@@ -96,7 +96,7 @@ public class LoginController {
                     App.setRoot("EmployerMenu");
                 }
             } catch (Exception e) {
-                //e.printStackTrace();
+                e.printStackTrace();
                 errorMessage.setText("Invalid username");
                 errorMessage.setVisible(true);
             }

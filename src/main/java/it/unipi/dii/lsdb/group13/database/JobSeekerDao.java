@@ -6,8 +6,8 @@ import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
-import org.neo4j.driver.Result;
-import org.neo4j.driver.TransactionWork;
+import org.neo4j.driver.*;
+import org.neo4j.driver.Record;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -321,5 +321,25 @@ public class JobSeekerDao {
             e.printStackTrace();
         }
         return saved;
+    }
+
+    public List<String> savedOffers(String username) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<String> jobTitles;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            jobTitles = session.readTransaction((TransactionWork<List<String>>) tx -> {
+                Result result = tx.run( "MATCH (js:JobSeeker)-[:SAVED]->(jo) WHERE js.username = $username" +
+                                " RETURN jo.title as Title",
+                        parameters( "username", username) );
+                ArrayList<String> movies = new ArrayList<>();
+                while(result.hasNext())
+                {
+                    Record r = result.next();
+                    movies.add(r.get("Title").asString());
+                }
+                return movies;
+            });
+        }
+        return jobTitles;
     }
 }

@@ -25,6 +25,12 @@ public class JobSeekerMenuController {
     }
 
     @FXML
+    private void pressSavedJobOffers() throws IOException {
+        VBox vbox = (VBox) App.loadFXML("SavedJobOffers");
+        menuJobSeeker.setCenter(vbox);
+    }
+
+    @FXML
     private void pressViewAccount() throws IOException {
         VBox vbox = (VBox) App.loadFXML("JobSeekerInfo");
         menuJobSeeker.setCenter(vbox);
