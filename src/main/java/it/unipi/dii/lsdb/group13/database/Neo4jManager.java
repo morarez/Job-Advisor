@@ -6,6 +6,7 @@ public class Neo4jManager implements AutoCloseable {
 
     private final Driver driver;
     private static Neo4jManager neo4j = null;
+    //private String uri = "neo4j://localhost:7687";  // to localhost
 
     private Neo4jManager(){
         driver = GraphDatabase.driver("neo4j://localhost:7687",

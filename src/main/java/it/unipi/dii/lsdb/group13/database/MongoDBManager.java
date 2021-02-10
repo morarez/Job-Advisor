@@ -1,5 +1,7 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -11,9 +13,11 @@ class MongoDBManager {
      private static MongoDBManager dbManager = null;
 
      private MongoDBManager(){
-         String uriString= "mongodb://localhost:27017";
-         mongoClient = MongoClients.create(uriString);
-         database= mongoClient.getDatabase("job_advisor");
+         ConnectionString uriString = new ConnectionString("mongodb://localhost:27017"); // to connect to single local instance
+         //String uriString= "mongodb://localhost:27018,localhost:27019,localhost:27020"; // to connect to local cluster
+         MongoClientSettings mcs = MongoClientSettings.builder().applyConnectionString(uriString).build(); // for now its the same then we can change the settings for the cluster
+         mongoClient = MongoClients.create(mcs);
+         database = mongoClient.getDatabase("job_advisor");
          System.out.println("Mongo Connection opened");
      }
 
