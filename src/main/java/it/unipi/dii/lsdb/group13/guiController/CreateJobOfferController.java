@@ -78,6 +78,7 @@ public class CreateJobOfferController {
             JobOffer jobOffer = new JobOffer(titleField.getText(),companyName,descriptionField.getText()
                     ,jobTypeField.getValue().toString(),stateField.getText(),cityField.getText());
             if (jobOfferDao.createNewJobOffer(jobOffer)) {
+                jobOfferDao.addJobOfferToNeo4j(jobOffer);
                 loadConfirmationPage();
                 App.setRoot("EmployerMenu");
             }

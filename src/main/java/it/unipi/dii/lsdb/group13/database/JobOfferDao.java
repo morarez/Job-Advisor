@@ -9,6 +9,8 @@ import org.bson.BsonDocument;
 import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.neo4j.driver.TransactionWork;
+
 import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Filters.eq;
 import java.util.Arrays;
@@ -20,6 +22,7 @@ import java.util.regex.Pattern;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
 import static com.mongodb.client.model.Filters.gte;
+import static org.neo4j.driver.Values.parameters;
 
 public class JobOfferDao {
 
@@ -50,18 +53,44 @@ public class JobOfferDao {
         }
         return ret;
     }
+    public void addJobOfferToNeo4j(JobOffer jobOffer){
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run("MATCH (c:Company) WHERE c.name = $name MERGE (c)-[:PUBLISHED]->(jo:JobOffer {id: $id , title: $title})",
+                        parameters("name", jobOffer.getCompanyName(), "id", jobOffer.getId(),
+                                "title" , jobOffer.getTitle()));
+                return null;
+            });
+            System.out.println("Job added to neo4j");
+        }
+    }
+
+    private void removeJobOfferToNeo4j(String id){
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run("Match(j:JobOffer) WHERE j.id = $id DETACH DELETE j",
+                        parameters("id", id));
+                return null;
+            });
+            System.out.println("Job deleted from neo4j");
+        }
+    }
 
     public boolean deleteJobOffer(String id){
         boolean ret = true;
         try {
             MongoDBManager mongoDB = MongoDBManager.getInstance();
             mongoDB.getJobOffersCollection().deleteOne(eq("_id",id));
+            removeJobOfferToNeo4j(id);
         }catch (Exception e){
             e.printStackTrace();
             ret = false;
         }
         return ret;
     }
+
 
     public List<JobOffer> getJobOffersByCity(String city){
         List<JobOffer> jobOffers = new ArrayList<>();

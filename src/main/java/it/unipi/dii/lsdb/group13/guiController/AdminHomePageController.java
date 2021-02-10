@@ -76,13 +76,12 @@ public class AdminHomePageController {
             case "Job seeker":
                 if ( foundedS != null ) {
                     JobSeekerDao seekerDao = new JobSeekerDao();
-                    if(seekerDao.deleteJobSeeker(foundedS.getUsername()) == 0) {
-                        errorMessage.setText("There is no document with this id to delete");
-                        errorMessage.setVisible(true);
-                    } else {
+                    if (seekerDao.deleteAccount(foundedS.getUsername())) {
                         errorMessage.setText("Document with id = " + foundedS.getUsername() + " successfully deleted");
-                        errorMessage.setVisible(true);
+                    } else {
+                        errorMessage.setText("There is no document with this id to delete");
                     }
+                    errorMessage.setVisible(true);
                     foundedS = null;
                 } else {
                     errorMessage.setText("Insert the id of the job seeker");
@@ -91,11 +90,11 @@ public class AdminHomePageController {
             case "Employer":
                 if ( foundedE != null ) {
                     EmployerDao employerDao = new EmployerDao();
-                    if(employerDao.deleteEmployer(foundedE.getName()) == 0) {
-                        errorMessage.setText("There is no document with this id to delete");
+                    if(employerDao.deleteAccount(foundedE.getName())) {
+                        errorMessage.setText("Document with id = " + foundedE.getName() + " successfully deleted");
                         errorMessage.setVisible(true);
                     } else {
-                        errorMessage.setText("Document with id = " + foundedE.getName() + " successfully deleted");
+                        errorMessage.setText("There is no document with this id to delete");
                         errorMessage.setVisible(true);
                     }
                     foundedE = null;

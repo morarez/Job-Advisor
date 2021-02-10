@@ -30,7 +30,9 @@ public class EmployerInfoController {
 
     @FXML
     private void deleteAccount() throws IOException {
-        if(employerDao.deleteAccount())
+        Session.getSingleton();
+        if(employerDao.deleteAccount(Session.getLoggedUser()
+        ))
             App.setRoot("LoginPage");
     }
 

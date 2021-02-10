@@ -50,19 +50,29 @@ public class JobSeekerDao {
         }
     }
 
-    public boolean deleteAccount() {
+    public boolean deleteAccount(String username) {
         boolean ret = true;
-        Session.getSingleton();
-        String username = Session.getLoggedUser();
         try {
             MongoDBManager mongoDB = MongoDBManager.getInstance();
-            DeleteResult deleteResult= mongoDB.getJobSeekersCollection().deleteOne(eq("_id",username));
-            System.out.println(deleteResult.getDeletedCount() + " document has been deleted.");
+            mongoDB.getJobSeekersCollection().deleteOne(eq("_id",username));
+            deleteFromNeo4j(username);
         }catch (Exception e){
             e.printStackTrace();
             ret = false;
         }
         return ret;
+    }
+
+    private void deleteFromNeo4j(String username){
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            session.writeTransaction((TransactionWork<Void>) tx -> {
+                tx.run("Match(j:JobSeeker) WHERE j.username = $username DETACH DELETE j",
+                        parameters("username", username));
+                return null;
+            });
+            System.out.println("User deleted from neo4j");
+        }
     }
 
     public boolean changePassword(String newpwd, String pwdagain) {
@@ -119,7 +129,7 @@ public class JobSeekerDao {
 
         doc = (Document) mongoDB.getJobSeekersCollection().find(eq("_id", username)).first();
         System.out.println("arrived here 2");
-        if (doc == null) {;
+        if (doc == null) {
             throw new Exception("Invalid username");
         } else {
             foundedPw = (String) doc.get("password");
@@ -147,12 +157,6 @@ public class JobSeekerDao {
         } else {
             return null;
         }
-    }
-
-    public int deleteJobSeeker(String username) {
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        DeleteResult deleted = mongoDB.getJobSeekersCollection().deleteOne(eq("_id", username));
-        return (int) deleted.getDeletedCount();
     }
 
     public List<JobSeeker> searchSkill(String skill) {

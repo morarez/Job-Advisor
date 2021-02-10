@@ -51,7 +51,8 @@ public class JobSeekerInfoController {
     }
     @FXML
     private void deleteAccount() throws IOException {
-        if(jobSeekerDao.deleteAccount())
+        Session.getSingleton();
+        if(jobSeekerDao.deleteAccount(Session.getLoggedUser()))
             App.setRoot("LoginPage");
     }
 }
