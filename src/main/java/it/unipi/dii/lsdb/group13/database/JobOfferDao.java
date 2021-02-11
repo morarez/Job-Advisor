@@ -53,6 +53,7 @@ public class JobOfferDao {
         }
         return ret;
     }
+
     public void addJobOfferToNeo4j(JobOffer jobOffer){
         Neo4jManager neo4j = Neo4jManager.getInstance();
         try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
@@ -128,12 +129,13 @@ public class JobOfferDao {
         return jobOffers;
     }
 
+    /*in the mongo shell the query is: { job_title: {$regex: 'jobTitle', $options:i} }*/
     public List<JobOffer> getJobOffersByJobTitle(String jobTitle){
         List<JobOffer> jobOffers = new ArrayList<>();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         Document regQuery = new Document();
         regQuery.append("$regex",Pattern.quote(jobTitle));
-        regQuery.append("$options", "i");
+        regQuery.append("$options", "i"); /* the option i is for case insensitive*/
         FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
         for(Document doc: founded) {
             jobOffers.add(parseJobOffer(doc));
