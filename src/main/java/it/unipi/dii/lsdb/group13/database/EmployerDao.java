@@ -70,14 +70,14 @@ public class EmployerDao {
     }
 
     public boolean changePassword(String newpwd, String pwdagain) {
-       Session.getSingleton();
+        Session.getSingleton();
         String username= Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         MongoCollection col= mongoDB.getCompaniesCollection();
         try {
-                        col.updateOne(eq("_id",username),set("password",newpwd));
-                        return true;
-                }
+            col.updateOne(eq("_id",username),set("password",newpwd));
+            return true;
+        }
         catch(Exception e) {
             System.out.println(e.getMessage());
             return false;
