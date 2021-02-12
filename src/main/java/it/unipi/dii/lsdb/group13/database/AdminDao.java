@@ -34,7 +34,6 @@ public class AdminDao {
             map.put(loc.getString("state") + " - " + loc.getString("city"), next.getInteger("count"));
         }
         iterator.close();
-
         return map;
     }
 
@@ -53,7 +52,6 @@ public class AdminDao {
             map.put(next.getString("_id"), next.getInteger("count"));
         }
         iterator.close();
-
         return map;
     }
 }

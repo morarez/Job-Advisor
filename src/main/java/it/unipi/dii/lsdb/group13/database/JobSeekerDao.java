@@ -386,4 +386,26 @@ public class JobSeekerDao {
         }
         return companies;
     }
+
+    public LinkedHashMap<String, List<Object>> postsByFollowedCompanies(String username) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        LinkedHashMap<String, List<Object>> jobOffers;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            jobOffers = session.readTransaction((TransactionWork<LinkedHashMap<String, List<Object>>>) tx -> {
+                Result result = tx.run( "MATCH (:JobSeeker{username:$username})-[:FOLLOWS]->(c)-[r:PUBLISHED]->(j)" +
+                                " RETURN collect(c.name) as Companies,collect(r.date) as Dates," +
+                                " collect(j.title) as Titles ORDER BY r.date DESC",
+                        parameters( "username", username) );
+                List<Object> comps = result.single().get("Companies").asList();
+                List<Object> dates = result.single().get("Dates").asList();
+                List<Object> titles = result.single().get("Titles").asList();
+                LinkedHashMap<String, List<Object>> map = new LinkedHashMap<String, List<Object>>();
+                map.put("companies", comps);
+                map.put("dates", dates);
+                map.put("titles", titles);
+                return map;
+            });
+        }
+        return jobOffers;
+    }
 }
