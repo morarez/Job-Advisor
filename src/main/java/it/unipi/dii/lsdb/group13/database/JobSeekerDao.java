@@ -2,18 +2,14 @@ package it.unipi.dii.lsdb.group13.database;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.result.DeleteResult;
-import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
-
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
 import static org.neo4j.driver.Values.parameters;
@@ -370,13 +366,14 @@ public class JobSeekerDao {
         List<String> companies;
         try(org.neo4j.driver.Session session = neo4j.getDriver().session()) {
             companies = session.readTransaction( (TransactionWork<List<String>>) tx -> {
-                Result result = tx.run("MATCH (js1:JobSeeker)-[:FOLLOWS]->(c:Company)<-[:FOLLOWS]-(js2:JobSeeker) " +
-                        "WHERE js1.username = $username AND js1.username <> js2.username " +
-                        "MATCH (js2)-[:FOLLOWS]->(c1:Company) " +
-                        "WHERE NOT EXISTS ( (js1)-[:FOLLOWS]-(c1) ) " +
-                        "RETURN c1.name AS companyName LIMIT 10", parameters("username", username));
 
-                // System.out.println(result.single().get("companyName").asString());
+                Result result = tx.run("MATCH (u1:JobSeeker)-[:FOLLOWS]->(c:Company)<-[:FOLLOWS]-(u2:JobSeeker)" +
+                                " WHERE u1.username = $username AND u1.username <> u2.username" +
+                                " WITH u2 AS foundedUser, count(DISTINCT c) AS strength" +
+                                " MATCH (foundedUser)-[:FOLLOWS]->(c1:Company)" +
+                                " WHERE NOT EXISTS { (j:JobSeeker {username : $username})-[:FOLLOWS]-(c1) } " +
+                                " RETURN c1.name AS companyName, strength ORDER BY strength DESC LIMIT 15", parameters("username", username));
+
                 ArrayList<String> comps = new ArrayList<>();
                 while(result.hasNext()) {
                     Record r = result.next();
