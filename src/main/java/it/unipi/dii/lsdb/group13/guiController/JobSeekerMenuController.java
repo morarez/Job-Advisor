@@ -32,9 +32,9 @@ public class JobSeekerMenuController {
 
     @FXML
     private void pressSavedJobOffers() throws IOException {
-        VBox vbox = (VBox) App.loadFXML("SavedJobOffers");
+        GridPane pane = (GridPane) App.loadFXML("SavedJobOffers");
         menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
-        menuJobSeeker.setCenter(vbox);
+        menuJobSeeker.setCenter(pane);
     }
 
     @FXML

@@ -307,6 +307,7 @@ public class JobSeekerDao {
         }
         return ret;
     }
+
     public boolean isSaved(String jobSeekerUsername, String JobOfferId){
         Neo4jManager neo4j = Neo4jManager.getInstance();
         boolean saved = false;

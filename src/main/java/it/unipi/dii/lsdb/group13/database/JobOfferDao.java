@@ -143,6 +143,14 @@ public class JobOfferDao {
         return jobOffers;
     }
 
+    public JobOffer getJobOffersByCompleteTitle(String jobTitle){
+        List<JobOffer> jobOffers = new ArrayList<>();
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        Document regQuery = new Document();
+        Document founded = (Document) mongoDB.getJobOffersCollection().find(eq("job_title", jobTitle)).first();
+        return parseJobOffer(founded);
+    }
+
     public List<JobOffer> getJobOffersBySalary(String timeunit, Double minimum){
         List<JobOffer> jobOffers = new ArrayList<>();
         MongoDBManager mongoDB = MongoDBManager.getInstance();

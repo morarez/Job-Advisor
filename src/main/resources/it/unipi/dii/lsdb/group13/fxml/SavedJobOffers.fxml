@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 
-<VBox alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="it.unipi.dii.lsdb.group13.guiController.SavedJobOffersController"
-            prefHeight="400.0" prefWidth="600.0">
-</VBox>
+<GridPane alignment="CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+          fx:controller="it.unipi.dii.lsdb.group13.guiController.SavedJobOffersController"
+          prefHeight="400.0" prefWidth="600.0" hgap="4" vgap="3">
+
+    <TableView fx:id="tableSaved" GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#rowsSelected" prefWidth="350">
+        <columns>
+            <TableColumn fx:id="titleCol" text="Title" prefWidth="350"/>
+        </columns>
+    </TableView>
+
+    <HBox GridPane.columnIndex="2" GridPane.rowIndex="10" spacing="50">
+        <Button text="Remove from favourites" onAction="#pressUnsave"/>
+        <Label fx:id="errorMsg" text="Error messagge" style = "-fx-text-fill: RED ; -fx-font-size: 12" visible="false"/>
+    </HBox>
+
+
+    <padding>
+        <Insets bottom="15" left="5" right="5" top="15"/>
+    </padding>
+</GridPane>
