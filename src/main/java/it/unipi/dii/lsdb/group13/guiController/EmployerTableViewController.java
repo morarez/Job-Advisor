@@ -1,6 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
+import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.main.Session;
 import javafx.collections.FXCollections;
@@ -17,6 +18,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class EmployerTableViewController {
+
+    @FXML
+    private Label errorMsg;
 
     @FXML
     private TableView tableEmployer;
@@ -72,6 +76,26 @@ public class EmployerTableViewController {
             jobOfferPage.setTitle("---- JobOffer info ----");
             jobOfferPage.setScene(new Scene(vbox, 440, 500));
             jobOfferPage.show();
+        }
+    }
+
+    @FXML
+    private void pressDeleteButton() {
+        JobOffer offer = (JobOffer) tableEmployer.getSelectionModel().getSelectedItem();
+        if (offer == null) {
+            errorMsg.setText("Please select \nsomething");
+            errorMsg.setVisible(true);
+        } else {
+            errorMsg.setVisible(false);
+            JobOfferDao jobOfferDao = new JobOfferDao();
+            boolean ret = jobOfferDao.deleteJobOffer(offer.getId());
+            if ( ret == false ) {
+                errorMsg.setText("Something went \nwrong. Please\ntry again");
+            } else {
+                initialize();
+                errorMsg.setText("Job offer\nsuccessfully deleted");
+            }
+            errorMsg.setVisible(true);
         }
     }
 }
