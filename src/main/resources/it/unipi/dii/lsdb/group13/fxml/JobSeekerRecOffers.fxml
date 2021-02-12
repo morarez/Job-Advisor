@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="it.unipi.dii.lsdb.group13.guiController.JobSeekerRecOffers"
+          prefHeight="400.0" prefWidth="500.0" stylesheets="@../css/style.css"
+          alignment="CENTER_LEFT" hgap="8" vgap="8"
+>
+    <Label text="Maybe you can be interested in those job offers:" GridPane.rowIndex="1" GridPane.columnIndex="2" GridPane.columnSpan="3"/>
+    <TableView fx:id="tableRecOffers" prefWidth="300" GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#rowsSelected">
+        <columns>
+            <TableColumn fx:id="titleCol" text="title" prefWidth="200"/>
+            <TableColumn fx:id="dateCol" text="post date" prefWidth="100"/>
+        </columns>
+    </TableView>
+
+    <padding>
+        <Insets bottom="15" left="25" right="25" top="15"/>
+    </padding>
+</GridPane>

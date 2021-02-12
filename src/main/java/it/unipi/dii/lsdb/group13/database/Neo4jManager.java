@@ -6,11 +6,10 @@ public class Neo4jManager implements AutoCloseable {
 
     private final Driver driver;
     private static Neo4jManager neo4j = null;
-    //private String uri = "neo4j://localhost:7687";  // to localhost
 
     private Neo4jManager(){
-        driver = GraphDatabase.driver("neo4j://localhost:7687",
-                AuthTokens.basic("neo4j","lem13"));
+        driver = GraphDatabase.driver("neo4j://localhost:7687", AuthTokens.basic("neo4j","lem13"));
+        //driver = GraphDatabase.driver("bolt://localhost:11003", AuthTokens.basic("neo4j","lem13")); /* please don't remove it :) */
         System.out.println("Neo4j Connection opened");
     }
 

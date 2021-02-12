@@ -3,6 +3,7 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.result.DeleteResult;
+import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.main.Session;
 import org.bson.Document;
@@ -356,6 +357,29 @@ public class JobSeekerDao {
                 {
                     Record r = result.next();
                     comps.add(r.get("Name").asString());
+                }
+                return comps;
+            });
+        }
+        return companies;
+    }
+
+    public List<String> findRecommendedCompanies(String username) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<String> companies;
+        try(org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            companies = session.readTransaction( (TransactionWork<List<String>>) tx -> {
+                Result result = tx.run("MATCH (js1:JobSeeker)-[:FOLLOWS]->(c:Company)<-[:FOLLOWS]-(js2:JobSeeker) " +
+                        "WHERE js1.username = $username AND js1.username <> js2.username " +
+                        "MATCH (js2)-[:FOLLOWS]->(c1:Company) " +
+                        "WHERE NOT EXISTS ( (js1)-[:FOLLOWS]-(c1) ) " +
+                        "RETURN c1.name AS companyName LIMIT 10", parameters("username", username));
+
+                // System.out.println(result.single().get("companyName").asString());
+                ArrayList<String> comps = new ArrayList<>();
+                while(result.hasNext()) {
+                    Record r = result.next();
+                    comps.add(r.get("companyName").asString());
                 }
                 return comps;
             });

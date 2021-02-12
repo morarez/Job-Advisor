@@ -4,6 +4,7 @@ import it.unipi.dii.lsdb.group13.App;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -66,5 +67,22 @@ public class JobSeekerMenuController {
     	GridPane pane = (GridPane) App.loadFXML("SearchACompany");
     	menuJobSeeker.getChildren().removeAll();
     	menuJobSeeker.setCenter(pane);
+    }
+
+    @FXML
+    private void pressViewRecommendedComp() throws IOException {
+        System.out.println("pressed view");
+        GridPane paneComp = (GridPane) App.loadFXML("JobSeekerRecComp");
+        GridPane paneOff = (GridPane) App.loadFXML("JobSeekerRecOffers");
+        menuJobSeeker.getChildren().removeAll();
+        menuJobSeeker.setLeft(paneComp);
+        menuJobSeeker.setRight(paneOff);
+
+        /*StackPane c = new StackPane();
+        c.setPrefWidth(20);
+        menuJobSeeker.setCenter(c);*/
+        //menuJobSeeker.setCenter(paneRight);
+        //menuJobSeeker.setCenter(paneLeft);
+        //menuJobSeeker.getChildren().addAll(paneRight, paneLeft);
     }
 }
