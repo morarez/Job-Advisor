@@ -4,9 +4,7 @@ import it.unipi.dii.lsdb.group13.App;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 
 public class JobSeekerMenuController {
@@ -15,7 +13,7 @@ public class JobSeekerMenuController {
     private BorderPane menuJobSeeker;
 
     @FXML
-    private void initialize() throws IOException {
+    private void initialize(){
         App.setDimStage(900.0, 600.0);
     }
 
@@ -28,44 +26,49 @@ public class JobSeekerMenuController {
     @FXML
     private void pressFollowedCompanies() throws IOException {
         VBox vbox = (VBox) App.loadFXML("FollowedCompanies");
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
         menuJobSeeker.setCenter(vbox);
     }
 
     @FXML
     private void pressSavedJobOffers() throws IOException {
         VBox vbox = (VBox) App.loadFXML("SavedJobOffers");
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
         menuJobSeeker.setCenter(vbox);
     }
 
     @FXML
     private void pressViewAccount() throws IOException {
         VBox vbox = (VBox) App.loadFXML("JobSeekerInfo");
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
         menuJobSeeker.setCenter(vbox);
     }
 
     @FXML
     private void pressUpdateAccount() throws IOException {
         GridPane pane = (GridPane) App.loadFXML("UpdateAccountJobSeeker");
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
         menuJobSeeker.setCenter(pane);
     }
 
     @FXML
     public void pressHomePage() throws IOException {
         VBox vbox = (VBox) App.loadFXML("JobSeekerHomePage");
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
         menuJobSeeker.setCenter(vbox);
     }
 
     @FXML
     private void pressSearchJobOffer() throws IOException{
     	GridPane pane = (GridPane) App.loadFXML("SearchJobOffer");
-    	menuJobSeeker.getChildren().removeAll();
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
     	menuJobSeeker.setCenter(pane);
     }
 
     @FXML
     private void pressSearchCompany() throws IOException{
     	GridPane pane = (GridPane) App.loadFXML("SearchACompany");
-    	menuJobSeeker.getChildren().removeAll();
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
     	menuJobSeeker.setCenter(pane);
     }
 
@@ -74,15 +77,8 @@ public class JobSeekerMenuController {
         System.out.println("pressed view");
         GridPane paneComp = (GridPane) App.loadFXML("JobSeekerRecComp");
         GridPane paneOff = (GridPane) App.loadFXML("JobSeekerRecOffers");
-        menuJobSeeker.getChildren().removeAll();
+        menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
         menuJobSeeker.setLeft(paneComp);
         menuJobSeeker.setRight(paneOff);
-
-        /*StackPane c = new StackPane();
-        c.setPrefWidth(20);
-        menuJobSeeker.setCenter(c);*/
-        //menuJobSeeker.setCenter(paneRight);
-        //menuJobSeeker.setCenter(paneLeft);
-        //menuJobSeeker.getChildren().addAll(paneRight, paneLeft);
     }
 }
