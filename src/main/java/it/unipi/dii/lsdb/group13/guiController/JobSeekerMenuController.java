@@ -25,9 +25,9 @@ public class JobSeekerMenuController {
 
     @FXML
     private void pressFollowedCompanies() throws IOException {
-        VBox vbox = (VBox) App.loadFXML("FollowedCompanies");
+        GridPane pane = (GridPane) App.loadFXML("FollowedCompanies");
         menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
-        menuJobSeeker.setCenter(vbox);
+        menuJobSeeker.setCenter(pane);
     }
 
     @FXML
