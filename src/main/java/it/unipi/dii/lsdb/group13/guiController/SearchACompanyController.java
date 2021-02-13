@@ -8,10 +8,9 @@ import it.unipi.dii.lsdb.group13.entities.JobOffer;
 
 import java.io.IOException;
 
-import it.unipi.dii.lsdb.group13.main.Session;
+import it.unipi.dii.lsdb.group13.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;

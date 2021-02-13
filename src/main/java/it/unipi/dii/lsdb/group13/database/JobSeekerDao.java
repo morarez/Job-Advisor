@@ -3,7 +3,7 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
-import it.unipi.dii.lsdb.group13.main.Session;
+import it.unipi.dii.lsdb.group13.Session;
 import org.bson.Document;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;

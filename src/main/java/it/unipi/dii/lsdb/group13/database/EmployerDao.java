@@ -3,12 +3,9 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.Employer;
-import it.unipi.dii.lsdb.group13.entities.JobOffer;
-import it.unipi.dii.lsdb.group13.main.Session;
+import it.unipi.dii.lsdb.group13.Session;
 import org.bson.Document;
 import org.neo4j.driver.TransactionWork;
-
-import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;

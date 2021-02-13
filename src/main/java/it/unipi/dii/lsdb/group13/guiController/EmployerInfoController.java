@@ -3,7 +3,7 @@ package it.unipi.dii.lsdb.group13.guiController;
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.entities.Employer;
-import it.unipi.dii.lsdb.group13.main.Session;
+import it.unipi.dii.lsdb.group13.Session;
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 

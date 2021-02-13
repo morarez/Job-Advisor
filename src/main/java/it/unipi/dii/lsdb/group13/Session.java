@@ -1,4 +1,4 @@
-package it.unipi.dii.lsdb.group13.main;
+package it.unipi.dii.lsdb.group13;
 
 // class to maintain info about the session
 public class Session {

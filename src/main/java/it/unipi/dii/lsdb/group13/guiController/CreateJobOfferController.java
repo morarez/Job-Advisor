@@ -3,7 +3,7 @@ package it.unipi.dii.lsdb.group13.guiController;
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
-import it.unipi.dii.lsdb.group13.main.Session;
+import it.unipi.dii.lsdb.group13.Session;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -15,7 +15,6 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.text.NumberFormat;
 
 public class CreateJobOfferController {
 

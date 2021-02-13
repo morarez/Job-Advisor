@@ -1,12 +1,9 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
-import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.entities.Employer;
-import it.unipi.dii.lsdb.group13.entities.JobOffer;
-import it.unipi.dii.lsdb.group13.main.Session;
-import javafx.beans.binding.Bindings;
+import it.unipi.dii.lsdb.group13.Session;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
