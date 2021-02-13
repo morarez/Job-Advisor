@@ -19,11 +19,7 @@
                     <PropertyValueFactory property = "title"/>
                 </cellValueFactory>
             </TableColumn>
-            <TableColumn text = "Post date" prefWidth="120">
-                <cellValueFactory>
-                    <PropertyValueFactory property = "postDate"/>
-                </cellValueFactory>
-            </TableColumn>
+            <TableColumn fx:id="dateCol" text="Post date" prefWidth="120"/>
         </columns>
     </TableView>
     <Label fx:id="errorMsg" text ="Error message" GridPane.rowIndex="9" GridPane.columnIndex="4" style="-fx-text-fill: RED ; -fx-font-size: 12" visible="false"/>

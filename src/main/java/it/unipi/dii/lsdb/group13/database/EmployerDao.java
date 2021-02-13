@@ -4,8 +4,14 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.Employer;
 import it.unipi.dii.lsdb.group13.Session;
+import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import org.bson.Document;
+import org.neo4j.driver.Record;
+import org.neo4j.driver.Result;
 import org.neo4j.driver.TransactionWork;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.set;
@@ -84,8 +90,7 @@ public class EmployerDao {
         }
     }
 
-    //depending on the role, the appropriate collection in MongoDB is opened and the username is searched into it
-    // if it is founded, returns the corresponding password, otherwise returns null
+    // if the username is founded, returns the corresponding password, otherwise returns null
     public String searchUsername(String username)  throws Exception{
         String foundedPw;
         Document doc;
@@ -109,5 +114,25 @@ public class EmployerDao {
         } else {
             return null;
         }
+    }
+
+    public List<String> findFollowers(String companyName) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<String> followers;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            followers = session.writeTransaction((TransactionWork<List<String>>) tx -> {
+                Result result = tx.run("MATCH (c:Company {name: $name})<-[:FOLLOWS]-(j:JobSeeker)" +
+                        " RETURN j.username AS username",
+                        parameters("name", companyName));
+
+                List<String> names = new ArrayList<>();
+                while(result.hasNext()) {
+                    Record r = result.next();
+                    names.add(r.get("username").asString());
+                }
+                return names;
+            });
+        }
+        return followers;
     }
 }

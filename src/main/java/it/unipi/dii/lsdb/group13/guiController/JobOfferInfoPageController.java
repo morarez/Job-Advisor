@@ -115,5 +115,4 @@ public class JobOfferInfoPageController {
             jobOfferPage.show();
         }
     }
-
 }
