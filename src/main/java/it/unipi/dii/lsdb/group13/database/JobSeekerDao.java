@@ -36,6 +36,7 @@ public class JobSeekerDao {
             return e.getMessage();
         }
     }
+
     public void addJobSeekerToNeo4j(String username){
         Neo4jManager neo4j = Neo4jManager.getInstance();
         try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
@@ -321,27 +322,6 @@ public class JobSeekerDao {
         }
         return saved;
     }
-
-    /*
-    public List<String> savedOffers(String username) {
-        Neo4jManager neo4j = Neo4jManager.getInstance();
-        List<String> jobTitles;
-        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
-            jobTitles = session.readTransaction((TransactionWork<List<String>>) tx -> {
-                Result result = tx.run( "MATCH (js:JobSeeker)-[:SAVED]->(jo) WHERE js.username = $username" +
-                                " RETURN jo.title as Title",
-                        parameters( "username", username) );
-                ArrayList<String> titles = new ArrayList<>();
-                while(result.hasNext())
-                {
-                    Record r = result.next();
-                    titles.add(r.get("Title").asString());
-                }
-                return titles;
-            });
-        }
-        return jobTitles;
-    } */
 
     public List<JobOffer> savedOffers(String username) {
         Neo4jManager neo4j = Neo4jManager.getInstance();

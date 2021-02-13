@@ -8,12 +8,8 @@ import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 
 public class AdminHomePageController {
-
-    @FXML
-    public Button deleteButton;
 
     @FXML
     private Label errorMessage;

@@ -4,12 +4,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
 
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           prefHeight="400.0" prefWidth="600.0" hgap="10" vgap="8"
           alignment="CENTER"
           stylesheets="@../css/style.css" fx:controller="it.unipi.dii.lsdb.group13.guiController.AdminHomePageController">
+
     <ChoiceBox fx:id="toSearchChoice" value="Search by Id" GridPane.columnIndex="5" GridPane.rowIndex="2" onAction="#searchById">
         <items>
             <FXCollections fx:factory="observableArrayList">
@@ -22,9 +24,17 @@
 
     <TextField fx:id="id" promptText="Insert the id" GridPane.columnIndex="0" GridPane.rowIndex="2" prefWidth="380" onMouseClicked="#emptyChoiceBox"/>
 
-    <Label fx:id="errorMessage" visible="false" style="-fx-text-fill: RED ; -fx-font-size: 12" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3"/>
+    <Label fx:id="errorMessage" visible="false" style="-fx-text-fill: RED ; -fx-font-size: 12" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="3" wrapText="true"/>
 
     <TextArea fx:id="textArea" editable="false" GridPane.rowIndex="3" GridPane.columnIndex="0" prefWidth="380" prefHeight="180"/>
 
     <Button fx:id="deleteButton" text = "Delete" onAction="#deleteFounded" GridPane.columnIndex="5" GridPane.rowIndex="3"/>
+
+    <!--<Label fx:id="numJobSeekerLa" text = "Total number of users: " GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+    <Label fx:id="numEmployerLa" text = "Total number of users: " GridPane.columnIndex="0" GridPane.rowIndex="6"/>
+    <Label fx:id="numJobOfferLa" text = "Total number of jobOffers: " GridPane.columnIndex="0" GridPane.rowIndex="7"/> -->
+
+    <padding>
+        <Insets bottom="15" left="25" right="25" top="15"/>
+    </padding>
 </GridPane>

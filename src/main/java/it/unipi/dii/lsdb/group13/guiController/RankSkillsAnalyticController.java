@@ -13,5 +13,6 @@ public class RankSkillsAnalyticController {
     private void initialize(){
         AdminDao adminDao = new AdminDao();
         label.setText(adminDao.rankSkills().toString());
+        label.wrapTextProperty().setValue(true);
     }
 }
