@@ -3,6 +3,8 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Sorts;
+
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
@@ -13,7 +15,7 @@ import org.neo4j.driver.Record;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.TransactionWork;
 
-import static com.mongodb.client.model.Aggregates.match;
+import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.eq;
 
 import java.text.ParseException;
@@ -105,9 +107,12 @@ public class JobOfferDao {
         List<JobOffer> jobOffers = new ArrayList<>();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
-        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(include("job_title",
+        Bson a= project(fields(include("job_title",
                 "job_type", "job_description", "company_name", "location", "post_date"), computed("lower",
-                eq("$toLower", "$location.city")))), match(eq("lower", city))));
+                eq("$toLower", "$location.city"))));
+        Bson b= match(eq("lower", city));
+        Bson c= sort(Sorts.descending("post_date"));
+        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(a,b,c ));
         for(Document doc: founded) {
             jobOffers.add(parseJobOffer(doc));
         }
@@ -118,9 +123,13 @@ public class JobOfferDao {
         List<JobOffer> jobOffers = new ArrayList<>();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
         MongoCollection<Document> collection= mongoDB.getJobOffersCollection();
-        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(project(fields(
+        Bson a= project(fields(
                 include("job_title", "job_type", "job_description", "company_name", "location", "post_date"),
-                computed("lower", eq("$toLower", "$company_name")))), match(eq("lower", company))));
+                computed("lower", eq("$toLower", "$company_name"))));
+        Bson b= match(eq("lower", company));
+        Bson c= sort(Sorts.descending("post_date"));
+        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(a,b ,c ));
+        		//match(eq("$sort",(eq("post_date",-1))))));
         for(Document doc: founded) {
             jobOffers.add(parseJobOffer(doc));
         }
@@ -130,7 +139,7 @@ public class JobOfferDao {
     public List<JobOffer> getJobOffersByJobType(String jobType){
         List<JobOffer> jobOffers = new ArrayList<>();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
-        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_type", jobType));
+        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_type", jobType)).sort(eq("post_date",-1));
         for (Document doc: founded) {
             jobOffers.add(parseJobOffer(doc));
         }
@@ -144,7 +153,7 @@ public class JobOfferDao {
         Document regQuery = new Document();
         regQuery.append("$regex",Pattern.quote(jobTitle));
         regQuery.append("$options", "i"); /* the option i is for case insensitive*/
-        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery));
+        FindIterable<Document> founded = mongoDB.getJobOffersCollection().find(eq("job_title", regQuery)).sort(eq("post_date",-1));
         for(Document doc: founded) {
             jobOffers.add(parseJobOffer(doc));
         }
@@ -179,7 +188,8 @@ public class JobOfferDao {
                                         .append("to",new BsonString("double"))
                                         .append("onError",new BsonString("0"))))));
         Bson n = match(gte("min", minimum));
-        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(m, p , n));
+        Bson o= sort(Sorts.descending("post_date"));
+        AggregateIterable<Document> founded = collection.aggregate(Arrays.asList(m, p , n, o));
         for(Document doc: founded) {
             jobOffers.add(parseJobOffer(doc));
 
