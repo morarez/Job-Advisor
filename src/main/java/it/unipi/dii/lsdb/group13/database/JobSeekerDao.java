@@ -8,6 +8,8 @@ import it.unipi.dii.lsdb.group13.Session;
 import org.bson.Document;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
@@ -386,5 +388,40 @@ public class JobSeekerDao {
             });
         }
         return companies;
+    }
+
+    public List<JobOffer> findRecommendedJobOffers(String username) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<JobOffer> recommened;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            recommened = session.readTransaction((TransactionWork<List<JobOffer>>) tx -> {
+
+                Result result = tx.run("MATCH (u1:JobSeeker)-[:SAVED]->(j1:JobOffer)<-[:SAVED]-(u2:JobSeeker) " +
+                        "WHERE u1.username = $username AND u1.username <> u2.username " +
+                        "WITH u2 AS foundedUser, count(DISTINCT j1) AS strength " +
+                        "MATCH (foundedUser)-[:SAVED]->(j2:JobOffer)<-[p:PUBLISHED]-(c:Company)" +
+                        "WHERE NOT EXISTS { (u:JobSeeker {username : $username})-[:SAVED]-(j2)} " +
+                        "RETURN foundedUser.username, j2.id as id, j2.title AS title, date(p.date) as postDate, c.name as company, strength ORDER BY strength DESC LIMIT 15", parameters("username", username));
+
+                ArrayList<JobOffer> offers = new ArrayList<>();
+                while (result.hasNext()) {
+                    Record r = result.next();
+                    JobOffer offer = null;
+                    int year = r.get("postDate").asLocalDate().getYear();
+                    int month = r.get("postDate").asLocalDate().getMonthValue();
+                    int day = r.get("postDate").asLocalDate().getDayOfMonth();
+                    System.out.println("year: " + year + " " + month + " " + day);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+                    try {
+                        offer = new JobOffer(r.get("id").asString(), r.get("title").asString(), r.get("company").asString(), sdf.parse(year + "-" + month + "-" + day));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    offers.add(offer);
+                }
+                return offers;
+            });
+        }
+        return recommened;
     }
 }

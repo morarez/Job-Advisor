@@ -16,7 +16,7 @@
                 <MenuItem text="Search a job offer" onAction="#pressSearchJobOffer" />
                 <MenuItem text="Search a Company" onAction="#pressSearchCompany" />
                 <MenuItem text="View followed companies" onAction="#pressFollowedCompanies" />
-                <MenuItem text ="View recommendedations" onAction="#pressViewRecommendedComp"/>
+                <MenuItem text ="View recommendedations" onAction="#pressViewRecommendations"/>
             </Menu>
             <Menu text="Account">
                 <items>

@@ -74,7 +74,7 @@ public class JobSeekerMenuController {
     }
 
     @FXML
-    private void pressViewRecommendedComp() throws IOException {
+    private void pressViewRecommendations() throws IOException {
         System.out.println("pressed view");
         GridPane paneComp = (GridPane) App.loadFXML("JobSeekerRecComp");
         GridPane paneOff = (GridPane) App.loadFXML("JobSeekerRecOffers");
