@@ -3,7 +3,6 @@ package it.unipi.dii.lsdb.group13.guiController;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.Session;
-import it.unipi.dii.lsdb.group13.entities.Employer;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;

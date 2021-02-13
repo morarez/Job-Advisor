@@ -7,7 +7,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
-public class CompanyInfoPageController {
+class CompanyInfoPageController {
 
     private Employer selected;
 
