@@ -77,6 +77,7 @@ public class JobOffer {
         this.postDate = new Date();
         location = new Location(state, city);
     }
+
     //get job offer from DB
     public JobOffer(String id, String title, String companyName, Date postDate, String description, String jobType,
                     String state, String city,String from,String to,String timeUnit) {
@@ -88,6 +89,20 @@ public class JobOffer {
         this.jobType = jobType;
         location = new Location(state, city);
         salary = new Salary(from,to,timeUnit);
+    }
+
+    //first constructor for job offers from Neo4J
+    public JobOffer(String id, String title) {
+        this.id = id;
+        this.title = title;
+    }
+
+    //second constructor for job offers from Neo4J
+    public JobOffer(String id, String title, String companyName, Date postDate) {
+        this.id = id;
+        this.title = title;
+        this.companyName = companyName;
+        this.postDate = postDate;
     }
 
     public String toStringWithoutDescription() {

@@ -1,7 +1,9 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
+import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.Session;
+import it.unipi.dii.lsdb.group13.entities.Employer;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -40,7 +42,8 @@ public class FollowedCompaniesController {
 
     @FXML
     private void rowsSelected() {
-
+        EmployerDao employerDao = new EmployerDao();
+        CompanyInfoPageController companyInfoPageController = new CompanyInfoPageController(employerDao.findUser(tableFollowed.getSelectionModel().getSelectedItem().toString()));
     }
 
     @FXML

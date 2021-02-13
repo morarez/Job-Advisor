@@ -9,15 +9,23 @@ import org.bson.BsonDocument;
 import org.bson.BsonString;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.neo4j.driver.Record;
+import org.neo4j.driver.Result;
 import org.neo4j.driver.TransactionWork;
 
 import static com.mongodb.client.model.Aggregates.match;
 import static com.mongodb.client.model.Filters.eq;
-import java.util.Arrays;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 import static com.mongodb.client.model.Aggregates.project;
 import static com.mongodb.client.model.Projections.computed;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.regex.Pattern;
 import static com.mongodb.client.model.Projections.fields;
 import static com.mongodb.client.model.Projections.include;
@@ -198,6 +206,37 @@ public class JobOfferDao {
         for(Document doc: founded) {
             jobOffers.add(parseJobOffer(doc));
         }
+        return jobOffers;
+    }
+
+    public List<JobOffer> postsByFollowedCompanies(String username) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<JobOffer> jobOffers = null;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            jobOffers = session.readTransaction((TransactionWork<List<JobOffer>>) tx -> {
+                Result result = tx.run("MATCH (:JobSeeker {username:$username})-[:FOLLOWS]->(c)-[r:PUBLISHED]->(j)" +
+                        "RETURN c.name AS company, date(r.date) as postDate,j.title AS title, j.id AS id ORDER BY postDate DESC LIMIT 20", parameters("username", username));
+
+                List<JobOffer> offers = new ArrayList<>();
+                while (result.hasNext()) {
+                    Record r = result.next();
+                    JobOffer offer = null;
+                    int year = r.get("postDate").asLocalDate().getYear();
+                    int month = r.get("postDate").asLocalDate().getMonthValue();
+                    int day = r.get("postDate").asLocalDate().getDayOfMonth();
+                    System.out.println("year: " + year + " " + month + " "+ day);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
+                    try {
+                        offer = new JobOffer(r.get("id").asString(), r.get("title").asString(), r.get("company").asString(), sdf.parse(year + "-" + month + "-" + day));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    offers.add(offer);
+                }
+                return offers;
+            });
+        }
+
         return jobOffers;
     }
 

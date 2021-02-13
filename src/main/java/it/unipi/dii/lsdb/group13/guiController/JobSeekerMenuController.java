@@ -13,8 +13,9 @@ public class JobSeekerMenuController {
     private BorderPane menuJobSeeker;
 
     @FXML
-    private void initialize(){
+    private void initialize() throws IOException {
         App.setDimStage(900.0, 600.0);
+        pressHomePage();
     }
 
     @FXML
@@ -53,9 +54,9 @@ public class JobSeekerMenuController {
 
     @FXML
     public void pressHomePage() throws IOException {
-        VBox vbox = (VBox) App.loadFXML("JobSeekerHomePage");
+        GridPane pane = (GridPane) App.loadFXML("JobSeekerHomePage");
         menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());
-        menuJobSeeker.setCenter(vbox);
+        menuJobSeeker.setCenter(pane);
     }
 
     @FXML

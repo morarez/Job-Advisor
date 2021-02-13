@@ -1,12 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<VBox id="vbox" xmlns="http://javafx.com/javafx/10.0.2-internal"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="it.unipi.dii.lsdb.group13.guiController.JobSeekerMenuController" >
-    <children>
-        <Text text="this is the job seeker home page"/>
-    </children>
-</VBox>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<GridPane xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="it.unipi.dii.lsdb.group13.guiController.JobSeekerHomePageController"
+          prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/style.css"
+          alignment="CENTER" hgap="8" vgap="8"
+>
+    <Label text="This are the job offers published by the companies you follow:" GridPane.rowIndex="1" GridPane.columnIndex="2" GridPane.columnSpan="3"/>
+    <TableView fx:id="tablePublished"  GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#rowsSelected">
+        <columns>
+            <TableColumn fx:id = "titleCol" text = "Title" prefWidth="350">
+                <cellValueFactory>
+                    <PropertyValueFactory property="title"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id = "companyCol" text = "Company" prefWidth="200">
+                <cellValueFactory>
+                    <PropertyValueFactory property="companyName"/>
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="dateCol" text = "Post date" prefWidth="90"></TableColumn>
+        </columns>
+    </TableView>
+
+    <padding>
+        <Insets bottom="15" left="25" right="25" top="15"/>
+    </padding>
+</GridPane>

@@ -2,6 +2,7 @@ package it.unipi.dii.lsdb.group13.database;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCursor;
+import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.Session;
 import org.bson.Document;
@@ -321,6 +322,7 @@ public class JobSeekerDao {
         return saved;
     }
 
+    /*
     public List<String> savedOffers(String username) {
         Neo4jManager neo4j = Neo4jManager.getInstance();
         List<String> jobTitles;
@@ -339,7 +341,28 @@ public class JobSeekerDao {
             });
         }
         return jobTitles;
+    } */
+
+    public List<JobOffer> savedOffers(String username) {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<JobOffer> jobTitles;
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
+            jobTitles = session.readTransaction((TransactionWork<List<JobOffer>>) tx -> {
+                Result result = tx.run( "MATCH (js:JobSeeker)-[:SAVED]->(jo) WHERE js.username = $username" +
+                                " RETURN jo.title as title, jo.id AS id",
+                        parameters( "username", username) );
+                ArrayList<JobOffer> offers = new ArrayList<>();
+                while(result.hasNext())
+                {
+                    Record r = result.next();
+                    offers.add(new JobOffer(r.get("id").asString(), r.get("title").asString()));
+                }
+                return offers;
+            });
+        }
+        return jobTitles;
     }
+
 
     public List<String> followedCompanies(String username) {
         Neo4jManager neo4j = Neo4jManager.getInstance();
@@ -383,27 +406,5 @@ public class JobSeekerDao {
             });
         }
         return companies;
-    }
-
-    public LinkedHashMap<String, List<Object>> postsByFollowedCompanies(String username) {
-        Neo4jManager neo4j = Neo4jManager.getInstance();
-        LinkedHashMap<String, List<Object>> jobOffers;
-        try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
-            jobOffers = session.readTransaction((TransactionWork<LinkedHashMap<String, List<Object>>>) tx -> {
-                Result result = tx.run( "MATCH (:JobSeeker{username:$username})-[:FOLLOWS]->(c)-[r:PUBLISHED]->(j)" +
-                                " RETURN collect(c.name) as Companies,collect(r.date) as Dates," +
-                                " collect(j.title) as Titles ORDER BY r.date DESC",
-                        parameters( "username", username) );
-                List<Object> comps = result.single().get("Companies").asList();
-                List<Object> dates = result.single().get("Dates").asList();
-                List<Object> titles = result.single().get("Titles").asList();
-                LinkedHashMap<String, List<Object>> map = new LinkedHashMap<String, List<Object>>();
-                map.put("companies", comps);
-                map.put("dates", dates);
-                map.put("titles", titles);
-                return map;
-            });
-        }
-        return jobOffers;
     }
 }
