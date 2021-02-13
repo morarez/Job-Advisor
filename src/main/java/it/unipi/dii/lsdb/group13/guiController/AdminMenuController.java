@@ -45,4 +45,9 @@ public class AdminMenuController {
         VBox vbox = (VBox) loadFXML("RankSkillsAnalytic");
         menuAdmin.setCenter(vbox);
     }
+    @FXML
+    private void pressCompaniesAnalytic() throws IOException {
+    	GridPane pane = (GridPane) loadFXML("TopFollowedCompaniesAnalytic");
+        menuAdmin.setCenter(pane);
+    }
 }

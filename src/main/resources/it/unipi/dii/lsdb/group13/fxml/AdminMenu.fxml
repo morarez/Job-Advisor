@@ -16,6 +16,7 @@
                     <MenuItem text="HomePage" onAction="#pressHomePage"/>
                     <MenuItem text="Cities with Most jobs" onAction="#pressCitiesAnalytic"/>
                     <MenuItem text="Most Repeated Skills" onAction="#pressSkillsAnalytic"/>
+                    <MenuItem text="Most Followed Companies" onAction="#pressCompaniesAnalytic"/>
                     <MenuItem text = "Exit" onAction="#pressExit"/>
                 </Menu>
             </menus>
