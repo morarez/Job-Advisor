@@ -33,7 +33,7 @@ public class SignUpJobSeekerController{
 	
 	 @FXML
 	    private void initialize() throws IOException {
-	        App.setDimStage(700.0, 650.0);
+	        App.setDimStage(750.0, 650.0);
 	    }
 	@FXML
 	private void presssubmit() throws IOException {
