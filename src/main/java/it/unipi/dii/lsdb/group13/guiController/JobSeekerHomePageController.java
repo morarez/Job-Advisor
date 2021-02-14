@@ -43,7 +43,6 @@ public class JobSeekerHomePageController {
 
     public void rowsSelected() {
         JobOfferDao jobOfferDao = new JobOfferDao();
-        JobSeekerDao jobSeekerDao = new JobSeekerDao();
         JobOffer item = (JobOffer) tablePublished.getSelectionModel().getSelectedItem();
         JobOfferInfoPageController infoPageController = new JobOfferInfoPageController(jobOfferDao.getById(item.getId()), true);
     }

@@ -1,6 +1,7 @@
 package it.unipi.dii.lsdb.group13;
 
-import it.unipi.dii.lsdb.group13.database.DatabaseManager;
+import it.unipi.dii.lsdb.group13.database.MongoDBManager;
+import it.unipi.dii.lsdb.group13.database.Neo4jManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,6 +18,9 @@ public class App extends Application {
     private static Scene scene;
     private static Stage stage;
 
+    Neo4jManager neo4jManager;
+    MongoDBManager mongoDBManager;
+
     @Override
     public void start(Stage stage) throws IOException {
         this.stage = stage;
@@ -24,11 +28,13 @@ public class App extends Application {
         stage.setScene(scene);
         //stage.setFullScreen(true);
         stage.show();
+        neo4jManager = Neo4jManager.getInstance();
+        mongoDBManager = MongoDBManager.getInstance();
     }
     @Override
     public void stop() {
-        //We need to set mongoDB public. How should we solve this???
-        DatabaseManager.closeDatabases();
+        neo4jManager.close();
+        mongoDBManager.close();
     }
 
     public static void setRoot(String fxml) throws IOException {

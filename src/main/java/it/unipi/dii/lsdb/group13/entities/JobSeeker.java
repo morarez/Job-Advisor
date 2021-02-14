@@ -2,7 +2,6 @@ package it.unipi.dii.lsdb.group13.entities;
 
 import java.util.*;
 
-// for now we do not have locations, workExperience and Skills, we will add them if needed
 public class JobSeeker{
     String firstName;
     String lastName;

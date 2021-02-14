@@ -20,7 +20,7 @@ public class Neo4jManager implements AutoCloseable {
             return neo4j.driver;
     }
 
-    static Neo4jManager getInstance() {
+    public static Neo4jManager getInstance() {
         if(neo4j == null)
             neo4j = new Neo4jManager();
 

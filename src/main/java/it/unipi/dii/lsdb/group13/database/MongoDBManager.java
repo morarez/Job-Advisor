@@ -7,7 +7,7 @@ import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
-class MongoDBManager {
+public class MongoDBManager {
      private MongoClient mongoClient;
      private MongoDatabase database;
      private static MongoDBManager dbManager = null;
@@ -21,14 +21,14 @@ class MongoDBManager {
          System.out.println("Mongo Connection opened");
      }
 
-    static MongoDBManager getInstance() {
+    public static MongoDBManager getInstance() {
     	if(dbManager == null){
     	    dbManager = new MongoDBManager();
         }
     	return dbManager;
     }
 
-    void closeDB() {
+    public void close() {
         mongoClient.close();
         System.out.println("Mongo Connection closed");
     }
