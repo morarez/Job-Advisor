@@ -2,6 +2,8 @@ package it.unipi.dii.lsdb.group13.database;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
+import com.mongodb.ReadPreference;
+import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import com.mongodb.client.MongoCollection;
@@ -13,9 +15,21 @@ public class MongoDBManager {
      private static MongoDBManager dbManager = null;
 
      private MongoDBManager(){
+         //to connect to local instance
          ConnectionString uriString = new ConnectionString("mongodb://localhost:27017"); // to connect to single local instance
-         //String uriString= "mongodb://localhost:27018,localhost:27019,localhost:27020"; // to connect to local cluster
-         MongoClientSettings mcs = MongoClientSettings.builder().applyConnectionString(uriString).build(); // for now its the same then we can change the settings for the cluster
+         MongoClientSettings mcs = MongoClientSettings.builder().applyConnectionString(uriString).build();
+
+         //to connect to local cluster
+         //ConnectionString uriString= new ConnectionString("mongodb://localhost:27018,localhost:27019,localhost:27020");
+
+         //to connect to the cluster of VMs
+         /*ConnectionString uriString= new ConnectionString("mongodb://172.16.3.151:27020,172.16.3.123:27020, 172.16.3.124:27020");
+         MongoClientSettings mcs = MongoClientSettings.builder().applyConnectionString(uriString)
+                 .readPreference(ReadPreference.nearest())
+                 .retryWrites(true)
+                 .writeConcern(WriteConcern.W1)
+                 .build(); */
+
          mongoClient = MongoClients.create(mcs);
          database = mongoClient.getDatabase("job_advisor");
          System.out.println("Mongo Connection opened");
