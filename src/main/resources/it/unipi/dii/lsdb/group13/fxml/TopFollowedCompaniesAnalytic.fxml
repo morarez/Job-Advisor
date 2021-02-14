@@ -13,7 +13,7 @@
     <Label text="The top 10 most followed companies are:" GridPane.rowIndex="1" GridPane.columnIndex="2" GridPane.columnSpan="3"/>
     <TableView fx:id="tableTopCompanies"  GridPane.rowIndex="4" GridPane.columnIndex="2">
         <columns>
-            <TableColumn fx:id="company" text="Company Name" prefWidth="250"/>
+            <TableColumn fx:id="company" text="Company Name" prefWidth="400"/>
         </columns>
     </TableView>
 

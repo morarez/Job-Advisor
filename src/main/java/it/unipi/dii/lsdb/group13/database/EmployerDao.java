@@ -142,11 +142,11 @@ public class EmployerDao {
         try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
             companies = session.writeTransaction((TransactionWork<List<String>>) tx -> {
                 Result result = tx.run("MATCH(co:Company)<-[r:FOLLOWS]-(js:JobSeeker)" +
-                        " WITH co, count (r) as rels"+" RETURN co.name AS name" + " ORDER BY rels DESC"
+                        " WITH co, count (r) as rels"+" RETURN co.name AS name, rels AS relation" + " ORDER BY rels DESC"
                         		+ " LIMIT 10");
                 while(result.hasNext()) {
                     Record r = result.next();
-                    names.add(r.get("name").asString());
+                    names.add(r.get("name").asString()+" has: "+ r.get("relation")+" followers");
                 }
                 return names;
             });
