@@ -34,6 +34,7 @@
                     <String fx:value="Part-Time" />
                     <String fx:value="Full-Time/Part-Time" />
                     <String fx:value="Contractor" />
+                    <String fx:value="Contract To Hire" />
                     <String fx:value="Seasonal/Temp" />
                 </FXCollections>
             </items>
