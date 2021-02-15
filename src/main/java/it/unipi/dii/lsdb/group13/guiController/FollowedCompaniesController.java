@@ -7,6 +7,7 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -40,12 +41,6 @@ public class FollowedCompaniesController {
     }
 
     @FXML
-    private void rowsSelected() {
-        EmployerDao employerDao = new EmployerDao();
-        CompanyInfoPageController companyInfoPageController = new CompanyInfoPageController(employerDao.findUser(tableFollowed.getSelectionModel().getSelectedItem().toString()));
-    }
-
-    @FXML
     private void pressUnfollow() {
         String selected = (String) tableFollowed.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -63,5 +58,11 @@ public class FollowedCompaniesController {
             }
             errorMsg.setVisible(true);
         }
+    }
+
+    @FXML
+    private void pressView() {
+        EmployerDao employerDao = new EmployerDao();
+        CompanyInfoPageController companyInfoPageController = new CompanyInfoPageController(employerDao.findUser(tableFollowed.getSelectionModel().getSelectedItem().toString()));
     }
 }

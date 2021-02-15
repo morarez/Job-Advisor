@@ -11,14 +11,18 @@
           fx:controller="it.unipi.dii.lsdb.group13.guiController.FollowedCompaniesController"
           prefHeight="400.0" prefWidth="600.0" hgap="4" vgap="3">
 
-    <TableView fx:id="tableFollowed" GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#rowsSelected" prefWidth="350">
+    <TableView fx:id="tableFollowed" GridPane.rowIndex="4" GridPane.columnIndex="2" prefWidth="350">
         <columns>
             <TableColumn fx:id="nameCol" text="Company name" prefWidth="350"/>
         </columns>
     </TableView>
 
     <HBox GridPane.columnIndex="2" GridPane.rowIndex="10" spacing="50">
-        <Button text="Unfollow" onAction="#pressUnfollow"/>
+        <VBox spacing="5">
+            <Button text="Unfollow" onAction="#pressUnfollow"/>
+            <Button text="View" onAction="#pressView"/>
+        </VBox>
+
         <Label fx:id="errorMsg" text="Error messagge" style = "-fx-text-fill: RED ; -fx-font-size: 12" visible="false"/>
     </HBox>
 
