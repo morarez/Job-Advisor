@@ -1,5 +1,7 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import org.apache.log4j.Logger;
+
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ReadPreference;
@@ -15,6 +17,7 @@ public class MongoDBManager {
      private static MongoDBManager dbManager = null;
 
      private MongoDBManager(){
+    	 Logger logger = Logger.getLogger(Neo4jManager.class.getName());
          //to connect to local instance
          ConnectionString uriString = new ConnectionString("mongodb://localhost:27017"); // to connect to single local instance
          MongoClientSettings mcs = MongoClientSettings.builder().applyConnectionString(uriString).build();
