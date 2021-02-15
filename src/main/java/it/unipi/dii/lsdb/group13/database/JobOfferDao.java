@@ -241,7 +241,6 @@ public class JobOfferDao {
                     int year = r.get("postDate").asLocalDate().getYear();
                     int month = r.get("postDate").asLocalDate().getMonthValue();
                     int day = r.get("postDate").asLocalDate().getDayOfMonth();
-                    System.out.println("year: " + year + " " + month + " "+ day);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
                     try {
                         offer = new JobOffer(r.get("id").asString(), r.get("title").asString(), r.get("company").asString(), sdf.parse(year + "-" + month + "-" + day));

@@ -45,7 +45,7 @@ public class EmployerDao {
                         parameters("name", name));
                 return null;
             });
-            System.out.println("User added to neo4j");
+            logger.info("User added to neo4j");
         }
     }
 
@@ -63,7 +63,6 @@ public class EmployerDao {
     	}
     	catch(Exception e) {
         	logger.error(e.getMessage());
-    		e.printStackTrace();
     		ret = false;
     	}
     	return ret;
@@ -77,7 +76,7 @@ public class EmployerDao {
                         parameters("name", name));
                 return null;
             });
-            System.out.println("User deleted from neo4j");
+            logger.info("User deleted from neo4j");
         }
     }
 
