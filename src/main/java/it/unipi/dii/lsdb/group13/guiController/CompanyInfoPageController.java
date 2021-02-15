@@ -1,12 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
-
-<<<<<<< HEAD
 import org.apache.log4j.Logger;
-
-=======
 import it.unipi.dii.lsdb.group13.Session;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
->>>>>>> 560044f17107c27dd7a8e20428620f84fffad3b2
 import it.unipi.dii.lsdb.group13.entities.Employer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
