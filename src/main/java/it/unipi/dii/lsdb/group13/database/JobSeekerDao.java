@@ -8,6 +8,8 @@ import com.mongodb.client.result.UpdateResult;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.Session;
+
+import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.neo4j.driver.*;
@@ -22,6 +24,10 @@ import static com.mongodb.client.model.Updates.*;
 import static org.neo4j.driver.Values.parameters;
 
 public class JobSeekerDao {
+	Logger logger;
+	 public JobSeekerDao() {
+	    	 logger = Logger.getLogger(JobSeekerDao.class.getName());
+	    }
 
     public String signUp(String fname, String lname, String username, LocalDate birthdate, String g, String password,
                           String email, String city, String state) {
@@ -39,6 +45,7 @@ public class JobSeekerDao {
             return "true";
         }
         catch(Exception e) {
+        	logger.error(e.getMessage());
             return e.getMessage();
         }
     }
@@ -51,7 +58,7 @@ public class JobSeekerDao {
                             parameters("username", username));
                     return null;
                 });
-                System.out.println("User added to neo4j");
+                logger.info("User added to neo4j");
         }
     }
 
@@ -62,7 +69,7 @@ public class JobSeekerDao {
             mongoDB.getJobSeekersCollection().deleteOne(eq("_id",username));
             deleteFromNeo4j(username);
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
             ret = false;
         }
         return ret;
@@ -76,7 +83,7 @@ public class JobSeekerDao {
                         parameters("username", username));
                 return null;
             });
-            System.out.println("User deleted from neo4j");
+            logger.info("User deleted from neo4j");
         }
     }
 
@@ -89,7 +96,7 @@ public class JobSeekerDao {
              return true;
          }
          catch(Exception e) {
-             System.out.println(e.getMessage());
+             logger.error(e.getMessage());
              return false;
          }
      }
@@ -105,7 +112,7 @@ public class JobSeekerDao {
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             return false;
         }
     }
@@ -121,7 +128,7 @@ public class JobSeekerDao {
         }
         catch(Exception e)
         {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             return false;
         }
 
@@ -266,6 +273,7 @@ public class JobSeekerDao {
                 return null;
             });
         }catch (Exception e){
+        	logger.error(e.getMessage());
             ret = false;
         }
         return ret;
@@ -281,6 +289,7 @@ public class JobSeekerDao {
                 return null;
             });
         }catch (Exception e){
+        	logger.error(e.getMessage());
             ret = false;
         }
         return ret;
@@ -298,7 +307,7 @@ public class JobSeekerDao {
                 return result.single().get(0).asBoolean();
             });
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
         return following;
     }
@@ -314,6 +323,7 @@ public class JobSeekerDao {
                 return null;
             });
         }catch (Exception e){
+        	logger.error(e.getMessage());
             ret = false;
         }
         return ret;
@@ -329,6 +339,7 @@ public class JobSeekerDao {
                 return null;
             });
         }catch (Exception e){
+        	logger.error(e.getMessage());
             ret = false;
         }
         return ret;
@@ -346,8 +357,8 @@ public class JobSeekerDao {
                 return result.single().get(0).asBoolean();
             });
         }catch (Exception e){
-            e.printStackTrace();
-        }
+        	logger.error(e.getMessage());    
+        	}
         return saved;
     }
 
