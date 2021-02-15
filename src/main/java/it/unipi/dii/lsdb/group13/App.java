@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 /** aaacosta, h:5}TWc0
  * JavaFX App
  */
@@ -17,9 +20,11 @@ public class App extends Application {
 
     private static Scene scene;
     private static Stage stage;
+    private static Logger logger = null;
 
     Neo4jManager neo4jManager;
     MongoDBManager mongoDBManager;
+    
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -28,8 +33,10 @@ public class App extends Application {
         stage.setScene(scene);
         //stage.setFullScreen(true);
         stage.show();
+        loadlog4j();
         neo4jManager = Neo4jManager.getInstance();
         mongoDBManager = MongoDBManager.getInstance();
+        
     }
     @Override
     public void stop() {
@@ -49,6 +56,10 @@ public class App extends Application {
     public static void setDimStage(Double width, Double height) {
         stage.setWidth(width);
         stage.setHeight(height);
+    }
+    public static void loadlog4j() {
+    	String path = System.getProperty("user.dir") + "/log.properties";
+    	PropertyConfigurator.configure(path);
     }
 
     public static void main(String[] args) {
