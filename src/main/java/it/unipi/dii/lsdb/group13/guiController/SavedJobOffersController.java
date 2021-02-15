@@ -28,7 +28,7 @@ public class SavedJobOffersController {
     }
 
     @FXML
-    private void rowsSelected() {
+    private void pressView() {
         JobOfferDao jobOfferDao = new JobOfferDao();
         JobOffer selected = (JobOffer) tableSaved.getSelectionModel().getSelectedItem();
         JobOfferInfoPageController jobOfferInfoPageController = new JobOfferInfoPageController(jobOfferDao.getById(selected.getId()), false);
