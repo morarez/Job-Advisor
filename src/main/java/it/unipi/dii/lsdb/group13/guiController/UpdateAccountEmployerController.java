@@ -2,6 +2,8 @@ package it.unipi.dii.lsdb.group13.guiController;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import javafx.fxml.FXML;
@@ -9,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 public class UpdateAccountEmployerController {
-	public void UpdateAccountEmployerController() {}
+	public UpdateAccountEmployerController() {
+    	Logger logger = Logger.getLogger(UpdateAccountEmployerController.class.getName());    
+}
 	
 
 	@FXML

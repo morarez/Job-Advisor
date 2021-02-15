@@ -1,5 +1,8 @@
 package it.unipi.dii.lsdb.group13.guiController;
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import javafx.fxml.FXML;
@@ -8,7 +11,9 @@ import javafx.scene.paint.Color;
 
 public class SignUpJobSeekerController{
 
-	public SignUpJobSeekerController() {}
+	public SignUpJobSeekerController() {
+	    	Logger logger = Logger.getLogger(SignUpJobSeekerController.class.getName());    
+	}
 	@FXML
 	private TextField fname;
 	@FXML

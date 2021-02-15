@@ -8,6 +8,8 @@ import it.unipi.dii.lsdb.group13.entities.JobOffer;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.Session;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,6 +20,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class SearchACompanyController {
+	public SearchACompanyController() {
+    	Logger logger = Logger.getLogger(SearchACompanyController.class.getName());
+    }
 	@FXML
 	TextField company;
 

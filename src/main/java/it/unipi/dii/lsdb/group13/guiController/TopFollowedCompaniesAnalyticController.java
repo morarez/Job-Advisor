@@ -1,5 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -11,6 +13,9 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class TopFollowedCompaniesAnalyticController {
+	public TopFollowedCompaniesAnalyticController() {
+    	Logger logger = Logger.getLogger(TopFollowedCompaniesAnalyticController.class.getName());    
+}
 	@FXML
 	private TableView tableTopCompanies;
 	@FXML

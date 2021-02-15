@@ -1,5 +1,8 @@
 package it.unipi.dii.lsdb.group13.guiController;
 import java.io.IOException;
+
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import javafx.event.ActionEvent;
@@ -8,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 public class SignUpEmployerController {
-
+	public SignUpEmployerController() {
+    	Logger logger = Logger.getLogger(SignUpEmployerController.class.getName());    
+}
 	@FXML
 	private TextField companyName;
 	@FXML

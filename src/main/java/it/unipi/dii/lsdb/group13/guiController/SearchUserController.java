@@ -9,8 +9,12 @@ import javafx.scene.control.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchUserController {
+import org.apache.log4j.Logger;
 
+public class SearchUserController {
+	public SearchUserController() {
+    	Logger logger = Logger.getLogger(SearchUserController.class.getName());
+    }
     @FXML
     private Label errorMsg;
 

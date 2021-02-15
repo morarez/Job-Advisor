@@ -1,5 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.collections.FXCollections;
@@ -9,7 +11,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
 public class SearchJobOfferController {
-
+	public SearchJobOfferController() {
+    	Logger logger = Logger.getLogger(SearchJobOfferController.class.getName());
+    }
     @FXML
     private TableView tableJobOffers;
 

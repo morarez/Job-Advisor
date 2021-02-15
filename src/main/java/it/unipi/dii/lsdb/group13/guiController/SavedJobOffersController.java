@@ -2,6 +2,9 @@ package it.unipi.dii.lsdb.group13.guiController;
 
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
+
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.Session;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import javafx.collections.FXCollections;
@@ -11,7 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 
 public class SavedJobOffersController {
-
+	public SavedJobOffersController() {
+    	Logger logger = Logger.getLogger(SavedJobOffersController.class.getName());
+    }
     @FXML
     private Label errorMsg;
 

@@ -2,6 +2,8 @@ package it.unipi.dii.lsdb.group13.guiController;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.App;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
@@ -10,7 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 public class UpdateAccountJobSeekerController {
-	
+	public UpdateAccountJobSeekerController() {
+    	Logger logger = Logger.getLogger(UpdateAccountJobSeekerController.class.getName());    
+}
 	@FXML
 	private PasswordField npwd;
 	@FXML
@@ -21,8 +25,6 @@ public class UpdateAccountJobSeekerController {
 	private TextField skill;
 	@FXML
 	private TextField dskill;
-	
-	public UpdateAccountJobSeekerController() {};
 	
 
 	@FXML
