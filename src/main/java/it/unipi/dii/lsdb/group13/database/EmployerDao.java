@@ -3,7 +3,10 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.result.DeleteResult;
 import it.unipi.dii.lsdb.group13.entities.Employer;
+import it.unipi.dii.lsdb.group13.guiController.AdminMenuController;
 import it.unipi.dii.lsdb.group13.Session;
+
+import org.apache.log4j.Logger;
 import org.bson.Document;
 import org.neo4j.driver.Record;
 import org.neo4j.driver.Result;
@@ -15,7 +18,10 @@ import static com.mongodb.client.model.Updates.set;
 import static org.neo4j.driver.Values.parameters;
 
 public class EmployerDao {
-
+	Logger logger;
+	 public EmployerDao() {
+	    	 logger = Logger.getLogger(EmployerDao.class.getName());
+	    }
 	 public String signUp(String companyName,String email,String password) {
 	    	try {
 	            MongoDBManager mongoDB = MongoDBManager.getInstance();
@@ -25,7 +31,9 @@ public class EmployerDao {
 	            return "true";
 	        }
 	        catch(Exception e) {
+	        	logger.error(e.getMessage());
 	            return e.getMessage();
+	            
 	        }
 	 }
 
@@ -54,6 +62,7 @@ public class EmployerDao {
             deleteFromNeo4j(username);
     	}
     	catch(Exception e) {
+        	logger.error(e.getMessage());
     		e.printStackTrace();
     		ret = false;
     	}
@@ -82,7 +91,7 @@ public class EmployerDao {
             return true;
         }
         catch(Exception e) {
-            System.out.println(e.getMessage());
+        	logger.error(e.getMessage());
             return false;
         }
     }
