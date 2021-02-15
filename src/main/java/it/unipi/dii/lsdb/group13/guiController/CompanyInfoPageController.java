@@ -5,7 +5,6 @@ import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.entities.Employer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
