@@ -144,13 +144,12 @@ public class JobSeekerDao {
         MongoDBManager mongoDB = MongoDBManager.getInstance();
 
         doc = (Document) mongoDB.getJobSeekersCollection().find(eq("_id", username)).first();
-        System.out.println("arrived here 2");
         if (doc == null) {
             throw new Exception("Invalid username");
         } else {
             foundedPw = (String) doc.get("password");
         }
-        System.out.println("check founded password: "+ foundedPw);
+        logger.info("check founded password: "+ foundedPw);
         return foundedPw;
     }
 
@@ -447,12 +446,11 @@ public class JobSeekerDao {
                     int year = r.get("postDate").asLocalDate().getYear();
                     int month = r.get("postDate").asLocalDate().getMonthValue();
                     int day = r.get("postDate").asLocalDate().getDayOfMonth();
-                    System.out.println("year: " + year + " " + month + " " + day);
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd");
                     try {
                         offer = new JobOffer(r.get("id").asString(), r.get("title").asString(), r.get("company").asString(), sdf.parse(year + "-" + month + "-" + day));
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                    	logger.error(e.getMessage());
                     }
                     offers.add(offer);
                 }

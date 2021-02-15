@@ -15,9 +15,10 @@ public class MongoDBManager {
      private MongoClient mongoClient;
      private MongoDatabase database;
      private static MongoDBManager dbManager = null;
+     Logger logger;
 
      private MongoDBManager(){
-    	 Logger logger = Logger.getLogger(Neo4jManager.class.getName());
+    	  logger = Logger.getLogger(Neo4jManager.class.getName());
          //to connect to local instance
          ConnectionString uriString = new ConnectionString("mongodb://localhost:27017"); // to connect to single local instance
          MongoClientSettings mcs = MongoClientSettings.builder().applyConnectionString(uriString).build();
@@ -39,6 +40,8 @@ public class MongoDBManager {
          mongoClient = MongoClients.create(mcs);
          database = mongoClient.getDatabase("job_advisor");
          System.out.println("Mongo Connection opened");
+         logger.info("Mongo Connection opened.");
+
 
 
      }
@@ -53,6 +56,7 @@ public class MongoDBManager {
     public void close() {
         mongoClient.close();
         System.out.println("Mongo Connection closed");
+        logger.info("Mongo Connection closed.");
     }
 
     MongoCollection getJobSeekersCollection(){ return database.getCollection("job_seekers"); }

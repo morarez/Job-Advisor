@@ -12,9 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class AdminHomePageController {
+	Logger logger;
 
 	 public AdminHomePageController() {
-	    	Logger logger = Logger.getLogger(AdminHomePageController.class.getName());
+	    	logger = Logger.getLogger(AdminHomePageController.class.getName());
 	    }
     @FXML
     private Label errorMessage;
@@ -47,6 +48,7 @@ public class AdminHomePageController {
                         textArea.setText(foundedS.toStringWithoutPassword());
                     } catch(NullPointerException e) {
                         textArea.setText("No job seeeker founded with this id");
+                        logger.error(e.getMessage());
                     }
                     break;
                 case "Employer":
@@ -56,6 +58,7 @@ public class AdminHomePageController {
                         textArea.setText(foundedE.toStringWithoutPassword());
                     } catch(NullPointerException e) {
                         textArea.setText("No employer founded with this id");
+                        logger.error(e.getMessage());
                     }
                     break;
                 case "Job offer":
@@ -65,6 +68,7 @@ public class AdminHomePageController {
                         textArea.setText(foundedJ.toStringWithoutDescription());
                     } catch(NullPointerException e) {
                         textArea.setText("No job offer founded with this id");
+                        logger.error(e.getMessage());
                     }
                     break;
             }

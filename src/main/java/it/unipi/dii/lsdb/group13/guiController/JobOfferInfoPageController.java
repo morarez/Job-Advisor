@@ -30,8 +30,6 @@ class JobOfferInfoPageController {
     private void showInfoPage(boolean withButton) {
         JobSeekerDao jobSeekerDao = new JobSeekerDao();
         if(selected != null) {
-            System.out.println("Rows selected! " + selected.getTitle() + " " + selected.getCompanyName());
-
             VBox vbox = new VBox(10);
 
             HBox hbox = new HBox(40);

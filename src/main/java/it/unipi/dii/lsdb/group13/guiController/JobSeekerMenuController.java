@@ -79,7 +79,6 @@ public class JobSeekerMenuController {
 
     @FXML
     private void pressViewRecommendations() throws IOException {
-        System.out.println("pressed view");
         GridPane paneComp = (GridPane) App.loadFXML("JobSeekerRecComp");
         GridPane paneOff = (GridPane) App.loadFXML("JobSeekerRecOffers");
         menuJobSeeker.getChildren().removeAll(menuJobSeeker.getCenter(), menuJobSeeker.getLeft(), menuJobSeeker.getRight());

@@ -41,7 +41,6 @@ public class SearchUserController {
         }
 
         if ( !cityField.getText().isEmpty() && !stateField.getText().isEmpty()) {
-            System.out.println("Search by location");
 
             JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchLocation(cityField.getText(), stateField.getText()));
@@ -50,26 +49,18 @@ public class SearchUserController {
 
         } else if (!cityField.getText().isEmpty()) {
 
-            System.out.println("Search by city");
-
             JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchByCity(cityField.getText()));
             oList = FXCollections.observableArrayList(seekers);
             tableFoundedUsers.setItems(oList);
 
         } else if (!stateField.getText().isEmpty()) {
-
-            System.out.println("Search by state");
-
             JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchByState(stateField.getText()));
             oList = FXCollections.observableArrayList(seekers);
             tableFoundedUsers.setItems(oList);
 
         } else if ( !skillField.getText().isEmpty() ) {
-
-            System.out.println("Search by skill");
-
             JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchSkill(skillField.getText()));
             oList = FXCollections.observableArrayList(seekers);
@@ -92,6 +83,5 @@ public class SearchUserController {
         errorMsg.setVisible(false);
         oList = null;
         tableFoundedUsers.setItems(null);
-        System.out.println("arrived here");
     }
 }

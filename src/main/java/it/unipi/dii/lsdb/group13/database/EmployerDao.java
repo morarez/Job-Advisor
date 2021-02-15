@@ -56,9 +56,7 @@ public class EmployerDao {
             MongoCollection<Document> companies= mongoDB.getCompaniesCollection();
             MongoCollection<Document> joboffers= mongoDB.getJobOffersCollection();
             DeleteResult offers= joboffers.deleteMany(eq("company_name",username));
-            System.out.println(offers.getDeletedCount()+" Job Offers have been deleted.");
             DeleteResult deleteresult= companies.deleteOne(eq("_id",username));
-            System.out.println(deleteresult.getDeletedCount()+" company has been deleted.");
             deleteFromNeo4j(username);
     	}
     	catch(Exception e) {
@@ -106,7 +104,7 @@ public class EmployerDao {
         } else {
             foundedPw = (String) doc.get("password");
         }
-        System.out.println("check founded password: "+ foundedPw);
+        logger.info("check founded password: "+ foundedPw);
         return foundedPw;
     }
 

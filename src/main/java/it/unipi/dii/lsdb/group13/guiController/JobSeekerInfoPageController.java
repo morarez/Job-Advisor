@@ -22,7 +22,6 @@ class JobSeekerInfoPageController {
 
     private void showInfoPage() {
         if(selected != null) {
-            System.out.println("Rows selected! " + selected.getUsername());
 
             VBox vbox = new VBox(10);
 

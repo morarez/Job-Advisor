@@ -25,9 +25,10 @@ public class LoginController {
 
     @FXML
     private TextField usernameField;
+    Logger logger;
 
     public LoginController() {
-    	Logger logger = Logger.getLogger(LoginController.class.getName());
+    	logger = Logger.getLogger(LoginController.class.getName());
     }
 
     @FXML
@@ -68,7 +69,7 @@ public class LoginController {
             }
         } else if (choice.equals("Job seeker")) {
             JobSeekerDao seeker = new JobSeekerDao();
-            System.out.println("inserted pw: " + password);
+            logger.info("inserted pw: " + password);
             try {
                 if (!password.equals(seeker.searchUsername(username))) {
                     errorMessage.setText("Wrong password");
@@ -81,7 +82,7 @@ public class LoginController {
                     App.setRoot("JobSeekerMenu");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 errorMessage.setText("Invalid username");
                 errorMessage.setVisible(true);
             }
@@ -99,7 +100,7 @@ public class LoginController {
                     App.setRoot("EmployerMenu");
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error(e.getMessage());
                 errorMessage.setText("Invalid username");
                 errorMessage.setVisible(true);
             }

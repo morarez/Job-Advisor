@@ -14,8 +14,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 class CompanyInfoPageController {
+	Logger logger;
 	 public CompanyInfoPageController() {
-	    	Logger logger = Logger.getLogger(CompanyInfoPageController.class.getName());
+	    	logger = Logger.getLogger(CompanyInfoPageController.class.getName());
 	    }
     private Employer selected;
 
@@ -32,7 +33,6 @@ class CompanyInfoPageController {
     private void showInfoPage(boolean withFollowButton) {
         JobSeekerDao jobSeekerDao = new JobSeekerDao();
         if(selected != null) {
-            System.out.println("Rows selected! " + selected.getName());
 
 
             VBox vbox = new VBox(10);
@@ -99,7 +99,7 @@ class CompanyInfoPageController {
             jobOfferPage.setScene(new Scene(vbox, 440, 300));
             jobOfferPage.show();
         }else {
-            System.out.println("Selected = NULL");
+            logger.info("Row Selected = NULL");
         }
     }
 

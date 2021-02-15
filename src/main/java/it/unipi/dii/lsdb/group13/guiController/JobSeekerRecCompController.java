@@ -45,7 +45,6 @@ public class JobSeekerRecCompController {
     @FXML
     private void rowsSelected() {
         EmployerDao employerDao = new EmployerDao();
-        System.out.println("row selected: " + tableRecComp.getSelectionModel().getSelectedItem());
         Employer selected =  employerDao.findUser((String) tableRecComp.getSelectionModel().getSelectedItem());
         CompanyInfoPageController companyInfoPageController = new CompanyInfoPageController(selected, true);
     }
