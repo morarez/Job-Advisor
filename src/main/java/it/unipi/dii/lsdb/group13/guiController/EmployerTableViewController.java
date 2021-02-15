@@ -14,8 +14,12 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import java.util.Calendar;
 
-public class EmployerTableViewController {
+import org.apache.log4j.Logger;
 
+public class EmployerTableViewController {
+	 public EmployerTableViewController() {
+	    	Logger logger = Logger.getLogger(EmployerTableViewController.class.getName());
+	    }
     @FXML
     private TableColumn dateCol;
 

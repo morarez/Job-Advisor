@@ -1,5 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.Session;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
@@ -13,7 +15,9 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class EmployerViewFollowersController {
-
+	 public EmployerViewFollowersController() {
+	    	Logger logger = Logger.getLogger(EmployerViewFollowersController.class.getName());
+	    }
     @FXML
     private TableView tableFollowers;
 

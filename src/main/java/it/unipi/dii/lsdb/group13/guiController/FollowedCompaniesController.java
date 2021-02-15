@@ -2,6 +2,9 @@ package it.unipi.dii.lsdb.group13.guiController;
 
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
+
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.Session;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -14,7 +17,9 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class FollowedCompaniesController {
-
+	 public FollowedCompaniesController() {
+	    	Logger logger = Logger.getLogger(FollowedCompaniesController.class.getName());
+	    }
     @FXML
     private TableView tableFollowed;
 

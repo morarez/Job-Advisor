@@ -1,5 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.Session;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
@@ -15,7 +17,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 class JobOfferInfoPageController {
-
+	 public JobOfferInfoPageController() {
+	    	Logger logger = Logger.getLogger(JobOfferInfoPageController.class.getName());
+	    }
     private JobOffer selected;
 
     JobOfferInfoPageController(JobOffer selected, boolean withButton) {
