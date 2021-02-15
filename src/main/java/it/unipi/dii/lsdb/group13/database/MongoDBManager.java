@@ -29,7 +29,7 @@ public class MongoDBManager {
                  .readPreference(ReadPreference.nearest())
                  .retryWrites(true)
                  .writeConcern(WriteConcern.W1)
-                 .build();*/
+                 .build(); */
 
 
 

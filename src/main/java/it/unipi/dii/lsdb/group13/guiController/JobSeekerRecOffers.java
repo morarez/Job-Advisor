@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.util.Callback;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
