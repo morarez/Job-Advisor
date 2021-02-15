@@ -49,7 +49,7 @@
          </GridPane.margin>
       </Button>
 
-      <Label id="error" fx:id="error" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED" GridPane.columnSpan="2147483647" GridPane.rowIndex="5" GridPane.valignment="BOTTOM">
+      <Label id="error" fx:id="error" alignment="CENTER" contentDisplay="CENTER" textAlignment="CENTER" textFill="RED" GridPane.columnSpan="2147483647" GridPane.rowIndex="6" GridPane.valignment="BOTTOM">
          <padding>
             <Insets left="5.0" right="5.0" />
          </padding>
