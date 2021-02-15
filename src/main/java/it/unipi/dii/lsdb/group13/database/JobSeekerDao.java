@@ -4,6 +4,7 @@ import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.result.UpdateResult;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.Session;
@@ -11,12 +12,10 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
-
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
@@ -111,21 +110,25 @@ public class JobSeekerDao {
         }
     }
 
-    @SuppressWarnings("if the skill is not in the database, it still says skill deleted")
     public boolean deleteSkill(String skill)
     {
         Session.getSingleton();
         String username= Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
+        UpdateResult result;
         try {
-            mongoDB.getJobSeekersCollection().updateOne(eq("_id",username),pull("skills",skill));
-            return true;
+            result = mongoDB.getJobSeekersCollection().updateOne(eq("_id",username),pull("skills",skill));
         }
         catch(Exception e)
         {
             System.out.println(e.getMessage());
             return false;
         }
+
+        if(result.getModifiedCount() == 1)
+            return true;
+        else
+            return false;
     }
 
     public String searchUsername(String username) throws Exception{
