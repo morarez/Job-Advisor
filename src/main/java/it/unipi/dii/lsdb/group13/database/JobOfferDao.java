@@ -8,6 +8,8 @@ import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Sorts;
 
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
+
+import org.apache.log4j.Logger;
 import org.bson.BsonArray;
 import org.bson.BsonDocument;
 import org.bson.BsonString;
@@ -37,7 +39,10 @@ import static com.mongodb.client.model.Filters.gte;
 import static org.neo4j.driver.Values.parameters;
 
 public class JobOfferDao {
-
+	Logger logger;
+	 public JobOfferDao() {
+	    	 logger = Logger.getLogger(JobOfferDao.class.getName());
+	    }
     public boolean createNewJobOffer(JobOffer jobOffer){
         boolean ret = true;
         Document job;
@@ -60,7 +65,7 @@ public class JobOfferDao {
             }
             mongoDB.getJobOffersCollection().insertOne(job);
         } catch (Exception e) {
-            e.printStackTrace();
+        	logger.error(e.getMessage());
             ret = false;
         }
         return ret;
@@ -75,7 +80,7 @@ public class JobOfferDao {
                                 "title" , jobOffer.getTitle()));
                 return null;
             });
-            System.out.println("Job added to neo4j");
+        	logger.info("Job Offer Added to Neo4j.");
         }
     }
 
@@ -87,7 +92,7 @@ public class JobOfferDao {
                         parameters("id", id));
                 return null;
             });
-            System.out.println("Job deleted from neo4j");
+            logger.info("Job deleted from neo4j");
         }
     }
 
@@ -98,7 +103,7 @@ public class JobOfferDao {
             mongoDB.getJobOffersCollection().deleteOne(eq("_id",id));
             removeJobOfferToNeo4j(id);
         }catch (Exception e){
-            e.printStackTrace();
+            logger.error(e.getMessage());
             ret = false;
         }
         return ret;
@@ -241,7 +246,7 @@ public class JobOfferDao {
                     try {
                         offer = new JobOffer(r.get("id").asString(), r.get("title").asString(), r.get("company").asString(), sdf.parse(year + "-" + month + "-" + day));
                     } catch (ParseException e) {
-                        e.printStackTrace();
+                    	logger.error(e.getMessage());
                     }
                     offers.add(offer);
                 }
@@ -289,7 +294,7 @@ public class JobOfferDao {
             stats.add(mongoDB.getCompaniesCollection().countDocuments());
             stats.add(mongoDB.getJobOffersCollection().countDocuments());
         }catch (Exception e){
-            e.printStackTrace();
+        	logger.error(e.getMessage());
         }
         return stats;
     }
