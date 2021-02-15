@@ -7,8 +7,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 
-public class JobSeekerMenuController {
+import org.apache.log4j.Logger;
 
+public class JobSeekerMenuController {
+	 public JobSeekerMenuController() {
+	    	Logger logger = Logger.getLogger(JobSeekerMenuController.class.getName());
+	    }
     @FXML
     private BorderPane menuJobSeeker;
 

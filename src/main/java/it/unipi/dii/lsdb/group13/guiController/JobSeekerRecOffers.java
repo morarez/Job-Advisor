@@ -15,8 +15,12 @@ import javafx.util.Callback;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class JobSeekerRecOffers {
+import org.apache.log4j.Logger;
 
+public class JobSeekerRecOffers {
+	public JobSeekerRecOffers() {
+    	Logger logger = Logger.getLogger(JobSeekerRecOffers.class.getName());
+    }
     @FXML
     private TableColumn dateCol;
 

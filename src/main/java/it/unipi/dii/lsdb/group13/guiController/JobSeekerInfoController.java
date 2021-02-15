@@ -9,8 +9,12 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class JobSeekerInfoController {
+import org.apache.log4j.Logger;
 
+public class JobSeekerInfoController {
+	 public JobSeekerInfoController() {
+	    	Logger logger = Logger.getLogger(JobSeekerInfoController.class.getName());
+	    }
     private JobSeekerDao jobSeekerDao = new JobSeekerDao();
 
     @FXML

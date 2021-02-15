@@ -14,8 +14,12 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 import java.util.ArrayList;
 
-public class JobSeekerRecCompController {
+import org.apache.log4j.Logger;
 
+public class JobSeekerRecCompController {
+	 public JobSeekerRecCompController() {
+	    	Logger logger = Logger.getLogger(JobSeekerRecCompController.class.getName());
+	    }
     @FXML
     private TableColumn companyCol;
 
