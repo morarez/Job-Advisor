@@ -10,10 +10,14 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import static it.unipi.dii.lsdb.group13.App.loadFXML;
 
 public class AdminMenuController {
-
+	 public AdminMenuController() {
+	    	Logger logger = Logger.getLogger(AdminMenuController.class.getName());
+	    }
     @FXML
     private BorderPane menuAdmin;
 

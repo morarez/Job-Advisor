@@ -6,7 +6,12 @@ import javafx.scene.control.Label;
 
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
+
 public class AdminStatisticsController {
+	 public AdminStatisticsController() {
+	    	Logger logger = Logger.getLogger(AdminStatisticsController.class.getName());
+	    }
     @FXML
     private Label seekersCount;
 

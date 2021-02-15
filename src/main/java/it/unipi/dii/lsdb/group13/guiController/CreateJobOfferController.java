@@ -16,7 +16,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 public class CreateJobOfferController {
+	 public CreateJobOfferController() {
+	    	Logger logger = Logger.getLogger(CreateJobOfferController.class.getName());
+	    }
 
     @FXML
     private Label errorMsg;

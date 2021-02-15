@@ -1,5 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
+import org.apache.log4j.Logger;
+
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
@@ -11,6 +13,9 @@ import javafx.scene.control.*;
 
 public class AdminHomePageController {
 
+	 public AdminHomePageController() {
+	    	Logger logger = Logger.getLogger(AdminHomePageController.class.getName());
+	    }
     @FXML
     private Label errorMessage;
 

@@ -9,8 +9,12 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class EmployerInfoController {
+import org.apache.log4j.Logger;
 
+public class EmployerInfoController {
+	 public EmployerInfoController() {
+	    	Logger logger = Logger.getLogger(EmployerInfoController.class.getName());
+	    }
     private EmployerDao employerDao = new EmployerDao();
 
     @FXML

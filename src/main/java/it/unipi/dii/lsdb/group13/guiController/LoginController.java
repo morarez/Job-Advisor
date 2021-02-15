@@ -11,6 +11,8 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 public class LoginController {
     @FXML
     private Text errorMessage;
@@ -25,6 +27,7 @@ public class LoginController {
     private TextField usernameField;
 
     public LoginController() {
+    	Logger logger = Logger.getLogger(LoginController.class.getName());
     }
 
     @FXML

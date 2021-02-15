@@ -8,7 +8,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 public class EmployerMenuController {
+	 public EmployerMenuController() {
+	    	Logger logger = Logger.getLogger(EmployerMenuController.class.getName());
+	    }
 
     @FXML
     private BorderPane menuEmployer;
