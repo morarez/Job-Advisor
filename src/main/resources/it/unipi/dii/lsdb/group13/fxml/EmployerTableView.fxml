@@ -12,7 +12,7 @@
           alignment="CENTER" hgap="8" vgap="8"
 >
     <Label text="This are the job offers you published:" GridPane.rowIndex="1" GridPane.columnIndex="2" GridPane.columnSpan="3"/>
-    <TableView fx:id="tableEmployer"  GridPane.rowIndex="4" GridPane.columnIndex="2" onMouseClicked="#rowsSelected">
+    <TableView fx:id="tableEmployer"  GridPane.rowIndex="4" GridPane.columnIndex="2">
         <columns>
             <TableColumn text = "Title" prefWidth="250">
                 <cellValueFactory>
@@ -26,6 +26,7 @@
 
     <VBox GridPane.rowIndex="4" GridPane.columnIndex="4" spacing="15">
         <Button text="Delete" onAction="#pressDeleteButton"/>
+        <Button text="View" onAction="#pressView"/>
     </VBox>
 
     <padding>

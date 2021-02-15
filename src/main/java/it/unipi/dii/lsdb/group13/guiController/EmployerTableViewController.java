@@ -11,9 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
-import java.io.IOException;
 import java.util.Calendar;
 
 public class EmployerTableViewController {
@@ -51,7 +49,7 @@ public class EmployerTableViewController {
     }
     
     @FXML
-    private void rowsSelected(MouseEvent mouseEvent) throws IOException {
+    private void pressView() {
         JobOffer selected = (JobOffer) tableEmployer.getSelectionModel().getSelectedItem();
         JobOfferInfoPageController jobOfferInfoPageController = new JobOfferInfoPageController(selected, false);
     }
