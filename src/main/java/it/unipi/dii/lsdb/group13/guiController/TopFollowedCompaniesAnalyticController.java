@@ -1,7 +1,5 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
-import it.unipi.dii.lsdb.group13.Session;
-import it.unipi.dii.lsdb.group13.database.AdminDao;
 import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
@@ -20,10 +18,10 @@ public class TopFollowedCompaniesAnalyticController {
 	
 	@FXML
     private void initialize() {
-        AdminDao adminDao = new AdminDao();
-        ObservableList<String> followers = FXCollections.observableArrayList(adminDao.findTopCompanies());
-
-        company.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
+        EmployerDao employerDao = new EmployerDao();
+        ObservableList<String> followers = FXCollections.observableArrayList(employerDao.findTopCompanies());
+        company.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList<String>, String> p) {
                 return new ReadOnlyObjectWrapper(p.getValue());
             }

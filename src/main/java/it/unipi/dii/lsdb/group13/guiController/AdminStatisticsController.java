@@ -1,6 +1,6 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
-import it.unipi.dii.lsdb.group13.database.AdminDao;
+import it.unipi.dii.lsdb.group13.database.JobOfferDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -18,8 +18,8 @@ public class AdminStatisticsController {
 
     @FXML
     private void initialize(){
-        AdminDao adminDao = new AdminDao();
-        ArrayList<Long> stats = (ArrayList<Long>) adminDao.statistics();
+        JobOfferDao jobOfferDao = new JobOfferDao();
+        ArrayList<Long> stats = (ArrayList<Long>) jobOfferDao.statistics();
         seekersCount.setText("Number of job-seekers: " + stats.get(0).toString());
         companiesCount.setText("Number of companies: " + stats.get(1).toString());
         offersCount.setText("Number of job offers: " + stats.get(2).toString());

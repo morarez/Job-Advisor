@@ -3,6 +3,8 @@ package it.unipi.dii.lsdb.group13.database;
 import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Accumulators;
 import com.mongodb.client.model.Sorts;
 
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
@@ -249,6 +251,25 @@ public class JobOfferDao {
 
         return jobOffers;
     }
+    public LinkedHashMap<String, Integer> rankCities(String jobType){
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+        // Rank cities based on # of (job_type) jobs
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        mongoDB.getJobOffersCollection();
+        Bson m = match(eq("job_type",jobType));
+        Bson g = group("$location", Accumulators.sum("count",1));
+        Bson s = sort(Sorts.descending("count"));
+        Bson l = limit(10);
+        AggregateIterable<Document> aggregate = mongoDB.getJobOffersCollection().aggregate(Arrays.asList(m, g, s,l));
+        MongoCursor<Document> iterator = aggregate.iterator();
+        while (iterator.hasNext()) {
+            Document next = iterator.next();
+            Document loc = (Document) next.get("_id");
+            map.put(loc.getString("state") + " - " + loc.getString("city"), next.getInteger("count"));
+        }
+        iterator.close();
+        return map;
+    }
 
     private JobOffer parseJobOffer(Document doc){
         return new JobOffer(doc.getString("_id"), doc.getString("job_title"), doc.getString("company_name"),
@@ -257,5 +278,21 @@ public class JobOfferDao {
                 doc.getEmbedded(List.of("salary", "from"), String.class),doc.getEmbedded(List.of("salary", "to"), String.class),
                 doc.getEmbedded(List.of("salary", "time_unit"), String.class));
     }
+
+
+
+    public List<Long> statistics (){
+        ArrayList<Long> stats = new ArrayList<>();
+        try {
+            MongoDBManager mongoDB = MongoDBManager.getInstance();
+            stats.add(mongoDB.getJobSeekersCollection().countDocuments());
+            stats.add(mongoDB.getCompaniesCollection().countDocuments());
+            stats.add(mongoDB.getJobOffersCollection().countDocuments());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return stats;
+    }
+
 
 }

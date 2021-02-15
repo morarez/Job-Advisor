@@ -135,4 +135,22 @@ public class EmployerDao {
         }
         return followers;
     }
+
+    public List<String> findTopCompanies() {
+        Neo4jManager neo4j = Neo4jManager.getInstance();
+        List<String> names = new ArrayList<>();
+        try (org.neo4j.driver.Session session = neo4j.getDriver().session()) {
+            session.readTransaction((TransactionWork<List<String>>) tx -> {
+                Result result = tx.run("MATCH(co:Company)<-[r:FOLLOWS]-(js:JobSeeker)" +
+                        " WITH co, count (r) as rels"+" RETURN co.name AS name, rels AS relation" + " ORDER BY rels DESC"
+                        + " LIMIT 10");
+                while(result.hasNext()) {
+                    Record r = result.next();
+                    names.add(r.get("name").asString()+" : "+ r.get("relation")+" followers");
+                }
+                return names;
+            });
+        }
+        return names;
+    }
 }

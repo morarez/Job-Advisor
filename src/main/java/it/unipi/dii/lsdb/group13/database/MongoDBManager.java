@@ -23,16 +23,21 @@ public class MongoDBManager {
          //ConnectionString uriString= new ConnectionString("mongodb://localhost:27018,localhost:27019,localhost:27020");
 
          //to connect to the cluster of VMs
-         /*ConnectionString uriString= new ConnectionString("mongodb://172.16.3.151:27020,172.16.3.123:27020, 172.16.3.124:27020");
+         /*
+         ConnectionString uriString= new ConnectionString("mongodb://172.16.3.151:27020,172.16.3.123:27020, 172.16.3.124:27020");
          MongoClientSettings mcs = MongoClientSettings.builder().applyConnectionString(uriString)
                  .readPreference(ReadPreference.nearest())
                  .retryWrites(true)
                  .writeConcern(WriteConcern.W1)
-                 .build(); */
+                 .build();
+
+          */
 
          mongoClient = MongoClients.create(mcs);
          database = mongoClient.getDatabase("job_advisor");
          System.out.println("Mongo Connection opened");
+
+
      }
 
     public static MongoDBManager getInstance() {

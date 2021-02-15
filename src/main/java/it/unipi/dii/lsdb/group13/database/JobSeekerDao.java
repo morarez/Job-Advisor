@@ -1,11 +1,14 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import it.unipi.dii.lsdb.group13.entities.JobOffer;
 import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import it.unipi.dii.lsdb.group13.Session;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 
@@ -13,6 +16,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.*;
+
+import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.*;
 import static com.mongodb.client.model.Updates.*;
 import static org.neo4j.driver.Values.parameters;
@@ -227,6 +232,24 @@ public class JobSeekerDao {
         cursor.close();
 
         return seekers;
+    }
+
+    public LinkedHashMap<String, Integer> rankSkills(){
+        MongoDBManager mongoDB = MongoDBManager.getInstance();
+        MongoCollection collection = mongoDB.getJobSeekersCollection();
+        Bson uw = unwind("$skills");
+        // trim operator to remove the whitespace characters and toLower operator to change all to lower case
+        Bson sb = sortByCount(eq("$toLower", eq("$trim", eq("input", "$skills"))));
+        Bson limit = limit(10);
+        AggregateIterable aggregate = collection.aggregate(Arrays.asList(uw, sb, limit));
+        LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
+        MongoCursor<Document> iterator = aggregate.iterator();
+        while (iterator.hasNext()) {
+            Document next = iterator.next();
+            map.put(next.getString("_id"), next.getInteger("count"));
+        }
+        iterator.close();
+        return map;
     }
 
     public boolean followCompany(String jobSeekerUsername, String companyName){

@@ -25,7 +25,8 @@ public class EmployerViewFollowersController {
         EmployerDao employerDao = new EmployerDao();
         ObservableList<String> followers = FXCollections.observableArrayList(employerDao.findFollowers(Session.getLoggedUser()));
 
-        nameCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>, ObservableValue<String>>() {
+        nameCol.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList<String>, String>,
+                ObservableValue<String>>() {
             public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList<String>, String> p) {
                 return new ReadOnlyObjectWrapper(p.getValue());
             }
@@ -33,8 +34,8 @@ public class EmployerViewFollowersController {
 
         tableFollowers.setItems(followers);
     }
-
-    public void rowsSelected() {
+    @FXML
+    private void rowsSelected() {
         String selected = (String) tableFollowers.getSelectionModel().getSelectedItem();
         JobSeekerDao jobSeekerDao = new JobSeekerDao();
         JobSeekerInfoPageController jobSeekerInfoPageController = new JobSeekerInfoPageController(jobSeekerDao.findUser(selected));
