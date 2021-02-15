@@ -29,9 +29,9 @@ public class MongoDBManager {
                  .readPreference(ReadPreference.nearest())
                  .retryWrites(true)
                  .writeConcern(WriteConcern.W1)
-                 .build();
+                 .build(); */
 
-          */
+
 
          mongoClient = MongoClients.create(mcs);
          database = mongoClient.getDatabase("job_advisor");

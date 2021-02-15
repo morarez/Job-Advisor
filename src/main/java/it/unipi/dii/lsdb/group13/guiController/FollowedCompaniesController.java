@@ -40,12 +40,6 @@ public class FollowedCompaniesController {
     }
 
     @FXML
-    private void rowsSelected() {
-        EmployerDao employerDao = new EmployerDao();
-        CompanyInfoPageController companyInfoPageController = new CompanyInfoPageController(employerDao.findUser(tableFollowed.getSelectionModel().getSelectedItem().toString()));
-    }
-
-    @FXML
     private void pressUnfollow() {
         String selected = (String) tableFollowed.getSelectionModel().getSelectedItem();
         if (selected == null) {
@@ -63,5 +57,11 @@ public class FollowedCompaniesController {
             }
             errorMsg.setVisible(true);
         }
+    }
+
+    @FXML
+    private void pressView() {
+        EmployerDao employerDao = new EmployerDao();
+        CompanyInfoPageController companyInfoPageController = new CompanyInfoPageController(employerDao.findUser(tableFollowed.getSelectionModel().getSelectedItem().toString()));
     }
 }
