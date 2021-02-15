@@ -1,13 +1,14 @@
 package it.unipi.dii.lsdb.group13.database;
 
+import org.apache.log4j.Logger;
 import org.neo4j.driver.*;
 
 public class Neo4jManager implements AutoCloseable {
-
     private final Driver driver;
     private static Neo4jManager neo4j = null;
 
     private Neo4jManager(){
+   	 Logger logger = Logger.getLogger(Neo4jManager.class.getName());
         driver = GraphDatabase.driver("neo4j://localhost:7687", AuthTokens.basic("neo4j","lem13"));
         //driver = GraphDatabase.driver("bolt://localhost:11003", AuthTokens.basic("neo4j","lem13")); /* please don't remove it :) */
         System.out.println("Neo4j Connection opened");
