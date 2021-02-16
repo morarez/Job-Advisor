@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 public class JobSeeker{
+
     String firstName;
     String lastName;
     String gender;
