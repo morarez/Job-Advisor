@@ -13,11 +13,14 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class TopFollowedCompaniesAnalyticController {
+
 	public TopFollowedCompaniesAnalyticController() {
     	Logger logger = Logger.getLogger(TopFollowedCompaniesAnalyticController.class.getName());    
-}
+    }
+
 	@FXML
 	private TableView tableTopCompanies;
+
 	@FXML
 	private TableColumn company;
 	
