@@ -40,10 +40,6 @@ public class MongoDBManager {
          mongoClient = MongoClients.create(mcs);
          database = mongoClient.getDatabase("job_advisor");
          System.out.println("Mongo Connection opened");
-         logger.info("Mongo Connection opened.");
-
-
-
      }
 
     public static MongoDBManager getInstance() {
@@ -56,7 +52,6 @@ public class MongoDBManager {
     public void close() {
         mongoClient.close();
         System.out.println("Mongo Connection closed");
-        logger.info("Mongo Connection closed.");
     }
 
     MongoCollection getJobSeekersCollection(){ return database.getCollection("job_seekers"); }

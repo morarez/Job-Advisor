@@ -35,6 +35,8 @@ public class SearchUserController {
     @FXML
     private void pressSearch() {
 
+        JobSeekerDao jobSeekerDao = new JobSeekerDao();
+
         if ( (!cityField.getText().isEmpty() && !skillField.getText().isEmpty()) || (!stateField.getText().isEmpty() && !skillField.getText().isEmpty())) {
             errorMsg.setText("Search only by skill or by location, no both");
             errorMsg.setVisible(true);
@@ -42,26 +44,22 @@ public class SearchUserController {
 
         if ( !cityField.getText().isEmpty() && !stateField.getText().isEmpty()) {
 
-            JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchLocation(cityField.getText(), stateField.getText()));
             oList = FXCollections.observableArrayList(seekers);
             tableFoundedUsers.setItems(oList);
 
         } else if (!cityField.getText().isEmpty()) {
 
-            JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchByCity(cityField.getText()));
             oList = FXCollections.observableArrayList(seekers);
             tableFoundedUsers.setItems(oList);
 
         } else if (!stateField.getText().isEmpty()) {
-            JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchByState(stateField.getText()));
             oList = FXCollections.observableArrayList(seekers);
             tableFoundedUsers.setItems(oList);
 
         } else if ( !skillField.getText().isEmpty() ) {
-            JobSeekerDao jobSeekerDao = new JobSeekerDao();
             List<JobSeeker> seekers = new ArrayList<>(jobSeekerDao.searchSkill(skillField.getText()));
             oList = FXCollections.observableArrayList(seekers);
             tableFoundedUsers.setItems(oList);

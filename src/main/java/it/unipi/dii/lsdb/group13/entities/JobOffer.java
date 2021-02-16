@@ -107,9 +107,7 @@ public class JobOffer {
 
     public String toStringWithoutDescription() {
 
-        String s = " JOB TITLE: " + this.title + "\nCOMPANY NAME: " + this.companyName + "\nPOST DATE: " + this.postDate +
+        return " JOB TITLE: " + this.title + "\nCOMPANY NAME: " + this.companyName + "\nPOST DATE: " + this.postDate +
                 "\nJOB TYPE: " + this.jobType;
-
-        return s;
     }
 }

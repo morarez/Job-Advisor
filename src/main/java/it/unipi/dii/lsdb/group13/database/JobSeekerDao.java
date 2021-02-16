@@ -16,7 +16,6 @@ import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.*;
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.*;
@@ -24,23 +23,20 @@ import static com.mongodb.client.model.Updates.*;
 import static org.neo4j.driver.Values.parameters;
 
 public class JobSeekerDao {
+
 	Logger logger;
-	 public JobSeekerDao() {
+
+	public JobSeekerDao() {
 	    	 logger = Logger.getLogger(JobSeekerDao.class.getName());
 	    }
 
-    public String signUp(String fname, String lname, String username, LocalDate birthdate, String g, String password,
-                          String email, String city, String state) {
+    public String signUp(JobSeeker jobSeeker) {
         try {
-            char gender= g.charAt(0);
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate.toString());
-            //in the database we have
-            String formattedDate = new SimpleDateFormat("M/d/yy").format(date);
-           // List<String> skills = new ArrayList<>(Arrays.asList(skill.split(",")));
             MongoDBManager mongoDB = MongoDBManager.getInstance();
-            Document doc = new Document("_id",username).append("password",password).append("first_name",fname)
-                    .append("last_name",lname).append("birthdate",formattedDate).append("gender",gender).append("email",email)
-                    .append("location", new Document("city",city).append("state",state));
+            Document doc = new Document("_id",jobSeeker.getUsername()).append("password",jobSeeker.getPassword())
+                    .append("first_name",jobSeeker.getFirstName()).append("last_name",jobSeeker.getLastName())
+                    .append("birthdate",jobSeeker.getBirthdate()).append("gender",jobSeeker.getGender()).append("email",jobSeeker.getEmail())
+                    .append("location", new Document("city",jobSeeker.getLocation().getCity()).append("state",jobSeeker.getLocation().getState()));
             mongoDB.getJobSeekersCollection().insertOne(doc);
             return "true";
         }
@@ -59,6 +55,9 @@ public class JobSeekerDao {
                     return null;
                 });
                 logger.info("User added to neo4j");
+        }catch (Exception e){
+            logger.error("User " + username + " not added to neo4j");
+            logger.error(e.getMessage());
         }
     }
 
@@ -84,10 +83,13 @@ public class JobSeekerDao {
                 return null;
             });
             logger.info("User deleted from neo4j");
+        }catch (Exception e){
+            logger.error("User " + username + " not added to neo4j");
+            logger.error(e.getMessage());
         }
     }
 
-    public boolean changePassword(String newpwd, String pwdagain) {
+    public boolean changePassword(String newpwd) {
          Session.getSingleton();
          String username= Session.getLoggedUser();
          MongoDBManager mongoDB = MongoDBManager.getInstance();

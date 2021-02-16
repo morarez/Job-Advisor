@@ -18,15 +18,19 @@ import static com.mongodb.client.model.Updates.set;
 import static org.neo4j.driver.Values.parameters;
 
 public class EmployerDao {
+
 	Logger logger;
+
 	 public EmployerDao() {
 	    	 logger = Logger.getLogger(EmployerDao.class.getName());
 	    }
-	 public String signUp(String companyName,String email,String password) {
+
+	 public String signUp(Employer employer) {
 	    	try {
 	            MongoDBManager mongoDB = MongoDBManager.getInstance();
 	            MongoCollection companies = mongoDB.getCompaniesCollection();
-	            Document doc= new Document("_id",companyName).append("email",email).append("password",password);
+	            Document doc= new Document("_id",employer.getName()).append("email",employer.getEmail())
+                        .append("password",employer.getPassword());
 	            companies.insertOne(doc);
 	            return "true";
 	        }
@@ -46,6 +50,9 @@ public class EmployerDao {
                 return null;
             });
             logger.info("User added to neo4j");
+        }catch(Exception e){
+            logger.error("User " + name + " not added to neo4j");
+            logger.error(e.getMessage());
         }
     }
 
@@ -75,10 +82,13 @@ public class EmployerDao {
                 return null;
             });
             logger.info("User deleted from neo4j");
+        }catch(Exception e){
+            logger.error("User " + name + " not deleted to neo4j");
+            logger.error(e.getMessage());
         }
     }
 
-    public boolean changePassword(String newpwd, String pwdagain) {
+    public boolean changePassword(String newpwd) {
         Session.getSingleton();
         String username= Session.getLoggedUser();
         MongoDBManager mongoDB = MongoDBManager.getInstance();

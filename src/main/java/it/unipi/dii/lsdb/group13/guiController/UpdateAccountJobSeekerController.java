@@ -1,20 +1,18 @@
 package it.unipi.dii.lsdb.group13.guiController;
 
-import java.io.IOException;
-
 import org.apache.log4j.Logger;
 
-import it.unipi.dii.lsdb.group13.App;
-import it.unipi.dii.lsdb.group13.database.EmployerDao;
 import it.unipi.dii.lsdb.group13.database.JobSeekerDao;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 
 public class UpdateAccountJobSeekerController {
+
 	public UpdateAccountJobSeekerController() {
     	Logger logger = Logger.getLogger(UpdateAccountJobSeekerController.class.getName());    
-}
+	}
+
 	@FXML
 	private PasswordField npwd;
 	@FXML
@@ -26,22 +24,22 @@ public class UpdateAccountJobSeekerController {
 	@FXML
 	private TextField dskill;
 	
+	private final JobSeekerDao seeker= new JobSeekerDao();
+
 
 	@FXML
-	private void changePassword() throws IOException{
+	private void changePassword(){
 		if(npwd.getText().isEmpty() || cpwd.getText().isEmpty())
 		{
 			error.setText("Please enter both passwords!");
 			error.setTextFill(Color.web("#ff0000",0.8));
-			return;
 		}
 		else
 		{
 			if(npwd.getText().equals(cpwd.getText()))
 			{
-	        	JobSeekerDao seeker= new JobSeekerDao();
-	        	boolean isValid= seeker.changePassword(npwd.getText(),cpwd.getText());
-	        	if(isValid==true)
+	        	boolean isValid= seeker.changePassword(npwd.getText());
+	        	if(isValid)
 	        	{
 	        		error.setText("Password Updated!");
 	        	}
@@ -55,23 +53,20 @@ public class UpdateAccountJobSeekerController {
 				error.setText("Passwords don't match!");
 				error.setTextFill(Color.web("#ff0000",0.8));
 			}
-			return;
 		}
 	}
 		
 	@FXML
-	private void addSkill() throws IOException{
+	private void addSkill(){
 		if(skill.getText().isEmpty())
 		{
 			error.setText("Please enter new skill in order to add it!");
 			error.setTextFill(Color.web("#ff0000",0.8));
-			return;
 		}
 		else
 		{
-			JobSeekerDao seeker= new JobSeekerDao();
 			boolean isValid= seeker.addSkill(skill.getText());
-			if(isValid==true)
+			if(isValid)
 			{
 				error.setText("New skill added!");
 			}
@@ -80,22 +75,20 @@ public class UpdateAccountJobSeekerController {
 				error.setText("Skill could not be added!");
 				error.setTextFill(Color.web("#ff0000",0.8));
 			}
-			return;
 		}
 	}
+
 	@FXML
-	private void deleteSkill() throws IOException{
+	private void deleteSkill(){
 		if(dskill.getText().isEmpty())
 		{
 			error.setText("Please enter the skill that you want to remove!");
 			error.setTextFill(Color.web("#ff0000",0.8));
-			return;
 		}
 		else
 		{
-			JobSeekerDao seeker= new JobSeekerDao();
 			boolean isValid= seeker.deleteSkill(dskill.getText());
-			if(isValid==true)
+			if(isValid)
 			{
 				error.setText("Skill deleted!");
 			}
@@ -104,11 +97,6 @@ public class UpdateAccountJobSeekerController {
 				error.setText("Skill could not be deleted!");
 				error.setTextFill(Color.web("#ff0000",0.8));
 			}
-			return;
 		}
-	}
-	@FXML
-	private void goHome() throws IOException{
-		App.setRoot("JobSeekerHomePage");
 	}
 }

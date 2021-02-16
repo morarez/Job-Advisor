@@ -17,9 +17,9 @@ import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 class JobOfferInfoPageController {
-	 public JobOfferInfoPageController() {
+    public JobOfferInfoPageController() {
 	    	Logger logger = Logger.getLogger(JobOfferInfoPageController.class.getName());
-	    }
+    }
     private JobOffer selected;
 
     JobOfferInfoPageController(JobOffer selected, boolean withButton) {

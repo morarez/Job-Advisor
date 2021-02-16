@@ -47,7 +47,7 @@ public class AdminHomePageController {
                         foundedS = seeker.findUser(id.getText());
                         textArea.setText(foundedS.toStringWithoutPassword());
                     } catch(NullPointerException e) {
-                        textArea.setText("No job seeeker founded with this id");
+                        textArea.setText("No job seeker founded with this id");
                         logger.error(e.getMessage());
                     }
                     break;

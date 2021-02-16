@@ -1,6 +1,8 @@
 package it.unipi.dii.lsdb.group13.guiController;
 import java.io.IOException;
+import java.text.ParseException;
 
+import it.unipi.dii.lsdb.group13.entities.JobSeeker;
 import org.apache.log4j.Logger;
 
 import it.unipi.dii.lsdb.group13.App;
@@ -34,12 +36,10 @@ public class SignUpJobSeekerController{
 	private TextField username;
 	@FXML
 	private Label error;
-
 	
 	 @FXML
-	    private void initialize() throws IOException {
-	        App.setDimStage(750.0, 650.0);
-	    }
+	 private void initialize() throws IOException { App.setDimStage(750.0, 650.0); }
+
 	@FXML
 	private void presssubmit() throws IOException {
 		if((fname.getText().isEmpty()) || (lname.getText().isEmpty())  || (birthday.getValue() == null) || (gender.getValue()== null) || (jcity.getText().isEmpty()) || (jstate.getText().isEmpty()) || (jemail.getText().isEmpty()) || (jpassword.getText().isEmpty()) || (username.getText().isEmpty()))
@@ -50,15 +50,23 @@ public class SignUpJobSeekerController{
 		}
 		else
 		{
-			JobSeekerDao seeker= new JobSeekerDao();
-			String isValid = seeker.signUp(fname.getText(),lname.getText(),username.getText(),birthday.getValue(),gender.getValue().toString(),jpassword.getText(),jemail.getText(),jcity.getText(),jstate.getText());
+			JobSeekerDao jobSeekerDao = new JobSeekerDao();
+			JobSeeker jobSeeker = null;
+			try {
+				jobSeeker = new JobSeeker(username.getText(),jpassword.getText(),fname.getText(),lname.getText(),
+						gender.getValue().toString(),birthday.getValue(),jemail.getText(),jstate.getText(),jcity.getText());
+			}catch (ParseException ep){
+				error.setText("Enter valid Birthdate!");
+			}
+			String isValid = jobSeekerDao.signUp(jobSeeker);
 			if(isValid.equals("true")) {
-				seeker.addJobSeekerToNeo4j(username.getText());
+				jobSeekerDao.addJobSeekerToNeo4j(username.getText());
 				App.setRoot("SignUpConfirmation");
 			}
-			else
-				error.setText("Sign Up Failed because of this exception: \n"+isValid);
-			error.setTextFill(Color.web("#ff0000",0.8));
+			else {
+				error.setText("Sign Up Failed because of this exception: \n" + isValid);
+				error.setTextFill(Color.web("#ff0000", 0.8));
+			}
 		}
 	}
 

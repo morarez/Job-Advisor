@@ -49,7 +49,7 @@ public class FollowedCompaniesController {
         String selected = (String) tableFollowed.getSelectionModel().getSelectedItem();
         if (selected == null) {
             errorMsg.setText("Please select\na company");
-            errorMsg.setVisible(true); ;
+            errorMsg.setVisible(true);
         } else {
             errorMsg.setVisible(false);
             JobSeekerDao jobSeekerDao = new JobSeekerDao();

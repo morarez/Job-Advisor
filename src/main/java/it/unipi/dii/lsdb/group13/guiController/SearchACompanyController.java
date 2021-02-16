@@ -20,9 +20,11 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 public class SearchACompanyController {
+
 	public SearchACompanyController() {
     	Logger logger = Logger.getLogger(SearchACompanyController.class.getName());
     }
+
 	@FXML
 	TextField company;
 

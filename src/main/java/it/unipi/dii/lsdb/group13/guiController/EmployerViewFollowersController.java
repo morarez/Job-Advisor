@@ -15,9 +15,11 @@ import javafx.scene.control.TableView;
 import javafx.util.Callback;
 
 public class EmployerViewFollowersController {
+
 	 public EmployerViewFollowersController() {
 	    	Logger logger = Logger.getLogger(EmployerViewFollowersController.class.getName());
-	    }
+	 }
+
     @FXML
     private TableView tableFollowers;
 

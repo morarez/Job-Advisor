@@ -31,9 +31,10 @@ public class EmployerTableViewController {
 
     private ObservableList<JobOffer> published = null;
 
+    private JobOfferDao jobOfferDao = new JobOfferDao();
+
     @FXML
     private void initialize() {
-        JobOfferDao jobOfferDao = new JobOfferDao();
         published = FXCollections.observableArrayList(jobOfferDao.findPublished(Session.getLoggedUser()));
 
 
@@ -66,7 +67,6 @@ public class EmployerTableViewController {
             errorMsg.setVisible(true);
         } else {
             errorMsg.setVisible(false);
-            JobOfferDao jobOfferDao = new JobOfferDao();
             boolean ret = jobOfferDao.deleteJobOffer(offer.getId());
             if ( ret == false ) {
                 errorMsg.setText("Something went \nwrong. Please\ntry again");

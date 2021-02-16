@@ -1,6 +1,7 @@
 package it.unipi.dii.lsdb.group13.guiController;
 import java.io.IOException;
 
+import it.unipi.dii.lsdb.group13.entities.Employer;
 import org.apache.log4j.Logger;
 
 import it.unipi.dii.lsdb.group13.App;
@@ -24,10 +25,11 @@ public class SignUpEmployerController {
 	private Label error;
 	
 	
-	 @FXML
-	    private void initialize(){
+	@FXML
+	private void initialize(){
 	        App.setDimStage(800.0, 600.0);
 	    }
+
 	@FXML
 	private void pressSubmit(ActionEvent event) throws IOException {
         if((companyName.getText().isEmpty()) || (cpassword.getText().isEmpty()) || (cemail.getText().isEmpty()))
@@ -37,11 +39,11 @@ public class SignUpEmployerController {
         }
         else
         {
-        	EmployerDao employer= new EmployerDao();
-
-			String isValid= employer.signUp(companyName.getText(),cemail.getText(),cpassword.getText());
+        	EmployerDao employerDao= new EmployerDao();
+			Employer newEmp = new Employer(companyName.getText(),cemail.getText(),cpassword.getText());
+			String isValid= employerDao.signUp(newEmp);
         	if(isValid.equals("true")){
-				employer.addEmployerToNeo4j(companyName.getText());
+				employerDao.addEmployerToNeo4j(companyName.getText());
 				App.setRoot("SignUpConfirmation");
 
 			} else

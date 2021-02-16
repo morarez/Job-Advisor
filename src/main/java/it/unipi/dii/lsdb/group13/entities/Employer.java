@@ -17,13 +17,16 @@ public class Employer {
         return email;
     }
 
+    public Employer(String name, String email, String password) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
+    //Without password
     public Employer(String name, String email) {
         this.name = name;
         this.email = email;
-    }
-
-    public Employer() {
-        System.out.println("user not found");
     }
 
     public String toStringWithoutPassword() {

@@ -1,5 +1,8 @@
 package it.unipi.dii.lsdb.group13.entities;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class JobSeeker{
@@ -9,7 +12,7 @@ public class JobSeeker{
     String birthdate;
     String username;
     String password;
-    String email = null;
+    String email;
     Location location;
     List<String> skills = new ArrayList<>();
 
@@ -49,9 +52,24 @@ public class JobSeeker{
 
     public String getUsername() {return username;}
 
+    //Sign up job seeker
+    public JobSeeker(String username, String password, String firstName, String lastName, String gender, LocalDate birthdate,
+                     String email, String state, String city) throws ParseException {
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.gender = String.valueOf(gender.charAt(0));
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(birthdate.toString());
+        String formattedDate = new SimpleDateFormat("M/d/yy").format(date);
+        this.birthdate = formattedDate;
+        this.email = email;
+        this.location = new Location(state, city);
+    }
+
     //User without skills
     public JobSeeker(String username, String firstName, String lastName, String gender, String birthdate,
-                     String email, String state, String city) {
+                     String email, String state, String city){
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,6 +78,7 @@ public class JobSeeker{
         this.email = email;
         this.location = new Location(state, city);
     }
+
     //User with skills
     public JobSeeker(String username, String firstName, String lastName, String gender, String birthdate,
                      String email, String state, String city, List skills) {

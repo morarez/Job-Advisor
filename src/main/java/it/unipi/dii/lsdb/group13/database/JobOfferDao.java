@@ -24,9 +24,6 @@ import static com.mongodb.client.model.Filters.eq;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.mongodb.client.model.Aggregates.project;
@@ -39,10 +36,13 @@ import static com.mongodb.client.model.Filters.gte;
 import static org.neo4j.driver.Values.parameters;
 
 public class JobOfferDao {
+
 	Logger logger;
-	 public JobOfferDao() {
+
+	public JobOfferDao() {
 	    	 logger = Logger.getLogger(JobOfferDao.class.getName());
 	    }
+
     public boolean createNewJobOffer(JobOffer jobOffer){
         boolean ret = true;
         Document job;
@@ -80,7 +80,10 @@ public class JobOfferDao {
                                 "title" , jobOffer.getTitle()));
                 return null;
             });
-        	logger.info("Job Offer Added to Neo4j.");
+        	logger.info("Job Offer added to Neo4j.");
+        }catch (Exception e){
+            logger.error("Job offer " + jobOffer.getId() + " not added to neo4j");
+            logger.error(e.getMessage());
         }
     }
 
@@ -93,6 +96,9 @@ public class JobOfferDao {
                 return null;
             });
             logger.info("Job deleted from neo4j");
+        }catch (Exception e){
+            logger.error("Job offer " + id+ " not deleted to neo4j");
+            logger.error(e.getMessage());
         }
     }
 
@@ -167,14 +173,6 @@ public class JobOfferDao {
         return jobOffers;
     }
 
-    public JobOffer getJobOffersByCompleteTitle(String jobTitle){
-        List<JobOffer> jobOffers = new ArrayList<>();
-        MongoDBManager mongoDB = MongoDBManager.getInstance();
-        Document regQuery = new Document();
-        Document founded = (Document) mongoDB.getJobOffersCollection().find(eq("job_title", jobTitle)).first();
-        return parseJobOffer(founded);
-    }
-
     public List<JobOffer> getJobOffersBySalary(String timeunit, Double minimum){
         List<JobOffer> jobOffers = new ArrayList<>();
         MongoDBManager mongoDB = MongoDBManager.getInstance();
@@ -228,7 +226,7 @@ public class JobOfferDao {
 
     public List<JobOffer> postsByFollowedCompanies(String username) {
         Neo4jManager neo4j = Neo4jManager.getInstance();
-        List<JobOffer> jobOffers = null;
+        List<JobOffer> jobOffers;
         try (org.neo4j.driver.Session session = neo4j.getDriver().session() ) {
             jobOffers = session.readTransaction((TransactionWork<List<JobOffer>>) tx -> {
                 Result result = tx.run("MATCH (:JobSeeker {username:$username})-[:FOLLOWS]->(c)-[r:PUBLISHED]->(j)" +
@@ -255,6 +253,7 @@ public class JobOfferDao {
 
         return jobOffers;
     }
+
     public LinkedHashMap<String, Integer> rankCities(String jobType){
         LinkedHashMap<String, Integer> map = new LinkedHashMap<>();
         // Rank cities based on # of (job_type) jobs
@@ -282,8 +281,6 @@ public class JobOfferDao {
                 doc.getEmbedded(List.of("salary", "from"), String.class),doc.getEmbedded(List.of("salary", "to"), String.class),
                 doc.getEmbedded(List.of("salary", "time_unit"), String.class));
     }
-
-
 
     public List<Long> statistics (){
         ArrayList<Long> stats = new ArrayList<>();

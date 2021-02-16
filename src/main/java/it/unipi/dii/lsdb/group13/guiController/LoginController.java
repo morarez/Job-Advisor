@@ -25,6 +25,7 @@ public class LoginController {
 
     @FXML
     private TextField usernameField;
+
     Logger logger;
 
     public LoginController() {

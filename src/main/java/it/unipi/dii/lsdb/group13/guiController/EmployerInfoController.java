@@ -12,9 +12,10 @@ import java.io.IOException;
 import org.apache.log4j.Logger;
 
 public class EmployerInfoController {
-	 public EmployerInfoController() {
+    public EmployerInfoController() {
 	    	Logger logger = Logger.getLogger(EmployerInfoController.class.getName());
 	    }
+
     private EmployerDao employerDao = new EmployerDao();
 
     @FXML
