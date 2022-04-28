@@ -2,7 +2,7 @@
 
 Job Advisor is an employment-oriented application whose core purpose is to provide a platform not only to job seekers to search for job offers, browse through lists of employers and job offers, and save the posts they like, but also to employers who post new job offers and meanwhile search for relevant job seekers. 
 
-*NOTE* : This readme is a breif description of the project. The full documentaiton is available in the repository.
+*NOTE* : This readme is a brief description of the project. The full documentation is available in the repository.
 
 # Introduction
 
